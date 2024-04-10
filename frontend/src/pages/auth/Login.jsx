@@ -141,14 +141,14 @@ function Login() {
                   <p className="text-red-500 text-sm">{errors.password}</p>
                 )}
               </div>
-              <div className="flex justify-end my-1">
+              {/* <div className="flex justify-end my-1">
                 <Link
                   className="font-semibold hover:text-blue-800"
                   to="/adminRegister"
                 >
                   &nbsp;Forgot Password?
                 </Link>
-              </div>
+              </div> */}
               <button className="bg-blue-500 hover:bg-blue-600 p-3 text-white">
                 Login
               </button>
