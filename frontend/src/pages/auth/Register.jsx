@@ -108,13 +108,13 @@ function Register() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white ${errors.name?"border-red-500 border":""} border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
                   autoComplete="off"
                   autoFocus="on"
                   placeholder="Enter your Full Name"
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-sm">{errors.name}</p>
+                  <p className="text-red-500 text-sm ">{errors.name}</p>
                 )}
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -125,7 +125,7 @@ function Register() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                    className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 ${errors.email?"border-red-500 border":""} bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
                     autoComplete="off"
                   
                     placeholder="Enter your email"
@@ -144,7 +144,7 @@ function Register() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="h-12 pl-2 text-black bg-white  border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)] focus:ring-2 focus:ring-blue-500"
+                    className={`h-12 pl-2 text-black bg-white ${errors.phone?"border-red-500 border":""} border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)] focus:ring-2 focus:ring-blue-500`}
                   
                     
                     placeholder="Enter your phone number"
@@ -164,7 +164,7 @@ function Register() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="h-12 pl-2 text-black bg-white border focus:ring-2 focus:ring-blue-500 rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  className={`h-12 pl-2 text-black bg-white ${errors.password?"border-red-500 border":""} border focus:ring-2 focus:ring-blue-500 rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
                   autoComplete="off"
                  
                   placeholder="Create password"
@@ -209,7 +209,7 @@ function Register() {
                 <label className="text-black">Confirm Password</label>
                 <input
                   type={showpassword ? "text" : "password"}
-                  className="h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white ${errors.confPassword?"border-red-500 border":""} border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
                   name="confPassword"
                   value={formData.confPassword}
                   onChange={handleInputChange}

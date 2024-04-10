@@ -3,10 +3,12 @@ import { fetchWithAuth } from '../../../auth/api';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteConfirmationModal from '../../../components/Home/DeleteConfirmationModal';
 
 const Staffs = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,6 +33,13 @@ const Staffs = () => {
       setError(error.message);
       toast.error('Failed to delete staff');
     }
+  };
+  const openDeleteConfirmation = (userId) => {
+    setSelectedUserId(userId);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setSelectedUserId(null);
   };
 
   return (
@@ -64,11 +73,8 @@ const Staffs = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                       <button
                         className="text-white bg-red-500 px-3 py-2 rounded-md hover:bg-red-300"
-                        onClick={() => {
-                          if (window.confirm('Are you sure you want to delete this staff?')) {
-                            handleDeleteUser(user.id);
-                          }
-                        }}>
+                        onClick={() => openDeleteConfirmation(user.id)
+                        }>
                         <i className="fa-regular fa-trash-alt"></i>
                       </button>
                     </td>
@@ -77,6 +83,16 @@ const Staffs = () => {
               </tbody>
             </table>
           </div>
+          <DeleteConfirmationModal
+            isOpen={selectedUserId !== null}
+            onClose={closeDeleteConfirmation}
+            onConfirm={() => {
+              handleDeleteUser(selectedUserId);
+              closeDeleteConfirmation();
+            }}
+            title="Delete User"
+            message="Are you sure you want to delete this user? This action cannot be undone."
+          />
         </div>
       )}
     </div>

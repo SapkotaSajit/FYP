@@ -34,3 +34,24 @@
 body {
   font-family: 'Bitter', 'IBM Plex Serif', 'Roboto', sans-serif;
 }
+
+
+
+
+::-webkit-scrollbar {
+  width: .3rem;
+  height: .3rem;
+}
+::-webkit-scrollbar-button {
+  background: #363535
+}
+::-webkit-scrollbar-track-piece {
+  background: #888
+}
+::-webkit-scrollbar-thumb {
+  background: #2f2e2e
+}
+
+main{
+  height: 70vh;
+}

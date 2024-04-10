@@ -82,7 +82,7 @@ function Login() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter Your email"
-                  className="px-4 py-3 focus:ring-2 focus:ring-blue-500 text-black bg-white border rounded-sm outline-none"
+                  className={`px-4 py-3 focus:ring-2 focus:ring-blue-500 text-black bg-white ${errors.email?"border-red-500 border":""} border rounded-sm outline-none`}
                   autoComplete="off"
                   autoFocus="on"
                 />
@@ -101,7 +101,7 @@ function Login() {
                   placeholder="Enter Your password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="px-4 py-3 text-black focus:ring-2 focus:ring-blue-500 bg-white border rounded-sm outline-none"
+                  className={`px-4 py-3 text-black focus:ring-2 focus:ring-blue-500 bg-white border ${errors.password?"border-red-500 border":""} rounded-sm outline-none`}
                   autoComplete="off"
                  
                 />

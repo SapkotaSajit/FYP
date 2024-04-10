@@ -60,7 +60,7 @@ const AllServicesWithParent = () => {
         </div>
       </div>
 
-      <main className="main-service mt-36">
+      <main className="main-service h-fit mt-36">
         <div className="service-heading">
         <a href="#service-section">
           <h2 className="text-center mb-16 text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 ">
