@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function EnterCode() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Use useNavigate hook for navigation
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,11 +14,11 @@ function EnterCode() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: "user@example.com", code }), // Assuming you have the user's email stored somewhere
+      body: JSON.stringify({ email: "user@example.com", code }), 
     });
     const data = await response.json();
     if (data.success) {
-      navigate("/reset-password"); // Navigate to reset-password page if code is valid
+      navigate("/reset-password"); 
     } else {
       setError(data.error || "Invalid code. Please try again.");
     }

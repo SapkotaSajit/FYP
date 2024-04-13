@@ -1,17 +1,57 @@
 import React, { useState } from "react";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
-import Slider from "../../components/Home/Slider";
-import { useForm } from "react-hook-form";
 import { Fade } from "react-awesome-reveal";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from 'axios';
 
+
+ 
 function Contact() {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    phone:"",
+    email:"",
+    description: ""
+  });
+ 
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const handleOpen = () => {
+      setIsOpen(!isOpen);
+    };
+  
 
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
+  
+  const BASE_URL = "http://localhost:5000/api/";
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_URL}createContact`, formData);
+  
+      if (response.status === 201) {
+        navigate("/");
+        toast.success("Message submitted successfully");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      console.error("Error:", error.message);
+      toast.error("Failed to submit message");
+    }
+  };
   return (
     <>
       <Nav />
@@ -81,7 +121,7 @@ function Contact() {
 
       <section className="mt-8">
         <Fade direction="down" triggerOnce>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div class="container mx-auto px-4 lg:w-4/5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
                 <div class="">
@@ -92,9 +132,13 @@ function Contact() {
                     >
                       Full Name
                     </label>
+                    
                     <input
                       id="fullname"
+                      name="name"
                       type="text"
+                      value={formData.name}
+                      onChange={handleChange}
                       placeholder="Your full name"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     />
@@ -110,7 +154,10 @@ function Contact() {
                     </label>
                     <input
                       id="email"
+                      name="email"
                       type="text"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Your email"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     />
@@ -126,6 +173,9 @@ function Contact() {
                     </label>
                     <input
                       id="phonenumber"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       type="text"
                       placeholder="Your phone number"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
@@ -144,8 +194,11 @@ function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="description"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32"
                     placeholder="Enter your message"
+                    value={formData.description}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
               </div>

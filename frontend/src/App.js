@@ -42,9 +42,8 @@ import ForgotPassword from "./components/Home/ForgotPassword";
 import ChangePassword from "./components/Home/ChangePassword";
 import ResetPassword from "./components/Home/ResetPassword";
 import EnterCode from "./components/Home/EnterCode";
+import ContactList from "./pages/Admin/Contact/ContactList";
 
-// import { resetPassword } from "../../backend/controllers/Admin/ForgotPasswordController";
-//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 function isAuthenticated() {
   const accessToken = Cookies.get("accessToken");
@@ -169,6 +168,17 @@ function App() {
             element={
               <PrivateAdminRoute
                 element={<RoleList />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+             <Route
+            path="ContactList"
+            element={
+              <PrivateAdminRoute
+                element={<ContactList />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"

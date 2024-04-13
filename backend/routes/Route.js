@@ -25,6 +25,7 @@ import { uploadGuideSteps } from "../helper/guideStepsImage.js";
 import { createBookingAssign, deleteBookingAssignById, getAllUserBookingAcceptAssignments, getAllUserBookingAssignments, getAllUserBookingCompleteAssignments, getAllUserBookingRejectAssignments, getBookingAssignById, updateBookingAssignById, updateBookingAssignStatus } from "../controllers/Admin/BookingAssignController.js";
 import { getAllAcceptBooking, getAllCompletedBooking, getAllPendingBooking, getAllRejectBooking } from "../controllers/Admin/BookingAdminAssigned.js";
 import { forgotPassword,  resetPassword } from "../controllers/Admin/UserController.js";
+import { createContact, AllContacts,  } from "../controllers/Admin/ContactController.js";
 
 
 const router = express.Router();
@@ -88,6 +89,11 @@ router.get('/assignUsersRejectedBookings/:userId',verifyToken, checkStaffRole, g
 router.get('/:id', getBookingAssignById);
 router.put('/:id', updateBookingAssignById);
 router.delete('/:id', deleteBookingAssignById,checkAdminRole);
+
+
+
+router.post('/createContact', createContact);
+router.get('/contacts',verifyToken, checkAdminRole, AllContacts);
 
 
 
