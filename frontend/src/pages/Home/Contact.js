@@ -5,15 +5,12 @@ import Slider from "../../components/Home/Slider";
 import { useForm } from "react-hook-form";
 import { Fade } from "react-awesome-reveal";
 
-
 function Contact() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
-
-
 
   return (
     <>
@@ -34,21 +31,28 @@ function Contact() {
               isOpen ? "opacity-0" : " "
             }`}
           >
-            <h1 className={`lg:text-5xl md:text-4xl text-sm bg-purple text-white p-2 rounded`}>
+            <h1
+              className={`lg:text-5xl md:text-4xl text-sm bg-purple text-white p-2 rounded`}
+            >
               Click arrow
             </h1>
           </div>
-          <div className={`absolute  left-[50%] right-[50%] flex  justify-center `}>
+          <div
+            className={`absolute  left-[50%] right-[50%] flex  justify-center `}
+          >
             <div
               className={`absolute lg:flex md:flex hidden    items-center justify-center lg:w-[1000px] md:w-[1000px]  gap-2 duration-500 ${
                 isOpen ? "opacity-0" : " "
               }`}
             >
-              <h1 className={`lg:text-5xl  md:text-4xl text-lg`}>Here we are located at</h1>
-              
+              <h1 className={`lg:text-5xl  md:text-4xl text-lg`}>
+                Here we are located at
+              </h1>
             </div>
             <button
-              className={`${!isOpen ? "duration-500" : "rotate-180 duration-500"} absolute justify-center -bottom-48  `}
+              className={`${
+                !isOpen ? "duration-500" : "rotate-180 duration-500"
+              } absolute justify-center -bottom-48  `}
               onClick={handleOpen}
             >
               <svg
@@ -69,62 +73,102 @@ function Contact() {
       </section>
 
       <section>
-      <h1 className='pt-6 text-4xl text-slate-900 font-semibold text-center'>Get in touch</h1>
-                <h2 className='pt-1  text-slate-900 text-center'>Leave a feedback</h2>
-               
+        <h1 className="pt-6 text-4xl text-slate-900 font-semibold text-center">
+          Get in touch
+        </h1>
+        <h2 className="pt-1  text-slate-900 text-center">Leave a feedback</h2>
       </section>
 
-      <section className='mt-8'>
+      <section className="mt-8">
         <Fade direction="down" triggerOnce>
-                <form>
+          <form>
+            <div class="container mx-auto px-4 lg:w-4/5">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
+                <div class="">
+                  <div class="border border-gray-300 rounded-md p-4">
+                    <label
+                      for="fullname"
+                      class="block text-gray-700 font-medium mb-2"
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      id="fullname"
+                      type="text"
+                      placeholder="Your full name"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+                <div class="">
+                  <div class="border border-gray-300 rounded-md p-4">
+                    <label
+                      for="email"
+                      class="block text-gray-700 font-medium mb-2"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      id="email"
+                      type="text"
+                      placeholder="Your email"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+                <div class="">
+                  <div class="border border-gray-300 rounded-md p-4">
+                    <label
+                      for="phonenumber"
+                      class="block text-gray-700 font-medium mb-2"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      id="phonenumber"
+                      type="text"
+                      placeholder="Your phone number"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                <div className='flex flex-col justify-center gap-3 p-3 '>
-                        <div className='flex flex-wrap justify-center gap-3'>
-                            <div className='flex flex-col p-2 '>
-                                <div className='flex border border-gray-500 items-center gap-2 p-2 lg:w-[450px] w-full'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" className='text-purple'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8" /></svg>
-                                    <input id='fullname' type='text' placeholder='Your fullname' className='w-full outline-none' />
-                                </div>
-                             
-                            </div>
-                            <div className='flex flex-col p-2 '>
-                                <div className='flex border border-gray-500 items-center gap-2 p-2 lg:w-[450px] w-full'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" className='text-purple'><path fill="currentColor" d="M5 5h13a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3m0 1c-.5 0-.94.17-1.28.47l7.78 5.03l7.78-5.03C18.94 6.17 18.5 6 18 6zm6.5 6.71L3.13 7.28C3.05 7.5 3 7.75 3 8v9a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V8c0-.25-.05-.5-.13-.72z" /></svg>
-                                    <input id='email' type='text' placeholder='Your email' className='w-full outline-none'  />
-                                </div>
-                      
-                            </div>
-                            <div className='flex flex-col p-2 '>
-                                <div className='flex border border-gray-500 items-center gap-2 p-2 lg:w-[450px] w-full'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" className='text-purple' viewBox="0 0 24 24"><path fill="currentColor" d="M19.5 22a1.5 1.5 0 0 0 1.5-1.5V17a1.5 1.5 0 0 0-1.5-1.5c-1.17 0-2.32-.18-3.42-.55a1.51 1.51 0 0 0-1.52.37l-1.44 1.44a14.772 14.772 0 0 1-5.89-5.89l1.43-1.43c.41-.39.56-.97.38-1.53c-.36-1.09-.54-2.24-.54-3.41A1.5 1.5 0 0 0 7 3H3.5A1.5 1.5 0 0 0 2 4.5C2 14.15 9.85 22 19.5 22M3.5 4H7a.5.5 0 0 1 .5.5c0 1.28.2 2.53.59 3.72c.05.14.04.34-.12.5L6 10.68c1.65 3.23 4.07 5.65 7.31 7.32l1.95-1.97c.14-.14.33-.18.51-.13c1.2.4 2.45.6 3.73.6a.5.5 0 0 1 .5.5v3.5a.5.5 0 0 1-.5.5C10.4 21 3 13.6 3 4.5a.5.5 0 0 1 .5-.5" /></svg>
+              <div class="mt-6">
+                <div class="border border-gray-300 rounded-md p-4">
+                  <label
+                    for="message"
+                    class="block text-gray-700 font-medium mb-2"
+                  >
+                    Your Message
+                  </label>
+                  <textarea
+                    id="message"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32"
+                    placeholder="Enter your message"
+                  ></textarea>
+                </div>
+              </div>
 
-                                    <input id='phonenumber' type='text' placeholder='Your number' className='w-full outline-none'  />
-                                </div>
-                            
-                            </div>
-                            </div>
+              <div class="mt-6">
+                <button
+                  type="submit"
+                  class="py-3 px-6 rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </Fade>
+      </section>
 
-
-
-                        </div>
-                    <div className='flex flex-col px-4 lg:w-4/5 mx-auto   '>
-                   
-                        <div className='flex flex-col  items-end w-full'>
-                            <div className='flex flex-col w-full'>
-                                <textarea id='message' className='w-full h-32 p-2 border border-gray-500 outline-none ' placeholder='Enter your query'  />
-                                
-                            </div>
-                            <button type='submit' className='  py-3 mt-6 rounded-sm text-center text-white  bg-blue-500 hover:bg-blue-600 w-fit px-4'>Submit</button>
-                        </div>
-                    </div>
-                </form>
-                </Fade>
-            </section>
-
-      
       <Footer />
     </>
   );
 }
 
 export default Contact;
+
+
+

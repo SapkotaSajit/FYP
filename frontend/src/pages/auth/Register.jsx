@@ -93,7 +93,7 @@ function Register() {
 
       <div className="container mx-auto overflow-hidden flex px-6 justify-center items-center">
         <div className="flex items-center   justify-center h-[100dvh]">
-          <div className="flex flex-col  md:w-[40dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-6 md:px-[50px] py-[30px] ">
+          <div className="flex flex-col  md:w-[70dvw]  lg:w-[40dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-6 md:px-[50px] py-[30px] ">
             <div className="flex flex-col  justify-center items-center">
               <p className="text-3xl  flex font-semibold text-start">SignUp</p>
             </div>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Nav from "../../components/Home/Nav";
 import Cookies from "js-cookie";
 import Footer from "../../components/Home/Footer";
+import ForgotPassword from "../../components/Home/ForgotPassword";
 
 function Login() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ function Login() {
       <Nav />
       <div className="container mx-auto overflow-hidden flex justify-center items-center ">
         <div className="flex items-center justify-center h-screen">
-          <div className="flex flex-col md:w-[30dvw]  shadow-2xl gap-3 rounded-sm bg-gray-50 border px-8 md:px-[50px] py-[30px]">
+          <div className="flex flex-col md:w-[50dvw]  lg:w-[30dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-8 md:px-[50px] py-[30px]">
             <p className="text-3xl my-3  text-center font-semibold">Login</p>
             <form onSubmit={handleLogin} className="flex flex-col gap-3 w-full">
               <div className="flex flex-col gap-2">
@@ -141,14 +142,14 @@ function Login() {
                   <p className="text-red-500 text-sm">{errors.password}</p>
                 )}
               </div>
-              {/* <div className="flex justify-end my-1">
+              <div className="flex justify-end my-1">
                 <Link
                   className="font-semibold hover:text-blue-800"
-                  to="/adminRegister"
+                  to="/forgot-password"
                 >
                   &nbsp;Forgot Password?
                 </Link>
-              </div> */}
+              </div>
               <button className="bg-blue-500 hover:bg-blue-600 p-3 text-white">
                 Login
               </button>

@@ -38,6 +38,12 @@ import AssignedAcceptedBookingsComponent from "./pages/Admin/staff/AssignedAccep
 import AssignedCompletedBookingsComponent from "./pages/Admin/staff/AllAssignedCompletedbooking";
 import BookingAssignForm from "./pages/Admin/staff/BookingAssignForm";
 import AllAssignedbooking from "./pages/Admin/staff/AllAssignedbooking";
+import ForgotPassword from "./components/Home/ForgotPassword";
+import ChangePassword from "./components/Home/ChangePassword";
+import ResetPassword from "./components/Home/ResetPassword";
+import EnterCode from "./components/Home/EnterCode";
+
+// import { resetPassword } from "../../backend/controllers/Admin/ForgotPasswordController";
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 function isAuthenticated() {
@@ -80,6 +86,10 @@ function App() {
             />
           }
         />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/change-password" element={<ChangePassword/>} />
+        <Route path="/enter-code" element={<EnterCode/>} />
+        <Route path="/reset-password" element={<ResetPassword/>} />
         <Route
           path="/register"
           element={
