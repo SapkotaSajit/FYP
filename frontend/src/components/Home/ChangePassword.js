@@ -52,18 +52,26 @@ function ChangePassword() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${Cookies.get("accessToken")}`, // Add this line
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/change-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("accessToken")}`, // Add this line
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         const successData = await response.json();
-        navigate("/");
+        const roleId = Cookies.get("roleId");
+        if (roleId === "1") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
         toast.success(successData.msg);
       } else {
         const errorData = await response.json();
@@ -83,7 +91,9 @@ function ChangePassword() {
         <div className="flex items-center justify-center h-[100dvh]">
           <div className="flex flex-col md:w-[40dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-6 md:px-[50px] py-[30px] ">
             <div className="flex flex-col justify-center items-center">
-              <p className="text-3xl flex font-semibold text-start">Change Password</p>
+              <p className="text-3xl flex font-semibold text-start">
+                Change Password
+              </p>
             </div>
             <form
               onSubmit={handleChangePassword}
@@ -103,7 +113,9 @@ function ChangePassword() {
                   placeholder="Enter your current password"
                 />
                 {errors.currentPassword && (
-                  <p className="text-red-500 text-sm ">{errors.currentPassword}</p>
+                  <p className="text-red-500 text-sm ">
+                    {errors.currentPassword}
+                  </p>
                 )}
               </div>
               <div className="flex flex-col gap-2">

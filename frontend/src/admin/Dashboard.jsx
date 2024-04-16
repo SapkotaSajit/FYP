@@ -39,6 +39,7 @@ function AdminDashboard() {
 
   return (
     <div className="flex   bg-white">
+      
       <aside
         className={`   bg-slate-800 duration-700  text-white" ${
           isSidebarOpen ? " w-[40%] xl:w-[19%] p-2 mx-4 my-3 rounded-xl"  : "w-0  "
@@ -160,6 +161,7 @@ function AdminDashboard() {
               </button>
               <h1 className="text-xl font-semibold">Admin Dashboard</h1>
             </div>
+            <div className="grid  grid-cols-2 text-sm  w-40 pr-4 md:pr-0 md-pl-4 md:w-fit  ">
             <div className="relative">
               <button onClick={toggleDropdown} className="focus:outline-none">
                 <img
@@ -170,14 +172,27 @@ function AdminDashboard() {
               </button>
               {isOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-28 rounded-md shadow-lg"
+                  className="absolute bg-gray-300 z-999 rounded-md shadow-lg"
+                  style={{
+                    top: "50%",
+                    right: "calc(100% + 10px)",
+                    transform: "translateY(-50%)",
+                    minWidth: "150px",
+                  }}
                   onClick={closeDropdown}
                 >
                   {/* <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Dashboard</a>
                   <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Edit Profile</a> */}
                   <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={handleLogout}>Log Out</a>
+                  <Link
+                        className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"
+                        to="/change-password"
+                      >
+                        &nbsp;Change Password
+                      </Link>
                 </div>
               )}
+            </div>
             </div>
           </div>
         </header>

@@ -97,7 +97,13 @@ function Nav() {
                       >
                         Log Out
                       </a>
-                      {/* <a href="#" className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900">Change Password</a>  */}
+                      <Link
+                  to={"/staffs"}
+                  className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+                >
+                  Dashboard
+                </Link>
+                     
                       <Link
                         className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
                         to="/change-password"
@@ -125,9 +131,9 @@ function Nav() {
               {isStaff() ? (
                 <Link
                   to={"/staffs"}
-                  className="text-white w-20 md:w-auto  md:mr-auto text-xs md:text-sm font-semibold px-4 py-2 rounded-md hover:bg-blue-600 border hover:border-blue-600 border-blue-600 bg-blue-500 "
+                  
                 >
-                  Dashboard
+
                 </Link>
               ) : null}
             </div>
