@@ -1,8 +1,7 @@
+
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import Users from "../../models/User.js";
-
-let resetCode = ""; // Variable to store the generated code
 
 // Generate a random 4-digit code
 const generateRandomCode = () => {
@@ -18,17 +17,30 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Send email with the random code and store the code in the variable
+// Send email with the random code and store the code in the database
 export const sendForgotPasswordEmail = async (email) => {
-  const resetCode = generateRandomCode(); // Generate a random 4-digit code
-  const mailOptions = {
-    from: "fabricvr411@gmail.com",
-    to: email,
-    subject: "Password Reset Code",
-    text: `Your password reset code is: ${resetCode}`,
-  };
-
   try {
+    // Find the user by email
+    const user = await Users.findOne({ where: { email } });
+    if (!user) {
+      return { success: false, error: "Email not found" };
+    }
+
+    // Generate a random 4-digit code
+    const resetCode = generateRandomCode();
+
+    // Store the reset code in the database
+    user.reset_code = resetCode;
+    await user.save();
+
+    // Send email with the reset code
+    const mailOptions = {
+      from: "fabricvr411@gmail.com",
+      to: email,
+      subject: "Password Reset Code",
+      text: `Your password reset code is: ${resetCode}`,
+    };
+
     await transporter.sendMail(mailOptions);
     console.log(`Code sent to ${email}: ${resetCode}`);
     return { success: true, resetCode };
@@ -39,29 +51,51 @@ export const sendForgotPasswordEmail = async (email) => {
 };
 
 
-export const verifyResetCode = async (email, enteredCode, newPassword) => {
+// export const verifyResetCode = async (email, enteredCode) => {
+//   try {
+//     // Find the user by email
+//     const user = await Users.findOne({ where: { email } });
+//     if (!user) {
+//       return { success: false, error: "User not found" };
+//     }
+
+//     // Check if the reset code stored in the database matches the entered code
+//     if (user.reset_code !== parseInt(enteredCode, 10)) {
+//       return { success: false, error: "Incorrect reset code" };
+//     }
+
+//     // Clear the reset code for the user
+//     user.reset_code = null;
+//     await user.save();
+
+//     navigate("/reset-password");
+    
+//     // Proceed with password reset - you can redirect to the reset password page or return success response
+
+//     return { success: true };
+//   } catch (error) {
+//     console.error("Error verifying reset code:", error);
+//     return { success: false, error: "Failed to verify reset code" };
+//   }
+// };
+
+
+export const verifyResetCode = async (req, res) => {
+  const { email, code } = req.body;
   try {
     // Find the user by email and reset code
-    const user = await Users.findOne({ where: { email: email, reset_code: enteredCode } });
+    const user = await Users.findOne({ where: { email, reset_code: code } });
     if (!user) {
-      return { success: false, error: "Invalid reset code" };
+      return res.status(400).json({ success: false, error: "Invalid reset code" });
     }
 
-    // Check if the entered code matches the stored code
-    if (user.reset_code !== enteredCode) {
-      return { success: false, error: "Incorrect reset code" };
-    }
+    // Reset code matches, clear the reset code
+    user.reset_code = null;
+    await user.save();
 
-    // Generate a hash of the new password
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update the user's password and reset_code in the database
-    await Users.update({ password: hashPassword, reset_code: null }, { where: { email: email } });
-
-    return { success: true };
+    return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error resetting password:", error);
-    return { success: false, error: "Failed to reset password" };
+    console.error("Error verifying reset code:", error);
+    return res.status(500).json({ success: false, error: "Failed to verify reset code" });
   }
 };

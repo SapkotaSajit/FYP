@@ -27,6 +27,7 @@ import { getAllAcceptBooking, getAllCompletedBooking, getAllPendingBooking, getA
 import { forgotPassword,  resetPassword } from "../controllers/Admin/UserController.js";
 import { createContact, AllContacts,  } from "../controllers/Admin/ContactController.js";
 import { changePassword } from "../controllers/Admin/changePassword.js";
+import { verifyResetCode } from "../controllers/Admin/forgotPassword.js";
 
 
 const router = express.Router();
@@ -34,6 +35,8 @@ router.post("/register", Register);
 router.post("/login", Login);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+router.post('/verify-reset-code', verifyResetCode);
+
 
 
 router.post("/change-password", verifyToken, changePassword);

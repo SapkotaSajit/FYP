@@ -184,12 +184,12 @@ function AdminDashboard() {
                   {/* <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Dashboard</a>
                   <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Edit Profile</a> */}
                   <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={handleLogout}>Log Out</a>
-                  <Link
+                <Link
                         className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"
                         to="/change-password"
                       >
                         &nbsp;Change Password
-                      </Link>
+                      </Link>  
                 </div>
               )}
             </div>

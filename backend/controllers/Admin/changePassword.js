@@ -24,7 +24,7 @@ export const changePassword = async (req, res) => {
 
     await user.update({ password: hashedPassword });
 
-   
+    // Send a success response
     res.json({ msg: "Password changed successfully" });
   } catch (error) {
     console.error("Error changing password:", error);

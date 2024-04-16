@@ -1,26 +1,33 @@
 
+
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function EnterCode() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/enter-code", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: "user@example.com", code }), 
-    });
-    const data = await response.json();
-    if (data.success) {
-      navigate("/reset-password"); 
-    } else {
-      setError(data.error || "Invalid code. Please try again.");
+    try {
+      const response = await fetch("http://localhost:5000/api/verify-reset-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        navigate("/reset-password");
+      } else {
+        setError(data.error || "Invalid code. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying code:", error);
+      setError("Failed to verify code");
     }
   };
 
