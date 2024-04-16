@@ -12,7 +12,7 @@ function HomePage() {
       <Slider />
       <header>
         <div className="main md:h-[60vh]   my-6 place-items-center lg:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2">
-          <Fade cascade direction="up" triggerOnce>
+          <Fade cascade direction="up" >
             <h1 className="text-3xl lg:text-4xl xl:text-5xl my-6 font-bold mx-4 tracking-wider">
               Providing Expert Waterproofing Solutions for Your Peace of Mind
             </h1>
@@ -46,7 +46,7 @@ function HomePage() {
           
 
             <div className="main md:h-[80vh] place-items-center  grid grid-cols-1 md:grid-cols-2">
-              <Fade direction="up" triggerOnce>
+              <Fade direction="up" cascade>
                 <div className="content px-4  space-y-5">
                   <p className="text-xl md:text-2xl  text-gray-700 font-semibold">
                     Quality
@@ -72,7 +72,7 @@ function HomePage() {
                   
                 </div>
               </Fade>
-              <Fade direction="right" triggerOnce>
+              <Fade direction="right" cascade>
                 <div className="img my-8 mx-4 h-[50vh]">
                   <img
                     src="img1 (8).jpg"
@@ -86,18 +86,20 @@ function HomePage() {
         </div>
       </main>
 
-      <main className="message-section">
+      <main className="message-section mt-[400px] md:mt-0">
         <div className="main lg:w-4/5 mx-auto
         ">
           <div className=" grid md:h-[80vh] py-6 grid-cols-1 place-items-center mx-auto  md:grid-cols-2">
          
-            <Fade cascade direction="up" triggerOnce>
+            <Fade cascade direction="left" >
               <div className="mx-4">
                 <img
                   src="https://scontent.fktm6-1.fna.fbcdn.net/v/t39.30808-6/250988891_4482606495160960_6706806048812467931_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=gU2Gi6IF4-MAb4R4B0D&_nc_ht=scontent.fktm6-1.fna&oh=00_AfCFFlqSmF3WXoiVJaN6rj43yPH5wRXb5h6hRWE4AMhmhQ&oe=6618088C"
                   className="rounded-[50%] aspect-auto  border"
                 ></img>
               </div>
+              </Fade>
+              <Fade cascade direction="right" delay={500}>
               
 
               <div className="md:border-l-4 border-blue-500 mx-4 md:ml-4 space-y-5 md:pl-4 ">
@@ -138,7 +140,7 @@ function HomePage() {
       </main>
 
 
-      <main className="history-section">
+      <main className="history-section mt-20 mb-52 md:mt-0">
         <div className="container   lg:w-4/5 mx-auto  my-6 ">
           <div className="about-company bg-white rounded-lg">
             <h2 className="text-center text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 my-8 md:my-0 ">
@@ -146,7 +148,7 @@ function HomePage() {
             </h2>
 
             <div className="main md:h-[80vh] place-items-center grid grid-cols-1 md:grid-cols-2">
-            <Fade direction="right" triggerOnce>
+            <Fade direction="right" cascade>
                 <div className="img my-8 mx-4 h-[50vh]">
                   <img
                     src="img1 (6).jpg"
@@ -155,7 +157,7 @@ function HomePage() {
                   />
                 </div>
               </Fade>
-              <Fade direction="up" triggerOnce>
+              <Fade direction="up" cascade>
                 <div className="content px-4 space-y-16">
                  
                   <h3 className="text-3xl md:text-3xl lg:text-4xl text-gray-700 font-bold">

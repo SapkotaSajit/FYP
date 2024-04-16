@@ -43,7 +43,11 @@ import ChangePassword from "./components/Home/ChangePassword";
 import ResetPassword from "./components/Home/ResetPassword";
 import EnterCode from "./components/Home/EnterCode";
 import ContactList from "./pages/Admin/Contact/ContactList";
-
+import AllGuide from "./pages/Admin/Guide/Index";
+import EditGuide from "./pages/Admin/Guide/edit";
+import AllGuideTypes from "./pages/Admin/GuideTypes/Index";
+import EditGuideTypes from "./pages/Admin/GuideTypes/edit";
+import AllGuideSteps from "./pages/Admin/GuideSteps/Index";
 
 function isAuthenticated() {
   const accessToken = Cookies.get("accessToken");
@@ -56,7 +60,7 @@ function isAdmin() {
 }
 function isStaff() {
   const roleId = Cookies.get("roleId");
-  return roleId === "3"; 
+  return roleId === "3";
 }
 function PrivateStaffRoute({ element, authenticated, redirectTo }) {
   return authenticated && isStaff() ? element : <Navigate to={redirectTo} />;
@@ -85,10 +89,10 @@ function App() {
             />
           }
         />
-        <Route path="/forgot-password" element={<ForgotPassword/>} />
-        <Route path="/change-password" element={<ChangePassword/>} />
-        <Route path="/enter-code" element={<EnterCode/>} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/enter-code" element={<EnterCode />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/register"
           element={
@@ -100,7 +104,6 @@ function App() {
           }
         />
 
-
         <Route path="/guide" element={<Guide />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/contact" element={<Contact />} />
@@ -108,16 +111,16 @@ function App() {
         <Route path="/guideType/:guide_id" element={<GuideTypes />} />
         <Route path="/guideStep/:guideTypes_id" element={<GuideSteps />} />
         <Route path="/homeServices" element={<AllServicesWithParent />} />
-
         <Route path="/childServices/:parentId" element={<ServiceDetails />} />
-        <Route path="/booking/:serviceId"
-                  element={
-                    <PrivateRoute
-                      element={<BookingForm/>}
-                      authenticated={isAuthenticated()}
-                      redirectTo="/login"
-                      />
-              }
+        <Route
+          path="/booking/:serviceId"
+          element={
+            <PrivateRoute
+              element={<BookingForm />}
+              authenticated={isAuthenticated()}
+              redirectTo="/login"
+            />
+          }
         />
         <Route
           path="/admin"
@@ -174,7 +177,7 @@ function App() {
               />
             }
           />
-             <Route
+          <Route
             path="ContactList"
             element={
               <PrivateAdminRoute
@@ -185,7 +188,67 @@ function App() {
               />
             }
           />
-                    <Route
+          <Route
+            path="AllGuide"
+            element={
+              <PrivateAdminRoute
+                element={<AllGuide />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+
+          <Route
+            path="editGuide/:id"
+            element={
+              <PrivateAdminRoute
+                element={<EditGuide />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+
+          <Route
+            path="AllGuideTypes"
+            element={
+              <PrivateAdminRoute
+                element={<AllGuideTypes />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+
+<Route
+            path="editGuideTypes/:id"
+            element={
+              <PrivateAdminRoute
+                element={<EditGuideTypes />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+    <Route
+            path="AllGuideSteps"
+            element={
+              <PrivateAdminRoute
+                element={<AllGuideSteps/>}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+
+
+          <Route
             path="staffs"
             element={
               <PrivateAdminRoute
@@ -284,51 +347,51 @@ function App() {
               />
             }
           />
-                    <Route
+          <Route
             path="allPen"
             element={
               <PrivateAdminRoute
-                element={<AssignedPendingBookingsComponentAdmin/>}
+                element={<AssignedPendingBookingsComponentAdmin />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"
               />
             }
           />
-                              <Route
+          <Route
             path="allAccept"
             element={
               <PrivateAdminRoute
-                element={<AssignedAcceptedBookingsComponentAdmin/>}
+                element={<AssignedAcceptedBookingsComponentAdmin />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"
               />
             }
           />
-                                        <Route
+          <Route
             path="allCompleted"
             element={
               <PrivateAdminRoute
-                element={<AssignedCompletedBookingsComponentAdmin/>}
+                element={<AssignedCompletedBookingsComponentAdmin />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"
               />
             }
           />
-                              <Route
+          <Route
             path="allReject"
             element={
               <PrivateAdminRoute
-                element={<AssignedRejectedBookingsComponentAdmin/>}
+                element={<AssignedRejectedBookingsComponentAdmin />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"
               />
             }
           />
-                    <Route
+          <Route
             path="processBookings"
             element={
               <PrivateAdminRoute
@@ -363,61 +426,61 @@ function App() {
           />
         </Route>
         <Route
-  path="/staffs"
-  element={
-    <PrivateStaffRoute
-      element={<StaffDashboard />}
-      authenticated={isAuthenticated()}
-      isStaff={isStaff()}
-      redirectTo="/login"
-    />
-  }
->
-  <Route
-    path="assignedUsers"
-    element={
-      <PrivateStaffRoute
-        element={<AllAssignedbooking />}
-        authenticated={isAuthenticated()}
-        isStaff={isStaff()}
-        redirectTo="/login"
-      />
-    }
-  />
-  <Route
-    path="completedAssigned"
-    element={
-      <PrivateStaffRoute
-        element={<AssignedCompletedBookingsComponent/>}
-        authenticated={isAuthenticated()}
-        isStaff={isStaff()}
-        redirectTo="/login"
-      />
-    }
-  />
-    <Route
-    path="acceptAssigned"
-    element={
-      <PrivateStaffRoute
-        element={<AssignedAcceptedBookingsComponent />}
-        authenticated={isAuthenticated()}
-        isStaff={isStaff()}
-        redirectTo="/login"
-      />
-    }
-  />
-      <Route
-    path="rejectAssigned"
-    element={
-      <PrivateStaffRoute
-        element={<AssignedRejectedBookingsComponent />}
-        authenticated={isAuthenticated()}
-        isStaff={isStaff()}
-        redirectTo="/login"
-      />
-    }
-  />
-</Route>
+          path="/staffs"
+          element={
+            <PrivateStaffRoute
+              element={<StaffDashboard />}
+              authenticated={isAuthenticated()}
+              isStaff={isStaff()}
+              redirectTo="/login"
+            />
+          }
+        >
+          <Route
+            path="assignedUsers"
+            element={
+              <PrivateStaffRoute
+                element={<AllAssignedbooking />}
+                authenticated={isAuthenticated()}
+                isStaff={isStaff()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="completedAssigned"
+            element={
+              <PrivateStaffRoute
+                element={<AssignedCompletedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isStaff={isStaff()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="acceptAssigned"
+            element={
+              <PrivateStaffRoute
+                element={<AssignedAcceptedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isStaff={isStaff()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="rejectAssigned"
+            element={
+              <PrivateStaffRoute
+                element={<AssignedRejectedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isStaff={isStaff()}
+                redirectTo="/login"
+              />
+            }
+          />
+        </Route>
       </Routes>
     </>
   );

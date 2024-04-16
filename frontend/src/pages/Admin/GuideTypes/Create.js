@@ -49,7 +49,7 @@ function CreateGuideType() {
       const response = await fetchWithAuth("POST", "createGuideTypes", formDataToSend);
 
       if (response.status === 201) {
-        navigate("/GuideTypes");
+        navigate("/admin/AllGuideTypes");
         toast.success('GuideType Created Successfully');
       } else {
         const errorData = await response.json();

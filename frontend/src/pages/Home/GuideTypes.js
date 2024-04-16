@@ -47,12 +47,12 @@ const GuideTypes = () => {
       <main className="">
         <div className="main-guide mx-auto lg:w-4/5 ">
           <div className="content  my-6  ">
-            <Fade direction="left" triggerOnce>
+            <Fade direction="left" cascade>
               <h1 className="text-start px-4  text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400  ">
                 Guide Types
               </h1>
             </Fade>
-            <Fade direction="right" triggerOnce delay={1000}>
+            <Fade direction="right" cascade delay={1000}>
               <div className="my-6 bg-gradient-to-b from-blue-200 to-blue-500">
                 <div className="px-4 grid place-items-end shadow-2xl rounded-md py-28">
                   <h1 className="text-white font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider">

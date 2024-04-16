@@ -28,7 +28,7 @@ function Nav() {
       navigate("/");
       toast.success("Logout successfully");
     } else if (e.target.textContent === "Change Password") {
-      navigate("/change-password"); // Redirect to the change password page
+      navigate("/change-password");
     }
   };
   const isStaff = () => {
@@ -46,42 +46,28 @@ function Nav() {
 
   return (
     <>
-      <div className="nav-head bg-slate-900 m-0 p-0 overflow-hidden ">
-        <div className="main lg:px-4 md:m-4 w-full mx-auto lg:mx-auto  md:w-full  lg:w-4/5  ">
-          <div className=" flex justify-between gap-3  w-full md:w-full mx-4 md:mx-0 items-center  bg-slate-900  py-4 text-gray-400">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  lg:gap-2 ">
-              <p className=" text-sm font-light">
-                <i class="fa-regular fa-envelope mr-1 text-blue-500"></i>{" "}
-                sajit@company.com
-              </p>
-              <p className="text-sm font-light">
-                <i class="fa-brands fa-periscope mr-1 text-blue-500"></i>
+      <div className="nav-head bg-slate-900   m-0 p-0 overflow-hidden ">
+        <div className="main lg:px-4 md:m-4 w-full mx-auto  lg:mx-auto  md:w-full  lg:w-4/5  ">
+          <div className=" flex justify-between gap-3  w-full md:w-full mx-4 md:mx-0 items-center  bg-slate-900   text-gray-400">
+            <div className="grid grid-cols-1 py-4 md:py-0 md:space-x-6 md:grid-cols-2 lg:grid-cols-2  lg:gap-2 ">
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=sapkotasajit2@gmail.com"
+                className="text-sm font-light"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fa-regular fa-envelope mr-1 text-blue-500"></i>{" "}
+                sapktosajit2@gmail.com
+              </a>
+
+              <a href="/contact" className="text-sm font-light">
+                <i className="fa-brands fa-periscope mr-1 text-blue-500"></i>
                 Naya Baneshwor. Nepal
-              </p>
+              </a>
             </div>
 
-            <div className="grid  grid-cols-2 text-sm  w-fit md:gap-4 ">
+            <div className="grid  grid-cols-2 text-sm  w-40 pr-4 md:pr-0 md-pl-4 md:w-fit  ">
               {isLoggedIn() ? (
-                //   <div className="relative">
-                //   <button onClick={toggleDropdown} className="focus:outline-none ">
-                //     <img
-                //       src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?t=st=1711861254~exp=1711864854~hmac=ebe6d6f8247b131892eced4153914b2cc9c740ddad891206e7bcfe4788be65c7&w=740"
-                //       alt="Profile"
-                //       className="w-16 rounded-full"
-                //     />
-                //   </button>
-                //   {isProfileOpen && (
-                //     <div
-                //       className="absolute bg-gray-300 right-0  z-999 rounded-sm shadow-lg"
-                //       onClick={closeDropdown}
-                //     >
-
-                //       <a href="#" className="block px-4 py-2 text-black  hover:bg-gray-200 hover:text-slate-900" onClick={handleLogout}>Log Out</a>
-                //       <a href="#" className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900">Change Password</a>
-                //     </div>
-                //   )}
-                // </div>
-
                 <div className="relative">
                   <button
                     onClick={toggleDropdown}
@@ -148,7 +134,7 @@ function Nav() {
           </div>
         </div>
       </div>
-      <div className="sticky top-0 z-10 bg-white shadow-md">
+      <div className="sticky top-0 z-10  bg-white shadow-md">
         <div className="main border-b-2 w-full lg:w-4/5 mx-auto">
           <nav className="w-full transition-opacity duration-500 ">
             <div className="px-4 py-4 md:flex md:justify-between md:items-center">
@@ -239,7 +225,13 @@ function Nav() {
                     <i className="fa-solid fa-phone text-blue-500 mr-3 p-4 shadow-lg rounded-full text-2xl"></i>
                     <div className="md:flex flex-col">
                       <p className="text-[12px] text-gray-400">Call us Now</p>
-                      <p className="text-[17px] font-semibold">0(700)123-456</p>
+                      <a
+                        href="tel:+9841435289
+                        "
+                        className="text-[17px] font-semibold"
+                      >
+                        9841435289
+                      </a>
                     </div>
                   </div>
                 </div>

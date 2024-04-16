@@ -33,7 +33,7 @@ function CreateGuide() {
       const response = await fetchWithAuth("POST", "createGuide", formDataToSend);
 
       if (response.status === 201) {
-        navigate("/admin/guide");
+        navigate("/admin/AllGuide");
         toast.success('Guide Created Successfully');
       } else {
         const errorData = await response.json();

@@ -30,7 +30,7 @@ function Login() {
     const newErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = "Username is required";
+      newErrors.email = "Email is required";
     }
 
     if (!formData.password.trim()) {
@@ -69,9 +69,9 @@ function Login() {
   return (
     <div className="m-0  p-0 ">
       <Nav />
-      <div className="container mx-auto overflow-hidden flex justify-center items-center ">
-        <div className="flex items-center justify-center h-screen">
-          <div className="flex flex-col md:w-[50dvw]  lg:w-[30dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-8 md:px-[50px] py-[30px]">
+      <div className="container  mx-auto overflow-hidden flex justify-center items-center ">
+        <div className="flex items-center  justify-center h-screen">
+          <div className="flex flex-col md:w-[60dvw]  lg:w-[40dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-8 md:px-[50px] py-[30px]">
             <p className="text-3xl my-3  text-center font-semibold">Login</p>
             <form onSubmit={handleLogin} className="flex flex-col gap-3 w-full">
               <div className="flex flex-col gap-2">

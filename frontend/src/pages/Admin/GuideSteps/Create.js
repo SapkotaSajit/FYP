@@ -49,7 +49,7 @@ function CreateGuideStep() {
 
       if (response.status === 201) {
         toast.success('GuideStep Created Successfully');
-        navigate("/admin/guideSteps");
+        navigate("admin/AllGuideSteps");
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Unknown error occurred.");

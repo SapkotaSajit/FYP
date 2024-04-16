@@ -1,55 +1,56 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchWithAuth } from '../../../auth/api';
 
 const URL = "http://localhost:5000/";
+
 function EditGuide() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [services, setServices] = useState([]);
+  const [guides, setguides] = useState([]);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
-    service_image: null,
+    image_url: null,
     name: '',
     description: '',
-    parent_id: ''
+   
   });
 
   useEffect(() => {
-    const fetchServices = async () => {
+    const fetchguides = async () => {
       try {
-        const response = await fetchWithAuth('get', 'services');
-        setServices(response.data);
+        const response = await fetchWithAuth('get', 'guides');
+        setguides(response.data);
       } catch (error) {
         setError(error.message);
       }
     };
-    fetchServices();
+    fetchguides();
   }, []);
 
   useEffect(() => {
-    const fetchService = async () => {
+    const fetchguide = async () => {
       try {
-        const response = await fetchWithAuth('get', `services/${id}`);
-        const service = response.data;
+        const response = await fetchWithAuth('get', `guides/${id}`);
+        const guide = response.data;
         setFormData({
-          name: service.name,
-          description: service.description,
-          parent_id: service.parent_id || '',
-          service_image:service.service_image || null
+          name: guide.name,
+          description: guide.description,
+          parent_id: guide.parent_id || '',
+          image_url:guide.image_url || null
         });
       } catch (error) {
-        console.error("Error fetching service:", error.message);
+        console.error("Error fetching guide:", error.message);
       }
     };
-    fetchService();
+    fetchguide();
   }, [id]);
 
-  
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    const newValue = name === 'service_image' ? files[0] : value;
+    const newValue = name === 'guide_image' ? files[0] : value;
     setFormData(prevState => ({ ...prevState, [name]: newValue }));
   };
 
@@ -60,73 +61,91 @@ function EditGuide() {
       formDataToSend.append("name", formData.name);
       formDataToSend.append("description", formData.description);
       formDataToSend.append("parent_id", formData.parent_id);
-      if (formData.service_image) {
-        formDataToSend.append("service_image", formData.service_image);
+      if (formData.guide_image) {
+        formDataToSend.append("guide_image", formData.image_url);
       }
   
-      const response = await fetchWithAuth("put", `editService/${id}`, formDataToSend);
+      const response = await fetchWithAuth("put", `editguide/${id}`, formDataToSend);
   
-      if (response.ok) {
-        navigate("/admin/services");
-        toast.success('Service Updated Successfully');
+      if (response.status === 200) {
+        navigate("/admin/AllGuide");
+        toast.success('guide Updated Successfully');
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Unknown error occurred.");
       }
     } catch (error) {
-        navigate("/services");
-        toast.success('Service Updated Successfully');
+        navigate("/admin/AllGuide");
+        toast.error('guide Update Failed');
     }
   };
   
   return (
-    <div>
-      <h2>Edit Service</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Service Image:</label>
-          {formData.service_image && (
-            <img src={`${URL}${formData.service_image}`} alt="Service Image" style={{ width: '100px', height: '100px' }} />
-          )}
-          <input
-            type="file"
-            name="service_image"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Parent Service:</label>
-          <select
-            name="parent_id"
-            value={formData.parent_id}
-            onChange={handleChange}
-          >
-            <option value="">Select Parent Service</option>
-            {services.map(service => (
-              <option key={service.id} value={service.id}>{service.name}</option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">Update Service</button>
-      </form>
+    <div className="px-4">
+    <div className="container mx-auto shadow-lg px-5  my-6">
+  <h2 className="text-center font-semibold text-3xl">Edit guide</h2>
+  <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col">
+      <label className="mb-1">Name:</label>
+      <input
+        className="border focus:ring-2 outline-none focus:ring-blue-500 border-gray-300 rounded-md p-2"
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        autoFocus= "on"
+      />
     </div>
+    <div className="flex flex-col">
+      <label className="mb-1">Description:</label>
+      <textarea
+        className="border focus:ring-2 outline-none focus:ring-blue-500 border-gray-300 rounded-md p-2"
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="flex flex-col">
+      <label className="mb-1">guide Image:</label>
+      {formData.image_url && (
+        <img
+          className="my-2 rounded-md"
+          src={`${URL}${formData.image_url}`}
+          alt="guide Image"
+          style={{ width: '100px', height: '100px' }}
+        />
+      )}
+      <input
+        type="file"
+        name="guide_image"
+        onChange={handleChange}
+        className="border focus:ring-2 outline-none focus:ring-blue-500 border-gray-300 rounded-md p-2"
+      />
+    </div>
+    <div className="flex flex-col">
+      <label className="mb-1">Parent guide:</label>
+      <select
+        className="border focus:ring-2 outline-none focus:ring-blue-500 border-gray-300 w-fit rounded-md p-2"
+        name="parent_id"
+        value={formData.parent_id}
+        onChange={handleChange}
+      >
+        <option value="">Select Parent guide</option>
+        {guides.map(guide => (
+          <option key={guide.id} value={guide.id}>{guide.name}</option>
+        ))}
+      </select>
+    </div>
+    <button
+      className="bg-blue-500 focus:ring-2 outline-none focus:ring-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 self-center"
+      type="submit"
+    >
+      Update guide
+    </button>
+  </form>
+</div>
+</div>
+
   );
 }
 

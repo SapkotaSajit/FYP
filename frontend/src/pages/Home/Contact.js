@@ -17,6 +17,7 @@ function Contact() {
     description: ""
   });
  
+    const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState(false);
   
     const handleOpen = () => {
@@ -37,6 +38,30 @@ function Contact() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = "Message is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+    
+      setErrors(newErrors);
+      return;
+    }
+
     try {
       const response = await axios.post(`${BASE_URL}createContact`, formData);
   
@@ -120,7 +145,7 @@ function Contact() {
       </section>
 
       <section className="mt-8">
-        <Fade direction="down" triggerOnce>
+        <Fade direction="right" cascade>
           <form onSubmit={handleSubmit}>
             <div class="container mx-auto px-4 lg:w-4/5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
@@ -140,8 +165,9 @@ function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your full name"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                      class={`w-full px-3 py-2 border border-gray-300 ${errors.name?"border border-red-500":""} rounded-md focus:outline-none focus:ring focus:ring-blue-500`}
                     />
+                    {errors.name && <p className="text-red-500">{errors.name}</p>}
                   </div>
                 </div>
                 <div class="">
@@ -159,8 +185,9 @@ function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Your email"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${errors.email?"border border-red-500":""} focus:outline-none focus:ring focus:ring-blue-500`}
                     />
+                    {errors.email && <p className="text-red-500">{errors.email}</p>}
                   </div>
                 </div>
                 <div class="">
@@ -178,8 +205,9 @@ function Contact() {
                       onChange={handleChange}
                       type="text"
                       placeholder="Your phone number"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${errors.phone?"border border-red-500":""} focus:outline-none focus:ring focus:ring-blue-500`}
                     />
+                    {errors.phone && <p className="text-red-500">{errors.phone}</p>}
                   </div>
                 </div>
               </div>
@@ -195,11 +223,12 @@ function Contact() {
                   <textarea
                     id="message"
                     name="description"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32"
+                    class={`w-full px-3 py-2 border border-gray-300 ${errors.description?"border border-red-500":""} rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32`}
                     placeholder="Enter your message"
                     value={formData.description}
                     onChange={handleChange}
                   ></textarea>
+                  {errors.description && <p className="text-red-500">{errors.description}</p>}
                 </div>
               </div>
 

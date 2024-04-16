@@ -47,27 +47,27 @@ const ServiceDetails = () => {
       <main className="heading  shadow-2xl">
         <div className="main grid  px-4 place-items-center  h-[80dvh]">
           <div className="content lg:w-4/5 lg:mx-auto px-4   ">
-            <Fade direction="left"  triggerOnce>
+            <Fade direction="left"  cascade>
             <h1 className="text-xl  md:text-3xl lg:text-4xl font-bold tracking-wider border-t-8 w-fit border-blue-500 py-6 ">
               Request Service <span className="text-blue-500">Today!</span>
             </h1>
             </Fade>
-            <Fade direction="right" triggerOnce>
+            <Fade direction="right" cascade>
             <p className="mb-6 text-gray-700 tracking-wide">
               Our Expert are ready to take care of your home comfort needs!
             </p>
             </Fade>
-            <Fade direction="down" triggerOnce>
+            <Fade direction="down" cascade>
             <h1 className="text-xl md:text-3xl lg:text-4xl font-bold tracking-wider  border-blue-500 py-6 ">
               Ask the Expert 
             </h1>
             </Fade>
-            <Fade direction="up" triggerOnce>
+            <Fade direction="up" cascade>
             <h1 className="text-xl  md:text-3xl lg:text-4xl font-bold tracking-wider  border-blue-500 py-6 ">
                <span className="text-blue-500">Savings</span> For you
             </h1>
             </Fade>
-            <Fade direction="right" triggerOnce>
+            <Fade direction="right" cascade>
               <a href="#service-type"><button className="text-white bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded-sm ">See All Services</button></a>
              </Fade>
           </div>

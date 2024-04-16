@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
+import Cookies from "js-cookie";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -55,13 +56,14 @@ function ChangePassword() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("accessToken")}`, // Add this line
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         const successData = await response.json();
-        navigate("/profile");
+        navigate("/");
         toast.success(successData.msg);
       } else {
         const errorData = await response.json();
@@ -69,6 +71,7 @@ function ChangePassword() {
       }
     } catch (error) {
       console.error("Error during password change:", error.message);
+      toast.error("Failed to change password");
     }
   };
 

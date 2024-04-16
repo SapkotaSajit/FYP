@@ -38,7 +38,7 @@ const GuideSteps = () => {
 <div className='flex justify-center items-center'>
   <div className="lg:w-4/5">
     {GuideSteps.map((guideStep, index) => (
-      <Fade direction='right' triggerOnce key={guideStep.id} duration={800}>
+      <Fade direction='right' cascade key={guideStep.id} duration={800}>
         <div className="bg-white shadow-lg rounded-md overflow-hidden mt-8 hvr-float-shadow">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-6">
