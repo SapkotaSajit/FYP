@@ -26,3 +26,17 @@ export const getGuideStepsByGuideTypeId = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch guide types', error: error.message });
     }
 };
+
+
+export const allSteps = async (req, res) => {
+    try {
+      const contacts = await GuideSteps.findAll({
+        attributes: ['id', 'name', 'guideTypes_id' , 'guideSteps_image', 'description'],
+      });
+      res.json(contacts);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      res.status(500).json({ message: 'Failed to fetch contacts' });
+    }
+  };
+  

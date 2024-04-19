@@ -144,7 +144,7 @@ function AdminDashboard() {
               </Link>
             </li>
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="ContactList">
+              <Link to="allContacts">
                 <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Contact
               </Link>
             </li>

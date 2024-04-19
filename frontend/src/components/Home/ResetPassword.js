@@ -1,23 +1,43 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const BASE_URL = "http://localhost:5000/api/";
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add password validation logic here
-    if (password !== confirmPassword) {
-      setError("Passwords do not match. Please try again.");
-      return;
-    }
-    // Add password reset logic here
-    setSuccess("Password reset successfully.");
+  const [formData, setFormData] = useState({
+    email:"",
+    password:"",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.patch(`${BASE_URL}reset-password`, formData);
+  
+      if (response.status === 200) {
+        navigate("/");
+        toast.success("Password reset successfully");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      toast.error("Failed to reset password");
+    }
+  };
+  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -29,15 +49,16 @@ function ResetPassword() {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
             >
-              New Password
+              Email
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your new password"
+              id="code"
+              type="text" 
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter the 4-digit code"
               required
             />
           </div>
@@ -46,15 +67,16 @@ function ResetPassword() {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="confirmPassword"
             >
-              Confirm Password
+            password
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Re-enter your new password"
+              id="code"
+              type="text" 
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter the 4-digit code"
               required
             />
           </div>

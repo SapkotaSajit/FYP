@@ -172,20 +172,21 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
-  const { email, code, newPassword } = req.body;
 
+export const resetPassword = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const result = await verifyResetCode(email, code, newPassword);
-    if (result.success) {
-      res.json({ msg: "Password reset successfully" });
-    } else {
-      res.status(400).json({ msg: result.error });
+    const user = await Users.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+    res.json({ message: 'Password updated successfully', user });
   } catch (error) {
-    console.error("Reset password error:", error);
-    res.status(500).json({ msg: "Failed to reset password" });
-  }
+    res.status(500).json({ message: 'helo' });
+  }  
 };
 
 

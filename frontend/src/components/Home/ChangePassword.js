@@ -68,7 +68,7 @@ function ChangePassword() {
         const successData = await response.json();
         const roleId = Cookies.get("roleId");
         if (roleId === "1") {
-          navigate("/admin");
+          navigate("/admin/dashboard");
         } else {
           navigate("/");
         }

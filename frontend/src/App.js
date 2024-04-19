@@ -42,7 +42,7 @@ import ForgotPassword from "./components/Home/ForgotPassword";
 import ChangePassword from "./components/Home/ChangePassword";
 import ResetPassword from "./components/Home/ResetPassword";
 import EnterCode from "./components/Home/EnterCode";
-import ContactList from "./pages/Admin/Contact/ContactList";
+import ContactList from "./pages/Admin/AdminContact/ContactList";
 import AllGuide from "./pages/Admin/Guide/Index";
 import EditGuide from "./pages/Admin/Guide/edit";
 import AllGuideTypes from "./pages/Admin/GuideTypes/Index";
@@ -178,7 +178,7 @@ function App() {
             }
           />
           <Route
-            path="ContactList"
+            path="allContacts"
             element={
               <PrivateAdminRoute
                 element={<ContactList />}

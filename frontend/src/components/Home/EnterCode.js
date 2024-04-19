@@ -2,32 +2,41 @@
 
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 function EnterCode() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const BASE_URL = "http://localhost:5000/api/";
 
+  const [formData, setFormData] = useState({
+    code: "",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/verify-reset-code", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      });
-      const data = await response.json();
-      if (response.ok && data.success) {
+      const response = await axios.post(`${BASE_URL}verify-reset-code`, formData);
+  
+      if (response.status === 201) {
         navigate("/reset-password");
+        toast.success("Message submitted successfully");
       } else {
-        setError(data.error || "Invalid code. Please try again.");
+        toast.error(response.data.message);
       }
     } catch (error) {
-      console.error("Error verifying code:", error);
-      setError("Failed to verify code");
+      console.log(error)
+      console.error("Error:", error.message);
+      toast.error("Failed to submit message");
     }
   };
 
@@ -46,9 +55,10 @@ function EnterCode() {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="code"
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+              type="text" 
+              name="code"
+              value={formData.code}
+              onChange={handleChange}
               placeholder="Enter the 4-digit code"
               required
             />

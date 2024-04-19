@@ -8,6 +8,7 @@ import {
 
 } from "../controllers/Admin/UserController.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
+import { verifyResetCode } from "../controllers/Admin/forgotPassword.js";
 import { refreshToken } from "../controllers/Admin/RefreshToken.js";
 import { createService, deleteServiceById, getAllServices, getServiceById, updateServiceById } from "../controllers/Admin/ServicesController.js";
 import { createRole, deleteRoleById, getRoleById, getRoles, updateRoleById } from "../controllers/Admin/RoleController.js";
@@ -19,7 +20,7 @@ import { bookService, deleteBookingById, getAllBookings, getAllProcessingBooking
 import { createguide, deleteguideById, getAllguides, getguideById, updateguideById } from "../controllers/Admin/GuideController.js";
 import { uploadGuide } from "../helper/guidImages.js";
 import { createGuideTypes, getAllguideTypes, getGuideTypesByGuideId } from "../controllers/Admin/GuideTypeController.js";
-import { createGuideSteps, getGuideStepsByGuideTypeId } from "../controllers/Admin/GuideStepsController.js";
+import { allSteps, createGuideSteps, getGuideStepsByGuideTypeId } from "../controllers/Admin/GuideStepsController.js";
 import { uploadGuideTypes } from "../helper/guideTypesImage.js";
 import { uploadGuideSteps } from "../helper/guideStepsImage.js";
 import { createBookingAssign, deleteBookingAssignById, getAllUserBookingAcceptAssignments, getAllUserBookingAssignments, getAllUserBookingCompleteAssignments, getAllUserBookingRejectAssignments, getBookingAssignById, updateBookingAssignById, updateBookingAssignStatus } from "../controllers/Admin/BookingAssignController.js";
@@ -27,14 +28,14 @@ import { getAllAcceptBooking, getAllCompletedBooking, getAllPendingBooking, getA
 import { forgotPassword,  resetPassword } from "../controllers/Admin/UserController.js";
 import { createContact, AllContacts,  } from "../controllers/Admin/ContactController.js";
 import { changePassword } from "../controllers/Admin/changePassword.js";
-import { verifyResetCode } from "../controllers/Admin/forgotPassword.js";
+import countController from "../controllers/Admin/countController.js";
 
 
 const router = express.Router();
 router.post("/register", Register);
 router.post("/login", Login);
 router.post('/forgot-password', forgotPassword);
-router.post('/reset-password', resetPassword);
+router.patch('/reset-password', resetPassword);
 router.post('/verify-reset-code', verifyResetCode);
 
 
@@ -46,6 +47,7 @@ router.delete("/logout", Logout);
 
 router.post('/createRole',verifyToken,checkAdminRole, createRole);
 router.get("/users", verifyToken, checkAdminRole, getUsers);
+router.get('/contacts',verifyToken, checkAdminRole, AllContacts);
 router.get("/usersRole", verifyToken, checkAdminRole, getUsersRole);
 router.delete("/deleteUser/:id", verifyToken, checkAdminRole, deleteUsersById);
 router.post('/roles', verifyToken, checkAdminRole, createRole);
@@ -88,7 +90,7 @@ router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes);
 router.get('/guideType/:guide_id',getGuideTypesByGuideId);
 router.post("/createGuideTypes",uploadGuideTypes,createGuideTypes,verifyToken, checkAdminRole,);
 
-router.get('/guideSteps',getGuideStepsByGuideTypeId );
+router.get('/guideSteps', verifyToken,checkAdminRole, allSteps );
 router.get('/guideStep/:guideTypes_id',getGuideStepsByGuideTypeId);
 router.post("/createGuideSteps",uploadGuideSteps,createGuideSteps,verifyToken, checkAdminRole,);
 router.patch('/bookingAssign/:id/status',verifyToken, checkStaffRole, updateBookingAssignStatus);
@@ -104,11 +106,11 @@ router.delete('/:id', deleteBookingAssignById,checkAdminRole);
 
 
 router.post('/createContact', createContact);
-router.get('/contacts',verifyToken, checkAdminRole, AllContacts);
 
 
 
-
+router.get('/totalUser', countController.getTotalUsers);
+router.get('/totalStaff', countController.getTotalStaff);
 
 export default router;
 

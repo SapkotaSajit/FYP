@@ -81,19 +81,17 @@ export const sendForgotPasswordEmail = async (email) => {
 
 
 export const verifyResetCode = async (req, res) => {
-  const { email, code } = req.body;
+  const { code } = req.body;
   try {
-    // Find the user by email and reset code
-    const user = await Users.findOne({ where: { email, reset_code: code } });
-    if (!user) {
+    const user = await Users.findOne({ where: { reset_code: code } });
+    if (user) {
+      if(user.reset_code == code){
+      return res.status(201).json({ success: true });
+      }
+    }else{
       return res.status(400).json({ success: false, error: "Invalid reset code" });
     }
 
-    // Reset code matches, clear the reset code
-    user.reset_code = null;
-    await user.save();
-
-    return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error verifying reset code:", error);
     return res.status(500).json({ success: false, error: "Failed to verify reset code" });

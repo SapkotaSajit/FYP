@@ -55,7 +55,7 @@ function Login() {
         Cookies.set("roleId", roleId, { expires: 30 / 1440 });
         Cookies.set("userId", userId, { expires: 30 / 1440 });
         if (roleId === 1) {
-          navigate("/admin");
+          navigate("/admin/dashboard");
         } else {
           navigate("/");
         }
