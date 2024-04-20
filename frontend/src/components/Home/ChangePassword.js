@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -16,6 +17,12 @@ function ChangePassword() {
   const [errors, setErrors] = useState({});
 
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+      if (!isLoggedIn()) {
+      navigate("/login"); 
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,6 +49,10 @@ function ChangePassword() {
         "New password must contain at least one uppercase letter, one number, and one special character";
     }
 
+    if (formData.newPassword === formData.currentPassword) {
+      newErrors.newPassword = "New password must be different from the current password";
+    }
+
     if (formData.newPassword !== formData.confirmNewPassword) {
       newErrors.confirmNewPassword = "Passwords do not match";
     }
@@ -58,7 +69,7 @@ function ChangePassword() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${Cookies.get("accessToken")}`, // Add this line
+            Authorization: `Bearer ${Cookies.get("accessToken")}`, 
           },
           body: JSON.stringify(formData),
         }
@@ -199,6 +210,11 @@ function ChangePassword() {
       <Footer />
     </div>
   );
+  
 }
-
+function isLoggedIn() {
+  // Implement your logic to check if user is logged in
+  const accessToken = Cookies.get("accessToken");
+  return !!accessToken;
+}
 export default ChangePassword;

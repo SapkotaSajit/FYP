@@ -66,7 +66,7 @@ function Nav() {
               </a>
             </div>
 
-            <div className="grid  grid-cols-2 text-sm  w-40 pr-4 md:pr-0 md-pl-4 md:w-fit  ">
+            {/* <div className="grid  grid-cols-2 text-sm  w-40 pr-4 md:pr-0 md-pl-4 md:w-fit  ">
               {isLoggedIn() ? (
                 <div className="relative">
                   <button
@@ -136,7 +136,74 @@ function Nav() {
 
                 </Link>
               ) : null}
-            </div>
+            </div> */}
+
+
+<div className="grid grid-cols-2 text-sm w-40 pr-4 md:pr-0 md-pl-4 md:w-fit">
+  {isLoggedIn() ? (
+    <div className="relative">
+      <button onClick={toggleDropdown} className="focus:outline-none">
+        <img
+          src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?t=st=1711861254~exp=1711864854~hmac=ebe6d6f8247b131892eced4153914b2cc9c740ddad891206e7bcfe4788be65c7&w=740"
+          alt="Profile"
+          className="w-16 rounded-full"
+        />
+      </button>
+      {isProfileOpen && (
+        <div
+          className="absolute bg-gray-300 z-999 rounded-sm shadow-lg"
+          style={{
+            top: "50%",
+            right: "calc(100% + 10px)",
+            transform: "translateY(-50%)",
+            minWidth: "150px",
+          }}
+          onClick={closeDropdown}
+        >
+          <a
+            href="#"
+            className="block px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+            onClick={handleLogout}
+          >
+            Log Out
+          </a>
+          {isStaff() && (
+            <Link
+              to={"/staffs"}
+              className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+            >
+              Dashboard
+            </Link>
+          )}
+          <Link
+            className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+            to="/change-password"
+          >
+            &nbsp;Change Password
+          </Link>
+        </div>
+      )}
+    </div>
+  ) : (
+    <>
+      <a href="/login">
+        <button className="text-white w-16 md:w-fit mr-6 md:mr-auto text-[9px] md:text-[14px] font-semibold md:px-4 py-2 rounded-md hover:bg-blue-600 border hover:border-blue-500 border-slate-900 bg-blue-500">
+          Login
+        </button>
+      </a>
+
+      <a href="/register">
+        <button className="text-white w-16 md:w-fit mr-16 md:mr-6 xl:mr-auto text-[9px] md:text-[14px] font-semibold md:px-4 py-2 rounded-md hover:bg-blue-600 border hover:border-blue-500 border-slate-900 bg-blue-500">
+          Sign Up
+        </button>
+      </a>
+    </>
+  )}
+  {isStaff() ? (
+    <Link to={"/staffs"}></Link>
+  ) : null}
+</div>
+
           </div>
         </div>
       </div>
