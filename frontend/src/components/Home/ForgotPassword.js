@@ -1,6 +1,7 @@
-
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -8,12 +9,19 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
+    setError(""); 
+    setSuccess(""); 
+
+    if (!email.trim()) {
+      setError("Email is required");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/forgot-password", {
@@ -26,10 +34,13 @@ function ForgotPassword() {
       const data = await response.json();
       if (response.ok) {
         setSuccess(data.msg);
-        // Set redirect to true to trigger navigation
+        toast.success("Reset code is sent to your email");
         setRedirect(true);
+       
+        localStorage.setItem("emailVerified", true);
       } else {
         setError(data.msg);
+        toast.error("Email address doesn't exist");
       }
     } catch (error) {
       console.error("Forgot password error:", error);
@@ -39,36 +50,32 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-xs">
-        <h2 className="text-2xl font-bold mb-4">Forgot Password</h2>
+    <div className="flex flex-col items-center px-4 justify-center h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+        <h2 className="text-3xl font-bold mb-6 text-center">Forgot Password</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-6">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="email"
             >
               Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 focus:ring-2 focus:ring-blue-500 outline-none"
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              autoFocus="on"
               required
             />
+            {error && <p className="text-red-500 text-sm">{error}</p>} {/* Display error message */}
           </div>
-          {error && (
-            <div className="text-red-500 text-sm mb-4">{error}</div>
-          )}
-          {success && (
-            <div className="text-green-500 text-sm mb-4">{success}</div>
-          )}
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between items-center">
             <button
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
                 loading && "opacity-50 cursor-not-allowed"
               }`}
               type="submit"
@@ -78,7 +85,7 @@ function ForgotPassword() {
             </button>
             <Link
               to="/login"
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              className="text-blue-500 font-semibold hover:text-blue-800"
             >
               Back to Login
             </Link>

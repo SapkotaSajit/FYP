@@ -29,7 +29,7 @@ import { forgotPassword,  resetPassword } from "../controllers/Admin/UserControl
 import { createContact, AllContacts,  } from "../controllers/Admin/ContactController.js";
 import { changePassword } from "../controllers/Admin/changePassword.js";
 import countController from "../controllers/Admin/countController.js";
-
+import { deleteGuideTypeById } from "../controllers/Admin/GuideTypeController.js";
 
 const router = express.Router();
 router.post("/register", Register);
@@ -89,6 +89,11 @@ router.put('/editguideTypes/:id',upload,updateguideById,verifyToken, checkAdminR
 router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes);
 router.get('/guideType/:guide_id',getGuideTypesByGuideId);
 router.post("/createGuideTypes",uploadGuideTypes,createGuideTypes,verifyToken, checkAdminRole,);
+router.delete('/deleteGuideType/:id', verifyToken, checkAdminRole, deleteGuideTypeById);
+
+
+
+
 
 router.get('/guideSteps', verifyToken,checkAdminRole, allSteps );
 router.get('/guideStep/:guideTypes_id',getGuideStepsByGuideTypeId);
@@ -113,8 +118,6 @@ router.get('/totalUser', countController.getTotalUsers);
 router.get('/totalStaff', countController.getTotalStaff);
 
 export default router;
-
-
 
 
 

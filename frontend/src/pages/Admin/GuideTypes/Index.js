@@ -26,24 +26,17 @@ const AllGuideTypes = () => {
     fetchguides();
   }, []);
 
-  
   const handleDeleteguide = async (guideId) => {
-    // try {
-    //   await fetchWithAuth('delete', `guidesTypes/${guideId}`);
-    //   setguides(guides.filter(guide => guide.id !== guideId));
-    // } catch (error) {
-    //   setError(error.message);
-    // }
     try {
-      await fetchWithAuth('delete', `guide_types/${guideId}`);
+      await fetchWithAuth('delete', `deleteGuideType/${guideId}`);
       setguides(guides.filter(guide => guide.id !== guideId));
-      toast.success('guide deleted successfully');
+      toast.success('Guide Type Deleted Successfully');
     } catch (error) {
       setError(error.message);
-      toast.error('Failed to delete guide');
+      toast.error('Failed to delete Guide Type');
     }
   };
-
+  
 
   return (
     <div className="container mx-auto px-5 overflow-y-auto h-[100dvh] my-6">

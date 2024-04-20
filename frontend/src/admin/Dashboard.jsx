@@ -47,7 +47,7 @@ function AdminDashboard() {
       >
         <h2
           className="text-lg font-semibold  my-4
-      text-white  px-5 py-2 rounded-sm"        >
+      text-white  px-5 py-2 rounded-sm">
           <i className="fa-solid fa-igloo mr-4"></i> S.D Enterprises
         </h2>
         <div className="border-gray-400   h-[100vh] overflow-y-auto ">
@@ -59,95 +59,120 @@ function AdminDashboard() {
             </Link>
           <p className="mt-4 text-gray-500 text-[14px] font-semibold">LAYOUTS & PAGES</p>
           <ul className="w-full">
+          <Link to="roles">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="roles">
+             
                 <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> Roles
-              </Link>
+              
             </li>
+            </Link>
+            <Link to="users">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="users">
+              
                 <i className="fa-regular fa-user mr-1 text-sm"></i> Users
-              </Link>
+              
             </li>
+            </Link>
+            <Link to="staffs">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="staffs">
+             
                 <i className="fa-regular fa-user mr-1 text-sm"></i> Staffs
-              </Link>
+              
             </li>
+            </Link>
+            <Link to="services">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="services">
+              
                 <i className="fa-solid fa-bell-concierge mr-1 text-sm"></i> Services
-              </Link>
+          
             </li>
+            </Link>
+            <Link to="bookings" className="flex justify-between"  >
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="bookings" className="flex justify-between" >
+               
                 <p>
                 <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> Bookings
                 </p>
                 <div onClick={toggleBookings} className=""> <p> <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19 9l-7 6l-7-6"/></svg> </p> </div>
-              </Link>
+             
               <ul className="hidden" id="bookingList">
                 {/* <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
                   <Link to="processBookings">
                     <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> Process Booking
                   </Link>
                 </li> */}
+                <Link to="allPen">
                 <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  <Link to="allPen">
+                  
                     <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All BookingPendings
-                  </Link>
+                  
                 </li>
-                
+                </Link>
+                <Link to="allAccept">
                 <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  <Link to="allAccept">
+                  
                     <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Accepted Booking
-                  </Link>
+                  
                 </li>
+                </Link>
+                <Link to="allReject">
                 <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  <Link to="allReject">
+                  
                     <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Rejected Booking
-                  </Link>
+                  
                 </li>
+                </Link>
+                <Link to="allCompleted">
                 <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  <Link to="allCompleted">
+                  
                     <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Completed Booking
-                  </Link>
+                  
                 </li>
+                </Link>
               </ul>
             </li>
-         
+            </Link>
+                
+            <Link to="AllGuide">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="AllGuide">
+              
                 <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Guide
-              </Link>
+              
             </li>
+            </Link>
             {/* <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
               <Link to="createGuideTypes">
                 <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> createGuideTypes
               </Link>
             </li> */}
+            <Link to="AllGuideTypes">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="AllGuideTypes">
+              
                 <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Guide Types
-              </Link>
+              
             </li>
-{/*             
+            </Link>
+{/*            
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
               <Link to="createGuideSteps">
                 <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> createGuideSteps
               </Link>
             </li>
              */}
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
               <Link to="AllGuideSteps">
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Guide Step
-              </Link>
-            </li>
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="allContacts">
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Contact
-              </Link>
+             
+                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Guide Step
+             
             </li>
+            </Link>
+            <Link to="allContacts">
+            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
+              
+                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Contact
+              
+            </li>
+            </Link>
           </ul>
         </div>
         </div>

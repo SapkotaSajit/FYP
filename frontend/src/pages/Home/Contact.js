@@ -162,8 +162,8 @@ function Contact() {
                       id="fullname"
                       name="name"
                       type="text"
-                      value={formData.name}
-                      onChange={handleChange}
+                        value={formData.name}
+                        onChange={handleChange}
                       placeholder="Your full name"
                       class={`w-full px-3 py-2 border border-gray-300 ${errors.name?"border border-red-500":""} rounded-md focus:outline-none focus:ring focus:ring-blue-500`}
                     />

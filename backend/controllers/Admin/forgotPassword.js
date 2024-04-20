@@ -39,6 +39,7 @@ export const sendForgotPasswordEmail = async (email) => {
       to: email,
       subject: "Password Reset Code",
       text: `Your password reset code is: ${resetCode}`,
+      // text: `http://localhost:3000/reset-password`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -49,37 +50,6 @@ export const sendForgotPasswordEmail = async (email) => {
     return { success: false, error: "Failed to send email" };
   }
 };
-
-
-// export const verifyResetCode = async (email, enteredCode) => {
-//   try {
-//     // Find the user by email
-//     const user = await Users.findOne({ where: { email } });
-//     if (!user) {
-//       return { success: false, error: "User not found" };
-//     }
-
-//     // Check if the reset code stored in the database matches the entered code
-//     if (user.reset_code !== parseInt(enteredCode, 10)) {
-//       return { success: false, error: "Incorrect reset code" };
-//     }
-
-//     // Clear the reset code for the user
-//     user.reset_code = null;
-//     await user.save();
-
-//     navigate("/reset-password");
-    
-//     // Proceed with password reset - you can redirect to the reset password page or return success response
-
-//     return { success: true };
-//   } catch (error) {
-//     console.error("Error verifying reset code:", error);
-//     return { success: false, error: "Failed to verify reset code" };
-//   }
-// };
-
-
 export const verifyResetCode = async (req, res) => {
   const { code } = req.body;
   try {
