@@ -12,7 +12,7 @@ function EditGuideTypes() {
   const [guides, setguides] = useState([]);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
-    image_url: null,
+    guideTypes_image: null,
     name: '',
     description: '',
     guide_id:'',
@@ -63,7 +63,7 @@ function EditGuideTypes() {
       formDataToSend.append("description", formData.description);
       formDataToSend.append("parent_id", formData.parent_id);
       if (formData.guideTypes_image) {
-        formDataToSend.append("guide_image", formData.guideTypes_image);
+        formDataToSend.append("guideTypes_image", formData.guideTypes_image);
       }
   
       const response = await fetchWithAuth("put", `editGuideTypes/${id}`, formDataToSend);

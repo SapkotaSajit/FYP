@@ -42,32 +42,9 @@ export const getContactById = async (req, res) => {
   }
 };
 
-export const updateContactById = async (req, res) => {
-  const { id } = req.params;
-  const { name, email, phone, description } = req.body;
-
-  try {
-    const contact = await Contact.findByPk(id);
-    if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
-    }
-    contact.name = name;
-    contact.email = email;
-    contact.phone = phone;
-    contact.description = description;
-    await contact.save();
-    res.json({ message: 'Contact updated successfully', contact });
-  } catch (error) {
-    console.error('Failed to update contact:', error);
-    res.status(500).json({ message: 'Failed to update contact' });
-  }
-};
 
 export const deleteContactById = async (req, res) => {
   const { id } = req.params;
-  if (!Number.isInteger(parseInt(id))) {
-    return res.status(400).json({ message: 'Invalid contact ID' });
-  }
 
   try {
     const contact = await Contact.findByPk(id);

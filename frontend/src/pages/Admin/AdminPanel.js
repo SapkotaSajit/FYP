@@ -78,27 +78,14 @@ function AdminPanel() {
             </div>
             <div className="py-5 px-4 flex items-center justify-center">
               <div className="text-2xl font-bold">
-                {loading ? 'Loading...' : error ? 'Error' : totalStaff}
+                {userCount}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Display error message if there's an error */}
-      {error && (
-        <div className="text-red-500 text-center mt-4">{error}</div>
-      )}
-
-      {/* Button to refresh data */}
-      <div className="flex justify-center mt-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleRefresh}
-        >
-          Refresh Data
-        </button>
-      </div>
+     
     </div>
   );
 }

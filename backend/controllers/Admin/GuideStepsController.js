@@ -16,7 +16,18 @@ export const createGuideSteps  = async (req, res) => {
       res.status(500).send('Error creating GuideSteps: ' + error.message);
   }
 }
-export const getGuideStepsByGuideTypeId = async (req, res) => {
+
+
+export const allSteps = async (req, res) => {
+    try {
+      const guideSteps = await GuideSteps.findAll();
+      res.json(guideSteps);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      res.status(500).json({ message: 'Failed to fetch contacts' });
+    }
+  };
+  export const getGuideStepsByGuideTypeId = async (req, res) => {
     const { guideTypes_id } = req.params;
     try {
         const guideSteps = await GuideSteps.findAll({ where: { guideTypes_id } });
@@ -28,15 +39,32 @@ export const getGuideStepsByGuideTypeId = async (req, res) => {
 };
 
 
-export const allSteps = async (req, res) => {
-    try {
-      const contacts = await GuideSteps.findAll({
-        attributes: ['id', 'name', 'guideTypes_id' , 'guideSteps_image', 'description'],
-      });
-      res.json(contacts);
-    } catch (error) {
-      console.error('Error fetching contacts:', error);
-      res.status(500).json({ message: 'Failed to fetch contacts' });
+
+
+  // export const deleteGuideStepById = async (req, res) => {
+  //   const { id } = req.params;
+  
+  //   try {
+  //     const guideStep = await GuideSteps.findByPk(id);
+  //     if (!guideStep) {
+  //       return res.status(404).json({ message: 'Guide step not found' });
+  //     }
+  
+  //     await guideStep.destroy();
+  //     console.log(`Guide step with ID ${id} deleted successfully`);
+  //     return res.json({ message: 'Guide step deleted successfully' });
+  //   } catch (error) {
+  //     console.error('Failed to delete guide step:', error);
+  //     return res.status(500).json({ message: 'Failed to delete guide step' });
+  //   }
+  // };
+  
+  export const deleteGuideStepById = async (req, res) =>{
+    try{
+      const {id} = req.params;
+      await GuideSteps.destroy({where:{id}});
+      res.status(200).json({message: 'Guide steps deleted successfully'})
+    } catch(error){
+      res.status(500).json({message:'Failed to delete Guide Steps'})
     }
   };
-  

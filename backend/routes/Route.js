@@ -26,10 +26,12 @@ import { uploadGuideSteps } from "../helper/guideStepsImage.js";
 import { createBookingAssign, deleteBookingAssignById, getAllUserBookingAcceptAssignments, getAllUserBookingAssignments, getAllUserBookingCompleteAssignments, getAllUserBookingRejectAssignments, getBookingAssignById, updateBookingAssignById, updateBookingAssignStatus } from "../controllers/Admin/BookingAssignController.js";
 import { getAllAcceptBooking, getAllCompletedBooking, getAllPendingBooking, getAllRejectBooking } from "../controllers/Admin/BookingAdminAssigned.js";
 import { forgotPassword,  resetPassword } from "../controllers/Admin/UserController.js";
-import { createContact, AllContacts,  } from "../controllers/Admin/ContactController.js";
+import { createContact, AllContacts, getContactById, deleteContactById,  } from "../controllers/Admin/ContactController.js";
 import { changePassword } from "../controllers/Admin/changePassword.js";
 import countController from "../controllers/Admin/countController.js";
 import { deleteGuideTypeById } from "../controllers/Admin/GuideTypeController.js";
+import { updateGuideTypesById } from "../controllers/Admin/GuideTypeController.js";
+import { deleteGuideStepById } from "../controllers/Admin/GuideStepsController.js";
 
 const router = express.Router();
 router.post("/register", Register);
@@ -84,12 +86,20 @@ router.put('/guides/:id', updateguideById);
 router.delete('/guides/:id', deleteguideById);
 
 router.get('/guidesTypes', getAllguideTypes);
-router.put('/editguideTypes/:id',upload,updateguideById,verifyToken, checkAdminRole);
+router.get('/guidesTypes/:id', getGuideTypesByGuideId);
+
 
 router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes);
 router.get('/guideType/:guide_id',getGuideTypesByGuideId);
 router.post("/createGuideTypes",uploadGuideTypes,createGuideTypes,verifyToken, checkAdminRole,);
 router.delete('/deleteGuideType/:id', verifyToken, checkAdminRole, deleteGuideTypeById);
+router.put('/editGuideType/:id',  updateGuideTypesById);
+router.put('/editGuideTypes/:id', verifyToken, checkAdminRole, updateGuideTypesById);
+
+
+
+
+
 
 
 
@@ -97,6 +107,10 @@ router.delete('/deleteGuideType/:id', verifyToken, checkAdminRole, deleteGuideTy
 
 router.get('/guideSteps', verifyToken,checkAdminRole, allSteps );
 router.get('/guideStep/:guideTypes_id',getGuideStepsByGuideTypeId);
+router.delete('/deleteGuideStep/:id', deleteGuideStepById, verifyToken, checkAdminRole);
+
+
+
 router.post("/createGuideSteps",uploadGuideSteps,createGuideSteps,verifyToken, checkAdminRole,);
 router.patch('/bookingAssign/:id/status',verifyToken, checkStaffRole, updateBookingAssignStatus);
 router.post('/assignBooking/:bookingId', createBookingAssign);
@@ -110,8 +124,12 @@ router.delete('/:id', deleteBookingAssignById,checkAdminRole);
 
 
 
+
 router.post('/createContact', createContact);
 
+router.post('/createContact', createContact);
+router.get('/AllContacts', AllContacts);
+router.get('/getContactById/:id', getContactById);
 
 
 router.get('/totalUser', countController.getTotalUsers);
