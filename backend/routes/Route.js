@@ -111,6 +111,9 @@ router.delete('/deleteGuideStep/:id', deleteGuideStepById, verifyToken, checkAdm
 router.put('/editguideSteps/guideTypes_id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
 router.put('/editguideSteps/guideTypes_id', updateGuideStepsById);
 router.put('/editguideSteps/:id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
+// Example route configuration in route.js
+router.get('/guideSteps/:id', verifyToken, getGuideStepsByGuideTypeId);
+
 
 
 
