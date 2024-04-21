@@ -48,6 +48,7 @@ import EditGuide from "./pages/Admin/Guide/edit";
 import AllGuideTypes from "./pages/Admin/GuideTypes/Index";
 import EditGuideTypes from "./pages/Admin/GuideTypes/edit";
 import AllGuideSteps from "./pages/Admin/GuideSteps/Index";
+import EditGuideSteps from "./pages/Admin/GuideSteps/edit";
 
 function isAuthenticated() {
   const accessToken = Cookies.get("accessToken");
@@ -235,6 +236,19 @@ function App() {
               />
             }
           />
+
+<Route
+            path="editGuideSteps/:id"
+            element={
+              <PrivateAdminRoute
+                element={<EditGuideSteps />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+
     <Route
             path="AllGuideSteps"
             element={

@@ -20,7 +20,7 @@ import { bookService, deleteBookingById, getAllBookings, getAllProcessingBooking
 import { createguide, deleteguideById, getAllguides, getguideById, updateguideById } from "../controllers/Admin/GuideController.js";
 import { uploadGuide } from "../helper/guidImages.js";
 import { createGuideTypes, getAllguideTypes, getGuideTypesByGuideId } from "../controllers/Admin/GuideTypeController.js";
-import { allSteps, createGuideSteps, getGuideStepsByGuideTypeId } from "../controllers/Admin/GuideStepsController.js";
+import { allSteps, createGuideSteps, getGuideStepsByGuideTypeId, updateGuideStepsById } from "../controllers/Admin/GuideStepsController.js";
 import { uploadGuideTypes } from "../helper/guideTypesImage.js";
 import { uploadGuideSteps } from "../helper/guideStepsImage.js";
 import { createBookingAssign, deleteBookingAssignById, getAllUserBookingAcceptAssignments, getAllUserBookingAssignments, getAllUserBookingCompleteAssignments, getAllUserBookingRejectAssignments, getBookingAssignById, updateBookingAssignById, updateBookingAssignStatus } from "../controllers/Admin/BookingAssignController.js";
@@ -108,6 +108,10 @@ router.put('/editguideTypes/:id', updateGuideTypesById);
 router.get('/guideSteps', verifyToken,checkAdminRole, allSteps );
 router.get('/guideStep/:guideTypes_id',getGuideStepsByGuideTypeId);
 router.delete('/deleteGuideStep/:id', deleteGuideStepById, verifyToken, checkAdminRole);
+router.put('/editguideSteps/guideTypes_id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
+router.put('/editguideSteps/guideTypes_id', updateGuideStepsById);
+router.put('/editguideSteps/:id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
+
 
 
 
