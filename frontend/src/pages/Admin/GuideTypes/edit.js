@@ -66,7 +66,7 @@ function EditGuideTypes() {
         formDataToSend.append("guideTypes_image", formData.guideTypes_image);
       }
   
-      const response = await fetchWithAuth("put", `editGuideTypes/${id}`, formDataToSend);
+      const response = await fetchWithAuth("put", `editguideTypes/${id}`, formDataToSend);
   
       if (response.status === 200) {
         navigate("/admin/AllGuideTypes");
@@ -77,7 +77,7 @@ function EditGuideTypes() {
       }
     } catch (error) {
         navigate("/admin/AllGuideTypes");
-        toast.error('Guide Update Failed');
+        toast.error('Guide Types Update Failed');
     }
   };
   

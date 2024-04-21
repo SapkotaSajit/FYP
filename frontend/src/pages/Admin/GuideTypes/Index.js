@@ -69,7 +69,7 @@ const AllGuideTypes = () => {
                   <img src={`${URL}${guide.guideTypes_image}`} alt="guide Image" className="w-20 h-20 object-cover" />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Link to={`/admin/editGuideTypes/${guide.id}`} className="text-white bg-blue-500 px-3 py-2 rounded-md hover:bg-blue-300">
+                  <Link to={`/admin/editguideTypes/${guide.id}`} className="text-white bg-blue-500 px-3 py-2 rounded-md hover:bg-blue-300">
                     <i className="fa-regular fa-pen-to-square"></i>
                   </Link>
                   <button

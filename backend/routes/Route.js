@@ -93,8 +93,8 @@ router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes);
 router.get('/guideType/:guide_id',getGuideTypesByGuideId);
 router.post("/createGuideTypes",uploadGuideTypes,createGuideTypes,verifyToken, checkAdminRole,);
 router.delete('/deleteGuideType/:id', verifyToken, checkAdminRole, deleteGuideTypeById);
-router.put('/editGuideType/:id',  updateGuideTypesById);
-router.put('/editGuideTypes/:id', verifyToken, checkAdminRole, updateGuideTypesById);
+router.put('/editguideTypes/:id', upload, verifyToken, updateGuideTypesById, checkAdminRole);
+router.put('/editguideTypes/:id', updateGuideTypesById);
 
 
 

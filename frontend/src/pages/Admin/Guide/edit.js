@@ -76,7 +76,7 @@ function EditGuide() {
       }
     } catch (error) {
         navigate("/admin/AllGuide");
-        toast.error('guide Update Failed');
+        toast.error('Guide Update Failed');
     }
   };
   

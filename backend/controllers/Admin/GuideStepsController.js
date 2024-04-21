@@ -37,27 +37,6 @@ export const allSteps = async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch guide types', error: error.message });
     }
 };
-
-
-
-
-  // export const deleteGuideStepById = async (req, res) => {
-  //   const { id } = req.params;
-  
-  //   try {
-  //     const guideStep = await GuideSteps.findByPk(id);
-  //     if (!guideStep) {
-  //       return res.status(404).json({ message: 'Guide step not found' });
-  //     }
-  
-  //     await guideStep.destroy();
-  //     console.log(`Guide step with ID ${id} deleted successfully`);
-  //     return res.json({ message: 'Guide step deleted successfully' });
-  //   } catch (error) {
-  //     console.error('Failed to delete guide step:', error);
-  //     return res.status(500).json({ message: 'Failed to delete guide step' });
-  //   }
-  // };
   
   export const deleteGuideStepById = async (req, res) =>{
     try{
