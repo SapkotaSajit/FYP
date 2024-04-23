@@ -225,7 +225,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="editGuideTypes/:id"
             element={
               <PrivateAdminRoute
@@ -237,7 +237,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="editGuideSteps/:id"
             element={
               <PrivateAdminRoute
@@ -249,18 +249,17 @@ function App() {
             }
           />
 
-    <Route
+          <Route
             path="AllGuideSteps"
             element={
               <PrivateAdminRoute
-                element={<AllGuideSteps/>}
+                element={<AllGuideSteps />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"
               />
             }
           />
-
 
           <Route
             path="staffs"

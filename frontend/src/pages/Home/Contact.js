@@ -4,36 +4,32 @@ import Footer from "../../components/Home/Footer";
 import { Fade } from "react-awesome-reveal";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from 'axios';
+import axios from "axios";
 
-
- 
 function Contact() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-    phone:"",
-    email:"",
-    description: ""
+    phone: "",
+    email: "",
+    description: "",
   });
- 
-    const [errors, setErrors] = useState({});
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const handleOpen = () => {
-      setIsOpen(!isOpen);
-    };
-  
 
+  const [errors, setErrors] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
-  
+
   const BASE_URL = "http://localhost:5000/api/";
 
   const handleSubmit = async (event) => {
@@ -57,14 +53,13 @@ function Contact() {
     }
 
     if (Object.keys(newErrors).length > 0) {
-    
       setErrors(newErrors);
       return;
     }
 
     try {
       const response = await axios.post(`${BASE_URL}createContact`, formData);
-  
+
       if (response.status === 201) {
         navigate("/");
         toast.success("Message submitted successfully");
@@ -72,7 +67,7 @@ function Contact() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       console.error("Error:", error.message);
       toast.error("Failed to submit message");
     }
@@ -157,17 +152,21 @@ function Contact() {
                     >
                       Full Name
                     </label>
-                    
+
                     <input
                       id="fullname"
                       name="name"
                       type="text"
-                        value={formData.name}
-                        onChange={handleChange}
+                      value={formData.name}
+                      onChange={handleChange}
                       placeholder="Your full name"
-                      class={`w-full px-3 py-2 border border-gray-300 ${errors.name?"border border-red-500":""} rounded-md focus:outline-none focus:ring focus:ring-blue-500`}
+                      class={`w-full px-3 py-2 border border-gray-300 ${
+                        errors.name ? "border border-red-500" : ""
+                      } rounded-md focus:outline-none focus:ring focus:ring-blue-500`}
                     />
-                    {errors.name && <p className="text-red-500">{errors.name}</p>}
+                    {errors.name && (
+                      <p className="text-red-500">{errors.name}</p>
+                    )}
                   </div>
                 </div>
                 <div class="">
@@ -185,9 +184,13 @@ function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Your email"
-                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${errors.email?"border border-red-500":""} focus:outline-none focus:ring focus:ring-blue-500`}
+                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${
+                        errors.email ? "border border-red-500" : ""
+                      } focus:outline-none focus:ring focus:ring-blue-500`}
                     />
-                    {errors.email && <p className="text-red-500">{errors.email}</p>}
+                    {errors.email && (
+                      <p className="text-red-500">{errors.email}</p>
+                    )}
                   </div>
                 </div>
                 <div class="">
@@ -205,9 +208,13 @@ function Contact() {
                       onChange={handleChange}
                       type="text"
                       placeholder="Your phone number"
-                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${errors.phone?"border border-red-500":""} focus:outline-none focus:ring focus:ring-blue-500`}
+                      class={`w-full px-3 py-2 border border-gray-300 rounded-md ${
+                        errors.phone ? "border border-red-500" : ""
+                      } focus:outline-none focus:ring focus:ring-blue-500`}
                     />
-                    {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+                    {errors.phone && (
+                      <p className="text-red-500">{errors.phone}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -223,12 +230,16 @@ function Contact() {
                   <textarea
                     id="message"
                     name="description"
-                    class={`w-full px-3 py-2 border border-gray-300 ${errors.description?"border border-red-500":""} rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32`}
+                    class={`w-full px-3 py-2 border border-gray-300 ${
+                      errors.description ? "border border-red-500" : ""
+                    } rounded-md focus:outline-none focus:ring focus:ring-blue-500 h-32`}
                     placeholder="Enter your message"
                     value={formData.description}
                     onChange={handleChange}
                   ></textarea>
-                  {errors.description && <p className="text-red-500">{errors.description}</p>}
+                  {errors.description && (
+                    <p className="text-red-500">{errors.description}</p>
+                  )}
                 </div>
               </div>
 
@@ -251,6 +262,3 @@ function Contact() {
 }
 
 export default Contact;
-
-
-

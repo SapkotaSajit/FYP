@@ -7,7 +7,7 @@ function Footer() {
         <div className="grid grid-cols-1  md:grid-cols-3 mx-auto gap-8  ">
           <div className="col-span-1">
             <h2 className="text-3xl font-bold">S.D Enterprises</h2>
-            <p className="text-gray-400 mt-4">Lorem ipsum dolor sit amet consectetur.</p>
+            <p className="text-gray-400 mt-4">You can follow us on.</p>
             <div className="mt-6 flex space-x-3">
               <a href="#" className="text-white hover:text-blue-500">
                 <i className="fab fa-facebook fa-lg"></i>
@@ -36,9 +36,9 @@ function Footer() {
 
               <div className="col-span-1">
                 <h3 className="text-xl font-semibold mb-4">Contact</h3>
-                <p className="text-gray-400">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                <p className="text-gray-400 mb-2">example@gmail.com</p>
-                <p className="text-gray-400 mb-2">+09894u39482</p>
+                <p className="text-gray-400">Get in touch with us.</p>
+                <p className="text-gray-400 mb-2">sapkotasajit05@gmail.com</p>
+                <p className="text-gray-400 mb-2">+09841435289</p>
               </div>
              
              

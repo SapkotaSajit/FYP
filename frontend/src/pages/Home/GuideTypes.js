@@ -17,6 +17,7 @@ const GuideTypes = () => {
   useEffect(() => {
     const fetchGuideTypes = async () => {
       try {
+        console.log('Guide ID:', guide_id);
         const response = await fetchApi('get', `guideType/${guide_id}`);
         setGuideTypes(response.data);
         setLoading(false);

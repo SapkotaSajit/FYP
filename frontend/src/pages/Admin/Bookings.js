@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useEffect } from 'react';
 import { fetchWithAuth } from '../../auth/api';
 import { Link } from "react-router-dom";
@@ -38,7 +36,7 @@ const AllBookings = () => {
       setError(error.message);
       toast.error('Failed to delete booking');
     }
-    setShowDeleteModal(false); // Close the modal after deletion
+    setShowDeleteModal(false); 
   };
 
   if (loading) return <div>Loading...</div>;
@@ -83,7 +81,7 @@ const AllBookings = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <Link to={`/admin/createAssignBooking/${booking.id}`}>
-                    <button className="text-blue-500">Assign Staff</button>
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 rounded-md px-4 py-2">Assign Staff</button>
                   </Link>
                 </td>
               </tr>

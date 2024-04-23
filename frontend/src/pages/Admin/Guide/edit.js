@@ -69,7 +69,7 @@ function EditGuide() {
   
       if (response.status === 200) {
         navigate("/admin/AllGuide");
-        toast.success('guide Updated Successfully');
+        toast.success('Guide Updated Successfully');
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Unknown error occurred.");

@@ -213,7 +213,6 @@ function ChangePassword() {
   
 }
 function isLoggedIn() {
-  // Implement your logic to check if user is logged in
   const accessToken = Cookies.get("accessToken");
   return !!accessToken;
 }

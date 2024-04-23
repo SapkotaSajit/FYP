@@ -95,7 +95,7 @@ const AllGuideTypes = () => {
           try {
             await fetchWithAuth('delete', `deleteGuideType/${deleteGuideId}`);
             setGuides(guides.filter(guide => guide.id !== deleteGuideId));
-            toast.success('Guide Deleted Successfully');
+            toast.success('Guide Type Deleted Successfully');
           } catch (error) {
             setError(error.message);
             toast.error('Failed to delete Guide');

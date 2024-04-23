@@ -19,8 +19,8 @@ import { getServicesByParentId, getServicesWithNullParentId } from "../controlle
 import { bookService, deleteBookingById, getAllBookings, getAllProcessingBookings } from "../controllers/API/BookServiceController.js";
 import { createguide, deleteguideById, getAllguides, getguideById, updateguideById } from "../controllers/Admin/GuideController.js";
 import { uploadGuide } from "../helper/guidImages.js";
-import { createGuideTypes, getAllguideTypes, getGuideTypesByGuideId } from "../controllers/Admin/GuideTypeController.js";
-import { allSteps, createGuideSteps, getGuideStepsByGuideTypeId, updateGuideStepsById } from "../controllers/Admin/GuideStepsController.js";
+import { createGuideTypes, getAllguideTypes, getGuideTypesByGuideId, getGuideTypesById } from "../controllers/Admin/GuideTypeController.js";
+import { allSteps, createGuideSteps, getGuideStepsByGuideTypeId, getGuideStepsById, updateGuideStepsById } from "../controllers/Admin/GuideStepsController.js";
 import { uploadGuideTypes } from "../helper/guideTypesImage.js";
 import { uploadGuideSteps } from "../helper/guideStepsImage.js";
 import { createBookingAssign, deleteBookingAssignById, getAllUserBookingAcceptAssignments, getAllUserBookingAssignments, getAllUserBookingCompleteAssignments, getAllUserBookingRejectAssignments, getBookingAssignById, updateBookingAssignById, updateBookingAssignStatus } from "../controllers/Admin/BookingAssignController.js";
@@ -34,6 +34,7 @@ import { updateGuideTypesById } from "../controllers/Admin/GuideTypeController.j
 import { deleteGuideStepById } from "../controllers/Admin/GuideStepsController.js";
 
 const router = express.Router();
+
 router.post("/register", Register);
 router.post("/login", Login);
 router.post('/forgot-password', forgotPassword);
@@ -71,6 +72,9 @@ router.get('/rejectBookings', verifyToken, checkAdminRole, getAllRejectBooking);
 router.get('/servicesWithNullParent',getServicesWithNullParentId);
 router.get('/parentServices/:parentId', getServicesByParentId);
 
+router.get('/guidesTypes/:id',getGuideTypesById);
+router.get('/guides/:id', getguideById);
+
 router.get('/bookings',verifyToken,checkAdminRole, getAllBookings);
 router.get('/assignedBookings',verifyToken,checkAdminRole, getAllProcessingBookings);
 router.post('/bookService/:serviceId',verifyToken, checkUserRole, bookService);
@@ -80,17 +84,17 @@ router.delete('/deleteBooking/:id', verifyToken, checkAdminRole, deleteBookingBy
 
 router.post('/createGuide',verifyToken,checkAdminRole, uploadGuide, createguide);
 router.get('/guides', getAllguides);
-router.get('/guides/:id', getguideById);
 router.put('/editguide/:id',upload,updateguideById,verifyToken, checkAdminRole);
 router.put('/guides/:id', updateguideById); 
 router.delete('/guides/:id', deleteguideById);
 
 router.get('/guidesTypes', getAllguideTypes);
-router.get('/guidesTypes/:id', getGuideTypesByGuideId);
+router.get('/guideType/:guide_id', getGuideTypesByGuideId, verifyToken);
 
 
-router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes);
-router.get('/guideType/:guide_id',getGuideTypesByGuideId);
+
+router.get('/guideTypes',verifyToken,checkAdminRole, getAllguideTypes, createGuideTypes);
+
 router.post("/createGuideTypes",uploadGuideTypes,createGuideTypes,verifyToken, checkAdminRole,);
 router.delete('/deleteGuideType/:id', verifyToken, checkAdminRole, deleteGuideTypeById);
 router.put('/editguideTypes/:id', upload, verifyToken, updateGuideTypesById, checkAdminRole);
@@ -111,8 +115,8 @@ router.delete('/deleteGuideStep/:id', deleteGuideStepById, verifyToken, checkAdm
 router.put('/editguideSteps/guideTypes_id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
 router.put('/editguideSteps/guideTypes_id', updateGuideStepsById);
 router.put('/editguideSteps/:id', upload, verifyToken, updateGuideStepsById, checkAdminRole);
-// Example route configuration in route.js
-router.get('/guideSteps/:id', verifyToken, getGuideStepsByGuideTypeId);
+
+router.get('/guideSteps/:id', verifyToken, getGuideStepsById);
 
 
 
@@ -131,8 +135,6 @@ router.delete('/:id', deleteBookingAssignById,checkAdminRole);
 
 
 
-
-router.post('/createContact', createContact);
 
 router.post('/createContact', createContact);
 router.get('/AllContacts', AllContacts);

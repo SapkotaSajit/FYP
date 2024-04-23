@@ -27,7 +27,7 @@ function ResetPassword() {
       const response = await axios.patch(`${BASE_URL}reset-password`, formData);
   
       if (response.status === 200) {
-        navigate("/");
+        navigate("/login");
         toast.success("Password reset successfully");
       } else {
         toast.error(response.data.message);

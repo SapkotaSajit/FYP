@@ -12,8 +12,8 @@ const generateRandomCode = () => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: 'fabricvr411@gmail.com',
-    pass: 'dzpailqdkiuhouty'
+    user: 'sapkotasajit5@gmail.com',
+    pass: 'exizvwsytjauboms'
   },
 });
 
@@ -35,7 +35,7 @@ export const sendForgotPasswordEmail = async (email) => {
 
     // Send email with the reset code
     const mailOptions = {
-      from: "fabricvr411@gmail.com",
+      from: "sapkotasajit5@gmail.com",
       to: email,
       subject: "Password Reset Code",
       text: `Your password reset code is: ${resetCode}`,

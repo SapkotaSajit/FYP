@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -14,7 +12,7 @@ export default function ServiceSlider() {
       pagination={{
         type: 'progressbar',
       }}
-      navigation={true}
+      navigation={false}
       className="mySwiper"
     >
       <SwiperSlide>
@@ -39,9 +37,6 @@ export default function ServiceSlider() {
     </div>
   </div>
 </SwiperSlide>
-
-
-      {/* Add more SwiperSlides here */}
     </Swiper>
   );
 }

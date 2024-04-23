@@ -96,11 +96,7 @@ function AdminDashboard() {
                 <div onClick={toggleBookings} className=""> <p> <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19 9l-7 6l-7-6"/></svg> </p> </div>
              
               <ul className="hidden" id="bookingList">
-                {/* <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  <Link to="processBookings">
-                    <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> Process Booking
-                  </Link>
-                </li> */}
+               
                 <Link to="allPen">
                 <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
                   
@@ -140,11 +136,7 @@ function AdminDashboard() {
               
             </li>
             </Link>
-            {/* <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="createGuideTypes">
-                <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> createGuideTypes
-              </Link>
-            </li> */}
+         
             <Link to="AllGuideTypes">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
               
@@ -152,13 +144,7 @@ function AdminDashboard() {
               
             </li>
             </Link>
-{/*            
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              <Link to="createGuideSteps">
-                <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> createGuideSteps
-              </Link>
-            </li>
-             */}
+
               <Link to="AllGuideSteps">
             <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
              
@@ -206,8 +192,7 @@ function AdminDashboard() {
                   }}
                   onClick={closeDropdown}
                 >
-                  {/* <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Dashboard</a>
-                  <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Edit Profile</a> */}
+                 
                   <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={handleLogout}>Log Out</a>
                 <Link
                         className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"

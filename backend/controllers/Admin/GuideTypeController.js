@@ -18,22 +18,32 @@ export const createGuideTypes = async (req, res) => {
   }
 }
 
-export const getAllguideTypes = async (req, res) => {
+export const getAllguideTypes  = async (req, res) => {
   try {
-    const guideTypes = await GuideTypes.findAll();
-    res.json(guideTypes);
+    const Guides = await GuideTypes.findAll();
+    const GuidesWithImage = await Promise.all(Guides.map(async Guide => {
+      return {
+        id: Guide.id,
+        name: Guide.name,
+        description: Guide.description,
+        guideTypes_image: Guide.guideTypes_image,
+      };
+    }));
+    res.json(GuidesWithImage);
   } catch (error) {
-    console.error('Error fetching guide types:', error);
-    res.status(500).json({ message: 'Failed to fetch guide types', error: error.message });
+    console.error('Error fetching Guides:', error);
+    res.status(500).json({ message: 'Failed to fetch Guides' });
   }
 };
 
-export const getGuideTypesByGuideId = async (req, res) => {
+
+
+export const getGuideTypesById = async (req, res) => {
   const { id } = req.params;
   try {
     const guideTypes = await GuideTypes.findByPk(id);
     if (!guideTypes) {
-      return res.status(404).json({ message: 'Guide not found' });
+      return res.status(404).json({ message: 'Guide not found hello guys' });
     }
     res.json(guideTypes);
   } catch (error) {
@@ -42,11 +52,28 @@ export const getGuideTypesByGuideId = async (req, res) => {
   }
 };
 
-
+ export const getGuideTypesByGuideId = async (req, res) => {
+    const { guide_id } = req.params;
+    try {
+        const guideTypes = await GuideTypes.findAll({ where: { guide_id } });
+        res.json(guideTypes);
+    } catch (error) {
+        console.error('Error fetching guide types by guide_id:', error);
+        res.status(500).json({ message: 'Failed to fetch guide types', error: error.message });
+    }
+};
 
 export const updateGuideTypesById = async (req, res) => {
   const { id } = req.params;
   try {
+    let info = {
+      name: req.body.name,
+      description: req.body.description,
+    };
+
+    if (req.file) {
+      info.guideTypes_image = req.file.path;
+    }
     const guideTypes = await GuideTypes.findByPk(id);
     if (!guideTypes) {
       return res.status(404).json({ message: 'GuideTypes not found' });

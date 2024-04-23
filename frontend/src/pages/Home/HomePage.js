@@ -94,7 +94,7 @@ function HomePage() {
             <Fade cascade direction="left" >
               <div className="mx-4">
                 <img
-                  src="https://scontent.fktm6-1.fna.fbcdn.net/v/t39.30808-6/250988891_4482606495160960_6706806048812467931_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=gU2Gi6IF4-MAb4R4B0D&_nc_ht=scontent.fktm6-1.fna&oh=00_AfCFFlqSmF3WXoiVJaN6rj43yPH5wRXb5h6hRWE4AMhmhQ&oe=6618088C"
+                  src="https://imgs.search.brave.com/ZCZVL6IUyO83QT2b_oGG3G2y3o1Bod0VxqtS5gy-kR8/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTI2/MzcwMTMwNi9waG90/by9zZXJpb3VzLWJ1/c2luZXNzbWFuLWxv/b2tpbmctdGhyb3Vn/aC10aGUtd2luZG93/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1La0JHSjZ0NExn/aUhDTVNNeE1uU3J6/aEhwT3hpNkFNYkps/eUhjUVMta1FzPQ"
                   className="rounded-[50%] aspect-auto  border"
                 ></img>
               </div>

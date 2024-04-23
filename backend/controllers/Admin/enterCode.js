@@ -1,4 +1,4 @@
-// enterCode.js
+
 
 import express from 'express';
 import { verifyResetCode } from '../controllers/forgotPassword.js';

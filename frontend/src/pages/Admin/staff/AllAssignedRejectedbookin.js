@@ -68,7 +68,7 @@ const AssignedRejectedBookingsComponent = () => {
 
   return (
     <div className='container mx-auto overflow-y-auto h-[100dvh] px-5 my-6'>
-      <h2 className="text-2xl  font-bold mb-4 my-6">Assigned Bookings</h2>
+      <h2 className="text-2xl  font-bold mb-4 my-6">Rejected Bookings</h2>
       <div className="overflow-x-auto">
         <table className="table-auto min-w-full divide-y divide-gray-200">
           <thead className='bg-gray-100'>
