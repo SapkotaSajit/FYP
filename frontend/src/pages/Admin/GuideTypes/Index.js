@@ -53,7 +53,7 @@ const AllGuideTypes = () => {
               <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">ID</th>
               <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Name</th>
               <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Description</th>
-              <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Parent Name</th>
+              {/* <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Parent Name</th> */}
               <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Image</th>
               <th className="py-3 px-6 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Action</th>
             </tr>
@@ -64,7 +64,7 @@ const AllGuideTypes = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-gray-700">{guide.id}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{guide.name.length > 10 ? guide.name.slice(0, 10) + "..." : guide.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{guide.description.length > 20 ? guide.description.slice(0, 20) + "..." : guide.description}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{guide.guide_id}</td>
+                {/* <td className="px-6 py-4 whitespace-nowrap">{guide.guide_id}</td> */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   <img src={`${URL}${guide.guideTypes_image}`} alt="Guide Image" className="w-20 h-20 object-cover" />
                 </td>

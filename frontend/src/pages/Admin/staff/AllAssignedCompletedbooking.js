@@ -94,9 +94,9 @@ const AssignedCompletedBookingsComponent= () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select value={formData.status} onChange={(e) => handleStatusChange(e, booking.id, booking.status)}>
                     <option value={booking.status}>{booking.status}</option>
-                    <option value="Pending">Pending</option>
+                    {/* <option value="Pending">Pending</option>
                     <option value="Accept">Accept</option>
-                    <option value="Reject">Reject</option>
+                    <option value="Reject">Reject</option> */}
                     <option value="Completed">Completed</option>
                   </select>
                 </td>

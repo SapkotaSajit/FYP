@@ -46,7 +46,7 @@ function HomePage() {
           
 
             <div className="main md:h-[80vh] place-items-center  grid grid-cols-1 md:grid-cols-2">
-              <Fade direction="up" cascade>
+              <Fade direction="right" cascade>
                 <div className="content px-4  space-y-5">
                   <p className="text-xl md:text-2xl  text-gray-700 font-semibold">
                     Quality
@@ -141,7 +141,7 @@ function HomePage() {
 
 
       <main className="history-section mt-20 mb-52 md:mt-0">
-        <div className="container   lg:w-4/5 mx-auto  my-6 ">
+        <div className="container   lg:w-4/5 mx-auto  my-8 ">
           <div className="about-company bg-white rounded-lg">
             <h2 className="text-center text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 my-8 md:my-0 ">
               Company history

@@ -9,13 +9,13 @@ function Footer() {
             <h2 className="text-3xl font-bold">S.D Enterprises</h2>
             <p className="text-gray-400 mt-4">You can follow us on.</p>
             <div className="mt-6 flex space-x-3">
-              <a href="#" className="text-white hover:text-blue-500">
+              <a href="https://www.facebook.com/ganesh.dkl" target='_blank' className="text-white hover:text-blue-500">
                 <i className="fab fa-facebook fa-lg"></i>
               </a>
-              <a href="#" className="text-white hover:text-blue-500">
+              <a href="https://x.com/" target='_blank' className="text-white hover:text-blue-500">
                 <i className="fab fa-twitter fa-lg"></i>
               </a>
-              <a href="#" className="text-white hover:text-blue-500">
+              <a href="https://www.instagram.com/" target='_blank' className="text-white hover:text-blue-500">
                 <i className="fab fa-instagram fa-lg"></i>
               </a>
             </div>
@@ -38,7 +38,7 @@ function Footer() {
                 <h3 className="text-xl font-semibold mb-4">Contact</h3>
                 <p className="text-gray-400">Get in touch with us.</p>
                 <p className="text-gray-400 mb-2">sapkotasajit05@gmail.com</p>
-                <p className="text-gray-400 mb-2">+09841435289</p>
+                <p className="text-gray-400 mb-2">9841435289</p>
               </div>
              
              

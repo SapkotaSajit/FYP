@@ -3,25 +3,35 @@ import React from "react";
 const SignificantProjects = () => {
   const projects = [
     {
-      title: "Project 1",
-      description: "Description of Project 1",
-      image: "img1 (1).jpg"
+      title: "Dwarika hotel, Dhulikhel",
+      description: "Swimming pool and water tanks waterproofing",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfjFjgChEiqPnsDAWIM9ufh-hf_rhS9QxKF7cpV_chHYAthH8&s"
     },
     {
-      title: "Project 2",
-      description: "Description of Project 2",
-      image: "img1 (2).jpg"
+      title: "Hayat Regency, Boudha",
+      description: "Old Slope roof dismantle and waterproofing",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCMON0IFH_NqTUbHLLDXMXgszAQ3K2npT9PXRIYKqsqKvIQyGp&s"
     },
     {
-      title: "Project 3",
-      description: "Description of Project 3",
-      image: "img1 (3).jpg"
+      title: "Hotel View, Bhaktapur",
+      description: "Swimming pool waterproofing",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6WwKEEL6exZ42c2wmM3NRv-QtZ9qjcHc-JKyp6VUvlCHegyta&s"
+    },
+    {
+      title: "Sarathi hotel, Dhulikhel",
+      description: "Membranous waterproofing treatment and hole seal",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQoS7rgFBMAxDsAMXMHJhEcbHAXzOjPB0m74bGhCqXRLMllWZ&s"
     }
-    
+    ,
+    {
+      title: "Le-Sherpa Hotel",
+      description: "Waterproofing works and Pressure injection Grouting",
+      image: " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ7peE9z-4Qp1XRhNzvHpNTz_I-4m0JlQHkiIz4l5pUJIf2wg&s"
+    }
   ];
-
+ 
   return (
-    <section className="significant-projects mt-36 h-fit   py-12">
+    <section className="significant-projects  h-fit ">
       <div className="container space-y-16  mx-auto">
         <h2 className="text-center mt-36 text-3xl lg:text-4xl xl:text-5xl text-blue-400 font-bold mb-8">
           Some Significant Projects

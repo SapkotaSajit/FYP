@@ -67,6 +67,7 @@ function Nav() {
                 <i className="fa-regular fa-envelope mr-1 text-blue-500"></i>{" "}
                 sapktosajit2@gmail.com
               </a> */}
+              
 
               <a href="/contact" className="text-sm font-light">
                 <i className="fa-brands fa-periscope mr-1 text-blue-500"></i>

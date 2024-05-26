@@ -60,12 +60,7 @@ function StaffDashboard() {
                   Client
                 </li>
               </Link>
-              <Link to="completedAssigned">
-                <li className="text-[16px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-                  <i class="fa-solid fa-dice-d20 mr-1 text-sm"></i> Completed
-                  Client
-                </li>
-              </Link>
+            
               <Link to="acceptAssigned">
                 <li className="text-[16px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
                   <i class="fa-solid fa-dice-d20 mr-1 text-sm"></i> Accepted
@@ -75,6 +70,12 @@ function StaffDashboard() {
               <Link to="rejectAssigned">
                 <li className="text-[16px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
                   <i class="fa-solid fa-dice-d20 mr-1 text-sm"></i> Rejected
+                  Client
+                </li>
+              </Link>
+              <Link to="completedAssigned">
+                <li className="text-[16px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
+                  <i class="fa-solid fa-dice-d20 mr-1 text-sm"></i> Completed
                   Client
                 </li>
               </Link>

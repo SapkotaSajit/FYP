@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { fetchWithAuth } from '../../../auth/api';
 import Cookies from 'js-cookie';
@@ -46,7 +47,6 @@ const AllAssignedbooking = () => {
         { status: newStatus }
       );
       if (response.status === 200) {
-  
         setAssignedBookings(prevBookings =>
           prevBookings.map(booking =>
             booking.id === id ? { ...booking, status: newStatus } : booking
@@ -54,8 +54,13 @@ const AllAssignedbooking = () => {
         );
         setSelectedMemberId(id);
         setFormData({ ...formData, status: newStatus });
-        navigate("staffs/acceptAssigned");
-        
+
+       
+        if (newStatus === "Accept") {
+          navigate("/staffs/acceptAssigned");
+        } else if (newStatus === "Reject") {
+          navigate("/staffs/rejectAssigned");
+        }
       } else {
         const errorData = await response.json();
         setError(errorData.message);
@@ -96,10 +101,8 @@ const AllAssignedbooking = () => {
                 <td className="px-6 py-4 whitespace-nowrap ">
                   <select value={formData.status} onChange={(e) => handleStatusChange(e, booking.id, booking.status)}>
                     <option value={booking.status}>{booking.status}</option>
-                    
                     <option value="Accept">Accept</option>
                     <option value="Reject">Reject</option>
-                    
                   </select>
                 </td>
               </tr>

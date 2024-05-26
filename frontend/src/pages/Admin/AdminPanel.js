@@ -15,12 +15,11 @@ function AdminPanel() {
   const fetchData = async () => {
     try {
       setLoading(true);
-     
-      const usersResponse = await axios.get('/totalUsers');
-     
+      const usersResponse = await fetchWithAuth('get', 'totalUsers');
+      console.log(usersResponse.data)
       const staffResponse = await axios.get('/totalStaff');
      
-      setTotalUsers(usersResponse.data.totalUsers);
+      setTotalUsers(usersResponse.data);
       setTotalStaff(staffResponse.data.totalStaff);
       setLoading(false);
     } catch (error) {
