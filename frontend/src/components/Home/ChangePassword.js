@@ -64,7 +64,7 @@ function ChangePassword() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/change-password",
+        `${window.location.origin}/api/change-password`,
         {
           method: "POST",
           headers: {
