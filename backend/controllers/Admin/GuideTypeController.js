@@ -88,7 +88,7 @@ export const updateGuideTypesById = async (req, res) => {
       guideTypes.guideTypes_image = req.file.path;
     }
 
-    console.log('Updated guideTypes:', guideTypes); // Add this line for debugging
+    console.log('Updated guideTypes:', guideTypes); 
 
     await guideTypes.save();
     res.json({ message: 'GuideTypes updated successfully', guideTypes });

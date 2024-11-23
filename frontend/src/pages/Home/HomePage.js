@@ -86,10 +86,10 @@ function HomePage() {
         </div>
       </main>
 
-      <main className="message-section mt-[400px] md:mt-0">
+      <main className="message-section mt-[500px]  md:mt-0">
         <div className="main lg:w-4/5 mx-auto
         ">
-          <div className=" grid md:h-[80vh] py-6 grid-cols-1 place-items-center mx-auto  md:grid-cols-2">
+          <div className=" grid md:h-[80vh] py-24 grid-cols-1 place-items-center mx-auto  md:grid-cols-2">
          
             <Fade cascade direction="left" >
               <div className="mx-4">
@@ -140,16 +140,16 @@ function HomePage() {
       </main>
 
 
-      <main className="history-section mt-20 mb-52 md:mt-0">
-        <div className="container   lg:w-4/5 mx-auto  my-8 ">
+      <main className="history-section  mt-40  mb-[500px] md:mb-0 lg:mt-24">
+        <div className="container   lg:w-4/5 mx-auto  lg:my-8 my-10  ">
           <div className="about-company bg-white rounded-lg">
-            <h2 className="text-center text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 my-8 md:my-0 ">
+            <h2 className="text-center text-3xl lg:text-4xl xl:text-5xl lg:mb-28 tracking-wide font-bold text-blue-400 my-[450px] md:my-36 lg:my-0 ">
               Company history
             </h2>
 
-            <div className="main md:h-[80vh] place-items-center grid grid-cols-1 md:grid-cols-2">
+            <div className="main md:h-[80vh] place-items-center grid grid-cols-1  md:grid-cols-2">
             <Fade direction="right" cascade>
-                <div className="img my-8 mx-4 h-[50vh]">
+                <div className="img -my-[370px] md:-my-[350px] mx-4 h-[50vh]">
                   <img
                     src="img1 (6).jpg"
                     className="h-[50vh]"
@@ -158,13 +158,13 @@ function HomePage() {
                 </div>
               </Fade>
               <Fade direction="up" cascade>
-                <div className="content px-4 space-y-16">
+                <div className="content space-y-4 md:-my-[350px]   px-4 ">
                  
-                  <h3 className="text-3xl md:text-3xl lg:text-4xl text-gray-700 font-bold">
+                  <h3 className="text-3xl md:text-3xl lg:text-4xl mt-2  md:mt-0 text-gray-700 font-bold">
                   Our Waterproofing Journey: From Humble Beginnings to Industry Leaders
                   </h3>
-
-                  <p className="text-gray-600 leading-relaxed">
+                 
+                  <p className="text-gray-600 space-y-5    leading-relaxed">
                     Made last it seen went no just when of by. Occasional
                     entreaties comparison me difficulty so themselves. At
                     brother inquiry of offices without do my service. As
@@ -175,6 +175,8 @@ function HomePage() {
                     any parties.
                   </p>
 
+
+              
                   
                 </div>
               </Fade>
