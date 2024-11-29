@@ -30,7 +30,7 @@ function Contact() {
     }));
   };
 
-  const BASE_URL = `${window.location.origin}/api/`;
+  const BASE_URL = `http://localhost:5000/api/`;
 
   const handleSubmit = async (event) => {
     event.preventDefault();

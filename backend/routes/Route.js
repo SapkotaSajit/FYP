@@ -35,6 +35,8 @@ import { deleteGuideStepById } from "../controllers/Admin/GuideStepsController.j
 
 const router = express.Router();
 
+router.post('/createContact', createContact);
+
 router.post("/register", Register);
 router.post("/login", Login);
 router.post('/forgot-password', forgotPassword);
@@ -127,7 +129,6 @@ router.delete('/:id', deleteBookingAssignById,checkAdminRole);
 
 
 
-router.post('/createContact', createContact);
 router.get('/AllContacts', AllContacts);
 router.get('/getContactById/:id', getContactById);
 
