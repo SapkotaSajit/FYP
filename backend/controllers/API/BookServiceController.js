@@ -5,14 +5,14 @@ import Service from '../../models/Service.js';
 
 export const getAllBookings = async (req, res) => {
   try {
-    // Find all bookings with status 0
+    
     const bookings = await Booking.findAll({
       where: {
-        status: 0 // Assuming the status field is named 'status' in your database schema
+        status: 0 
       }
     });
 
-    // Retrieve additional details for each booking
+    
     const bookingsWithDetails = await Promise.all(bookings.map(async (booking) => {
       const user = await User.findByPk(booking.user_id);
       const service = await Service.findByPk(booking.service_id);
@@ -43,14 +43,14 @@ export const getAllBookings = async (req, res) => {
 
 export const getAllProcessingBookings = async (req, res) => {
   try {
-    // Find all bookings with status 0
+    
     const bookings = await Booking.findAll({
       where: {
-        status: 1 // Assuming the status field is named 'status' in your database schema
+        status: 1 
       }
     });
 
-    // Retrieve additional details for each booking
+   
     const bookingsWithDetails = await Promise.all(bookings.map(async (booking) => {
       const user = await User.findByPk(booking.user_id);
       const service = await Service.findByPk(booking.service_id);

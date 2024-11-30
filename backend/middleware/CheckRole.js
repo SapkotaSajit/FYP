@@ -18,6 +18,6 @@ export const checkAdminRole = (req, res, next) => {
     if (req.role_id === 3) {
       next();
     } else {
-      return res.status(403).json({ message: "Access forbidden for non-user roles" });
+      return res.status(403).json({ message: "Access forbidden for non-staff roles" });
     }
   };

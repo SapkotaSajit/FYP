@@ -1,7 +1,6 @@
 import Contact from '../../models/Contact.js';
 
 export const createContact = async (req, res) => {
-  console.log("show me error")
   const { name, email, phone, description } = req.body;
   try {
     const newContact = await Contact.create({
