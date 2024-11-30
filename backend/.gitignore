@@ -132,7 +132,6 @@ dist
 .pnp.*
 
 node_modules/
-images/*
 
 *.min.js
 *.min.mjs
