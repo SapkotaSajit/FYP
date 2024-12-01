@@ -110,18 +110,18 @@ function StaffDashboard() {
               </button>
               {isOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-full text-sm h-fit bg-white rounded-md shadow-lg"
+                  className="absolute right-0 mt-2 w-full text-sm h-fit bg-slate-200 rounded-md shadow-lg"
                   style={{
-                    top: "50%",
-                    right: "calc(100% + 10px)",
+                    top: "150%",
+                    right: "calc(10% + 10px)",
                     transform: "translateY(-50%)",
                     minWidth: "150px",
                   }}
                   onClick={closeDropdown}
                 >
-                  <a href="#" className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900">Dashboard</a>
+                  <a href="#" className="block px-4 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900">Dashboard</a>
                   <Link
-                        className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"
+                        className="block px-4 py-2 w-fit text-black hover:bg-blue-600 hover:text-slate-900"
                         to="/change-password"
                       >
                         &nbsp;Change Password
@@ -129,7 +129,7 @@ function StaffDashboard() {
          
                   <a
                     href="#"
-                    className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"
+                    className="block px-6 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900"
                     onClick={handleLogout}
                   >
                     Log Out

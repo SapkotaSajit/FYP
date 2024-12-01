@@ -33,6 +33,10 @@ function Nav() {
     const roleId = Cookies.get("roleId");
     return roleId === "3";
   };
+  const isAdmin = () => {
+    const roleId = Cookies.get("roleId");
+    return roleId === "1";
+  };
 
   const toggleDropdown = () => {
     setProfileIsOpen(!isProfileOpen);
@@ -99,27 +103,36 @@ function Nav() {
                       }}
                       onClick={closeDropdown}
                     >
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
-                        onClick={handleLogout}
-                      >
-                        Log Out
-                      </a>
+                    
                       {isStaff() && (
                         <Link
                           to={"/staffs"}
-                          className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+                          className="block w-full px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
+                        >
+                          Dashboard
+                        </Link>
+                      )}
+                      {isAdmin() && (
+                        <Link
+                          to={"/admin/roles"}
+                          className="block w-full px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
                         >
                           Dashboard
                         </Link>
                       )}
                       <Link
-                        className="block w-full px-4 py-2 text-black hover:bg-gray-200 hover:text-slate-900"
+                        className="block w-full px-3 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
                         to="/change-password"
                       >
                         &nbsp;Change Password
                       </Link>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
+                        onClick={handleLogout}
+                      >
+                        Log Out
+                      </a>
                     </div>
                   )}
                 </div>

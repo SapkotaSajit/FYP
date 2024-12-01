@@ -185,21 +185,28 @@ function AdminDashboard() {
                 <div
                   className="absolute bg-gray-300 z-999 rounded-md shadow-lg"
                   style={{
-                    top: "50%",
-                    right: "calc(100% + 10px)",
+                    top: "150%",
+                    right: "calc(10% + 10px)",
                     transform: "translateY(-50%)",
                     minWidth: "150px",
                   }}
                   onClick={closeDropdown}
                 >
-                 
-                  <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={handleLogout}>Log Out</a>
-                <Link
-                        className="block px-4 py-2 w-fit text-black hover:bg-gray-200 hover:text-slate-900"
+                    {/* <Link
+                        className="block px-4 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900"
+                        to="/change-password"
+                      >
+                        &nbsp;Dashboard
+                      </Link>  */}
+                      <Link
+                        className="block px-4 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900"
                         to="/change-password"
                       >
                         &nbsp;Change Password
-                      </Link>  
+                      </Link>   
+                  <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-blue-600" onClick={handleLogout}>Log Out</a>
+          
+              
                 </div>
               )}
             </div>
