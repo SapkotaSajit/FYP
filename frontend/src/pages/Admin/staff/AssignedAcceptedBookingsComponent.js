@@ -1,113 +1,173 @@
-import React, { useState, useEffect } from 'react';
-import { fetchWithAuth } from '../../../auth/api';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect } from "react";
+import { fetchWithAuth } from "../../../auth/api";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import {
+  HiCheckCircle,
+  HiUser,
+  HiPhone,
+  HiClock,
+  HiCalendar,
+  HiCollection,
+  HiSelector,
+  HiArrowRight,
+} from "react-icons/hi";
+import { toast } from "react-toastify";
 
 const AssignedAcceptedBookingsComponent = () => {
   const [assignedBookings, setAssignedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [selectedMemberId, setSelectedMemberId] = useState(null);
- 
-  const [formData, setFormData] = useState({
-    status: "",
-  });
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAssignedBookings = async () => {
       try {
-        const userId = Cookies.get('userId');
-        const response = await fetchWithAuth('get', `assignUsersAcceptedBookings/${userId}`);
-        setAssignedBookings(response.data);
-        setLoading(false);
+        const userId = Cookies.get("userId");
+        const response = await fetchWithAuth(
+          "get",
+          `assignUsersAcceptedBookings/${userId}`,
+        );
+        setAssignedBookings(response.data || []);
       } catch (error) {
-        setError('Failed to fetch assigned bookings. Please try again later.');
+        toast.error("Failed to sync assignments.");
+      } finally {
         setLoading(false);
       }
     };
-
     fetchAssignedBookings();
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleStatusChange = async (e, id, oldStatus) => {
-    e.preventDefault();
+  const handleStatusChange = async (id, newStatus) => {
     try {
-      const newStatus = e.target.value;
       const response = await fetchWithAuth(
         "patch",
         `bookingAssign/${id}/status`,
-        { status: newStatus } 
+        { status: newStatus },
       );
-      if (response.status === 200) {
-        
- 
-        setAssignedBookings(prevBookings =>
-          prevBookings.map(booking =>
-            booking.id === id ? { ...booking, status: newStatus } : booking
-          )
-          
-        );
-
-        setSelectedMemberId(id); 
-        setFormData({ ...formData, status: newStatus });
+      if (response.status === 200 || response.ok) {
+        toast.success(`Marked as ${newStatus}`);
+        setAssignedBookings((prev) => prev.filter((b) => b.id !== id));
         navigate("/staffs/completedAssigned");
       } else {
-        const errorData = await response.json();
-        setError(errorData.message);
+        toast.error("Status update failed");
       }
     } catch (error) {
-      setError(error.message);
+      toast.error("Connection error");
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div className='container mx-auto overflow-y-auto h-[100dvh] px-5 my-6'>
-      <h2 className="text-2xl  font-bold mb-4 my-6">Accepted Bookings</h2>
-      <div className="overflow-x-auto">
-        <table className="table-auto min-w-full divide-y divide-gray-200">
-          <thead className='bg-gray-100'>
-            <tr>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">User Name</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">User Phone</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Booking Time</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Booking Date</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Service Name</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">Old Status</th>
-              <th className="px-6 py-3 text-left text-md font-medium text-gray-700 uppercase tracking-wider">New Status</th>
-            </tr>
-          </thead>
-          <tbody className='bg-white divide-y divide-gray-200'>
-            {assignedBookings.map((booking, index) => (
-              <tr key={booking.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.booking.user.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.booking.user.phone}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.booking.booking_time}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.booking.booking_date}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.booking.service.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{booking.status}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <select value={formData.status} onChange={(e) => handleStatusChange(e, booking.id, booking.status)}>
-                    <option value={booking.status}>{booking.status}</option>
-                                      
-                  
-                    <option value="Completed">Completed</option>
-                  </select>
-                </td>
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <HiCheckCircle className="text-emerald-500" />
+            Accepted Client Tasks
+          </h2>
+          <p className="text-slate-500 text-sm font-medium">
+            Work on assignments you've accepted and mark them as complete.
+          </p>
+        </div>
+      </div>
+
+      <div className="glass rounded-3xl overflow-hidden shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50/50 border-b border-slate-200/60">
+                <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  Client & Service
+                </th>
+                <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
+                  Schedule
+                </th>
+                <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
+                  Status Control
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
+                <tr>
+                  <td colSpan="3" className="px-6 py-20 text-center">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-10 h-10 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+                      <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                        Retrieving work queue...
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ) : assignedBookings.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="3"
+                    className="px-6 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs"
+                  >
+                    No active accepted tasks
+                  </td>
+                </tr>
+              ) : (
+                assignedBookings.map((booking) => (
+                  <tr
+                    key={booking.id}
+                    className="hover:bg-slate-50/50 transition-colors group"
+                  >
+                    <td className="px-6 py-5">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
+                            <HiUser size={20} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-slate-900">
+                              {booking.booking.user.name}
+                            </p>
+                            <p className="text-[10px] text-slate-500 font-bold flex items-center gap-1 uppercase tracking-tighter">
+                              <HiPhone className="inline shrink-0" />{" "}
+                              {booking.booking.user.phone}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-tight border border-slate-200">
+                          <HiCollection className="text-blue-500" />{" "}
+                          {booking.booking.service.name}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5 text-center">
+                      <div className="inline-flex flex-col gap-2">
+                        <span className="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-bold flex items-center gap-2 border border-indigo-100/50">
+                          <HiCalendar size={14} />{" "}
+                          {booking.booking.booking_date}
+                        </span>
+                        <span className="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-bold flex items-center gap-2 border border-blue-100/50">
+                          <HiClock size={14} /> {booking.booking.booking_time}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5 text-center">
+                      <div className="relative inline-block w-48 group/select">
+                        <select
+                          onChange={(e) =>
+                            handleStatusChange(booking.id, e.target.value)
+                          }
+                          className="w-full pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none cursor-pointer transition-all"
+                        >
+                          <option value={booking.status}>
+                            {booking.status}
+                          </option>
+                          <option value="Completed">Mark as Completed</option>
+                        </select>
+                        <HiSelector className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

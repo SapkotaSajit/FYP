@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import {
+  HiLockClosed,
+  HiEye,
+  HiEyeOff,
+  HiShieldCheck,
+  HiArrowRight,
+} from "react-icons/hi";
+import { Fade } from "react-awesome-reveal";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -15,14 +22,14 @@ function ChangePassword() {
     confirmNewPassword: "",
   });
   const [errors, setErrors] = useState({});
-
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-      if (!isLoggedIn()) {
-      navigate("/login"); 
+    if (!Cookies.get("accessToken")) {
+      navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,16 +48,15 @@ function ChangePassword() {
     if (!formData.newPassword.trim()) {
       newErrors.newPassword = "New password is required";
     } else if (formData.newPassword.length < 8) {
-      newErrors.newPassword = "New password must be at least 8 characters long";
+      newErrors.newPassword = "Must be at least 8 characters";
     } else if (
       !/(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])/.test(formData.newPassword)
     ) {
-      newErrors.newPassword =
-        "New password must contain at least one uppercase letter, one number, and one special character";
+      newErrors.newPassword = "Include uppercase, number & symbol";
     }
 
     if (formData.newPassword === formData.currentPassword) {
-      newErrors.newPassword = "New password must be different from the current password";
+      newErrors.newPassword = "Must be different from current";
     }
 
     if (formData.newPassword !== formData.confirmNewPassword) {
@@ -62,6 +68,7 @@ function ChangePassword() {
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const response = await fetch(
         `http://localhost:5000/api/change-password`,
@@ -69,151 +76,160 @@ function ChangePassword() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${Cookies.get("accessToken")}`, 
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       if (response.ok) {
         const successData = await response.json();
         const roleId = Cookies.get("roleId");
+        toast.success(successData.msg || "Security credentials updated");
         if (roleId === "1") {
           navigate("/admin/dashboard");
         } else {
           navigate("/");
         }
-        toast.success(successData.msg);
       } else {
         const errorData = await response.json();
-        toast.error(errorData.msg);
+        toast.error(errorData.msg || "Updating credentials failed");
       }
     } catch (error) {
-      console.error("Error during password change:", error.message);
-      toast.error("Failed to change password");
+      toast.error("Security synchronization error");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="m-0 p-0">
+    <div className="bg-slate-50 min-h-screen flex flex-col">
       <Nav />
 
-      <div className="container mx-auto overflow-hidden flex px-6 justify-center items-center">
-        <div className="flex items-center justify-center h-[100dvh]">
-          <div className="flex flex-col md:w-[40dvw] shadow-2xl gap-3 rounded-sm bg-gray-50 border px-6 md:px-[50px] py-[30px] ">
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-3xl flex font-semibold text-start">
-                Change Password
-              </p>
-            </div>
-            <form
-              onSubmit={handleChangePassword}
-              className="flex flex-col gap-3 w-full"
-            >
-              <div className="flex flex-col gap-2">
-                <label className="text-black">Current Password</label>
-                <input
-                  type="password"
-                  name="currentPassword"
-                  value={formData.currentPassword}
-                  onChange={handleInputChange}
-                  className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 bg-white ${
-                    errors.currentPassword ? "border-red-500 border" : ""
-                  } border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
-                  autoComplete="off"
-                  placeholder="Enter your current password"
-                />
-                {errors.currentPassword && (
-                  <p className="text-red-500 text-sm ">
-                    {errors.currentPassword}
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-black">New Password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="newPassword"
-                  value={formData.newPassword}
-                  onChange={handleInputChange}
-                  className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 ${
-                    errors.newPassword ? "border-red-500 border" : ""
-                  } bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
-                  autoComplete="off"
-                  placeholder="Enter your new password"
-                />
-                {errors.newPassword && (
-                  <p className="text-red-500 text-sm">{errors.newPassword}</p>
-                )}
-              </div>
-              <div className="flex flex-col gap-2 relative">
-                <label className="text-black">Confirm New Password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="confirmNewPassword"
-                  value={formData.confirmNewPassword}
-                  onChange={handleInputChange}
-                  className={`h-12 pl-2 text-black focus:ring-2 focus:ring-blue-500 ${
-                    errors.confirmNewPassword ? "border-red-500 border" : ""
-                  } bg-white border rounded outline-none shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
-                  autoComplete="off"
-                  placeholder="Re-enter your new password"
-                />
-                <div
-                  className="absolute top-[48px] right-5 cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="black"
-                        d="M12 16q1.875 0 3.188-1.313T16.5 11.5q0-1.875-1.313-3.188T12 7q-1.875 0-3.188 1.313T7.5 11.5q0 1.875 1.313 3.188T12 16Zm0-1.8q-1.125 0-1.913-.788T9.3 11.5q0-1.125.788-1.913T12 8.8q1.125 0 1.913.788T14.7 11.5q0 1.125-.787 1.913T12 14.2Zm0 4.8q-3.65 0-6.65-2.038T1 11.5q1.35-3.425 4.35-5.463T12 4q3.65 0 6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19Zm0-1.8q3.125 0 5.45-2.225t2.325-5.45q-1.225 2.45-3.775 4.288T12 17.2q-2.45 0-4.288-1.55T4.225 11.5q1.225 2.45 3.775 4.288T12 17.2Z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="black"
-                        d="M12 7q-1.875 0-3.188 1.313T7.5 11.5q0 1.875 1.313 3.188T12 16q1.875 0 3.188-1.313T16.5 11.5q0-1.875-1.313-3.188T12 7Zm-6.65 5.462T1 11.5q1.35-3.425 4.35-5.463T12 4q3.65 0 6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19q-3.65 0-6.65-2.038T1 11.5Zm6.65 6.125T4.225 11.5q1.225 2.45 3.775 4.288T12 17.2q2.45 0 4.288-1.55t2.325-5.45q-1.225 2.45-3.775 4.288T12 17.2ZM12 6q-3.125 0-5.45 2.225T4.225 11.5q1.225-2.45 3.775-4.288T12 6Z"
-                      />
-                    </svg>
-                  )}
+      <main className="flex-1 flex items-center justify-center py-24 px-6 relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 opacity-60"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 opacity-60"></div>
+
+        <div className="w-full max-w-xl relative z-10">
+          <Fade direction="up" triggerOnce>
+            <div className="glass rounded-[3rem] border border-white p-8 md:p-14 shadow-2xl shadow-blue-200/20 backdrop-blur-3xl bg-white/70">
+              <div className="text-center mb-12">
+                <div className="w-20 h-20 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-2xl shadow-slate-200 rotate-6 transition-transform hover:rotate-0 duration-500 border-4 border-white">
+                  <HiLockClosed size={36} />
                 </div>
-                {errors.confirmNewPassword && (
-                  <p className="text-red-500 text-sm">
-                    {errors.confirmNewPassword}
-                  </p>
-                )}
+                <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-3">
+                  Update Identity
+                </h2>
+                <p className="text-slate-500 font-bold uppercase tracking-[0.15em] text-[10px]">
+                  Secure Your Digital Access
+                </p>
               </div>
 
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
-              >
-                Change Password
-              </button>
-            </form>
-          </div>
+              <form onSubmit={handleChangePassword} className="space-y-8">
+                {/* Current Password */}
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                    <HiShieldCheck className="text-blue-500" /> Validation Point
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type="password"
+                      name="currentPassword"
+                      value={formData.currentPassword}
+                      onChange={handleInputChange}
+                      placeholder="Current Secret Key"
+                      className={`w-full bg-slate-50 border ${errors.currentPassword ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all`}
+                      required
+                    />
+                    {errors.currentPassword && (
+                      <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight mt-2 ml-1 animate-in fade-in slide-in-from-left-2">
+                        {errors.currentPassword}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* New Password */}
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                    New credentials
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="newPassword"
+                      value={formData.newPassword}
+                      onChange={handleInputChange}
+                      placeholder="Enter New Secret Key"
+                      className={`w-full bg-slate-50 border ${errors.newPassword ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all`}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors"
+                    >
+                      {showPassword ? (
+                        <HiEyeOff size={22} />
+                      ) : (
+                        <HiEye size={22} />
+                      )}
+                    </button>
+                    {errors.newPassword && (
+                      <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight mt-2 ml-1 animate-in fade-in slide-in-from-left-2">
+                        {errors.newPassword}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Confirm Password */}
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                    Redundancy Check
+                  </label>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="confirmNewPassword"
+                    value={formData.confirmNewPassword}
+                    onChange={handleInputChange}
+                    placeholder="Verify New Secret Key"
+                    className={`w-full bg-slate-50 border ${errors.confirmNewPassword ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all`}
+                    required
+                  />
+                  {errors.confirmNewPassword && (
+                    <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight mt-2 ml-1 animate-in fade-in slide-in-from-left-2">
+                      {errors.confirmNewPassword}
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full group py-5 bg-blue-600 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs hover:bg-slate-900 transition-all shadow-2xl shadow-blue-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-wait mt-4"
+                >
+                  <span className="flex items-center justify-center gap-3">
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        Commit Updates{" "}
+                        <HiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                      </>
+                    )}
+                  </span>
+                </button>
+              </form>
+            </div>
+          </Fade>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>
   );
-  
 }
-function isLoggedIn() {
-  const accessToken = Cookies.get("accessToken");
-  return !!accessToken;
-}
+
 export default ChangePassword;

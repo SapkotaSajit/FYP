@@ -5,114 +5,150 @@ import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
 import { Fade } from "react-awesome-reveal";
 import ServiceSlider from "../../components/Home/ServiceSlider";
+import {
+  HiCollection,
+  HiArrowRight,
+  HiChevronDown,
+  HiChevronUp,
+  HiInformationCircle,
+} from "react-icons/hi";
 
 const AllServicesWithParent = () => {
   const [services, setServices] = useState([]);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const URL = "http://localhost:5000/";
 
   useEffect(() => {
     const fetchServicesWithParent = async () => {
       try {
         const response = await fetchApi("get", "servicesWithNullParent");
-        setServices(response.data);
+        setServices(
+          (response.data || []).map((s) => ({ ...s, expanded: false })),
+        );
       } catch (error) {
-        setError(error.message);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchServicesWithParent();
   }, []);
 
   const toggleExpandService = (id) => {
-    setServices((prevServices) =>
-      prevServices.map((service) =>
-        service.id === id
-          ? { ...service, expanded: !service.expanded }
-          : service
-      )
+    setServices((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, expanded: !s.expanded } : s)),
     );
   };
 
   return (
-    <div className="">
+    <div className="bg-slate-50 min-h-screen">
       <Nav />
       <ServiceSlider />
-      {error && <div className="text-blue-500">Loading...</div>}
-      <div id= "our-service" className="info xl:w-4/5 mx-auto text-center my-12 mt-36 px-4 ">
-        
-        <div className="main text-3xl md:text-3xl lg:text-5xl text-gray-700 font-bold tracking-wider">
-        <a href="#our-service">
-        <h2>
-            We offer all kinds of professional modern waterproofing services
+
+      {/* Header Section */}
+      <section
+        id="our-service"
+        className="max-w-7xl mx-auto px-6 py-20 mt-12 text-center"
+      >
+        <Fade cascade direction="up" triggerOnce>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-blue-100 shadow-sm">
+            <HiCollection /> Professional Solutions
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tight max-w-4xl mx-auto">
+            World-class <span className="text-blue-600">Waterproofing</span> for
+            Modern Structures
           </h2>
-        </a>
-          
-        </div>
-        <div className="main-child my-6">
-          <p className="text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt laboredolore magna suspendisse ultrices
-            gravida.
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium leading-relaxed">
+            From chemical injection to structural membrane installation, our
+            advanced methods protect your investment from the inside out.
           </p>
-        </div>
-      </div>
+        </Fade>
+      </section>
 
-      <main className="main-service h-fit mt-36">
-        <div className="service-heading">
-        <a href="#service-section">
-          <h2 className="text-center mb-16 text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 ">
-            Our Services
-          </h2>
-        </a>
-        <div className="grid grid-cols-1 my-6 px-4 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:w-4/5 mx-auto">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="bg-white rounded-md shadow-md overflow-hidden relative flex flex-col"
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={`${URL}${service.service_image}`}
-                  alt="Service Image"
-                  className="w-full h-60  object-cover object-center  duration-1000 transform hover:scale-110"
-                  title={service.name}
-                />
+      {/* Services Grid */}
+      <main className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {loading ? (
+            Array(6)
+              .fill(0)
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="h-[450px] bg-slate-200 animate-pulse rounded-[2.5rem]"
+                ></div>
+              ))
+          ) : services.length === 0 ? (
+            <div className="col-span-full py-20 text-center">
+              <HiInformationCircle
+                size={64}
+                className="mx-auto text-slate-200 mb-4"
+              />
+              <p className="text-slate-400 font-bold uppercase tracking-widest">
+                No services found in our catalog
+              </p>
+            </div>
+          ) : (
+            services.map((service) => (
+              <div
+                key={service.id}
+                className="group bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col hover:-translate-y-2"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={`${URL}${service.service_image}`}
+                    alt={service.name}
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-4 py-2 glass border border-white/40 text-[10px] font-black text-white uppercase tracking-widest rounded-xl shadow-lg backdrop-blur-md">
+                      Premium Service
+                    </span>
+                  </div>
+                </div>
 
-                <div className="p-4">
-                  <h3 className="text-xl text-center capitalize font-semibold">
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-black text-slate-900 mb-4 capitalize group-hover:text-blue-600 transition-colors">
                     {service.name}
                   </h3>
-                </div>
-                <div className={`text-center text-gray-800 mb-4 ${service.expanded ? 'max-h-80 overflow-y-auto' : 'max-h-40 overflow-hidden'}`}>
-                  {service.expanded ? (
-                    <p className="px-4 text-justify tracking-normal ">{service.description}</p>
-                  ) : (
-                    <p>{service.description.slice(0, 30)}...</p>
-                  )}
-                </div>
-                <div className="flex justify-between  mx-4 my-6">
-                  {service.description.length > 1 && (
-                    <button
-                      className="text-white hover:text-blue-500 font-semibold w-fit hover:bg-gray-900 bg-gray-600 px-4  py-2  rounded-sm focus:outline-none"
-                      onClick={() => toggleExpandService(service.id)}
-                    >
-                      {service.expanded ? "Show Less" : "Read More"}
-                    </button>
-                  )}
 
-                  <Link
-                    to={`/childServices/${service.id}`}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-fit text-center rounded-sm transition duration-300"
+                  <div
+                    className={`text-slate-500 text-sm leading-relaxed mb-8 transition-all duration-500 ${service.expanded ? "max-h-[1000px] opacity-100" : "max-h-12 opacity-80 overflow-hidden"}`}
                   >
-                    Learn More
-                  </Link>
+                    <p>{service.description}</p>
+                  </div>
+
+                  <div className="mt-auto flex flex-col gap-4">
+                    <div className="flex items-center justify-between border-t border-slate-100 pt-6">
+                      <button
+                        onClick={() => toggleExpandService(service.id)}
+                        className="text-slate-500 hover:text-blue-600 flex items-center gap-1 text-xs font-black uppercase tracking-widest transition-colors"
+                      >
+                        {service.expanded ? (
+                          <>
+                            Collapse <HiChevronUp />
+                          </>
+                        ) : (
+                          <>
+                            Details <HiChevronDown />
+                          </>
+                        )}
+                      </button>
+
+                      <Link
+                        to={`/childServices/${service.id}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl text-xs font-black uppercase tracking-[0.15em] hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 hover:shadow-blue-200 active:scale-95"
+                      >
+                        Learn More <HiArrowRight />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
-      </div>
-    </main>
+      </main>
+
       <Footer />
     </div>
   );

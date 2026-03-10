@@ -1,268 +1,292 @@
-import React from "react";
-import { useState } from "react";
-import { Link, useNavigate, useNavigation, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import {
+  HiMenu,
+  HiX,
+  HiChevronDown,
+  HiLogout,
+  HiUser,
+  HiLockClosed,
+  HiMail,
+  HiLocationMarker,
+  HiPhone,
+} from "react-icons/hi";
+
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setProfileIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setTimeout(() => {
-      setIsOpen(!isOpen);
-    }, 300);
-  };
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const isLoggedIn = () => {
-    return Cookies.get("accessToken") && Cookies.get("roleId");
-  };
 
-  const handleLogout = async (e) => {
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleDropdown = () => setProfileIsOpen(!isProfileOpen);
+  const closeDropdown = () => setProfileIsOpen(false);
+
+  const isLoggedIn = () => Cookies.get("accessToken") && Cookies.get("roleId");
+  const isStaff = () => Cookies.get("roleId") === "3";
+  const isAdmin = () => Cookies.get("roleId") === "1";
+
+  const handleLogout = (e) => {
     e.preventDefault();
     Cookies.remove("accessToken");
     Cookies.remove("roleId");
     Cookies.remove("userId");
-    if (e.target.textContent === "Log Out") {
-      navigate("/");
-      toast.success("Logout successfully");
-    } else if (e.target.textContent === "Change Password") {
-      navigate("/change-password");
-    }
-  };
-  const isStaff = () => {
-    const roleId = Cookies.get("roleId");
-    return roleId === "3";
-  };
-  const isAdmin = () => {
-    const roleId = Cookies.get("roleId");
-    return roleId === "1";
+    navigate("/");
+    toast.success("Logout successfully");
+    closeDropdown();
   };
 
-  const toggleDropdown = () => {
-    setProfileIsOpen(!isProfileOpen);
-  };
-
-  const closeDropdown = () => {
-    setProfileIsOpen(false);
-  };
+  const navLinks = [
+    { label: "Home", path: "/" },
+    { label: "Services", path: "/homeServices" },
+    { label: "Guides", path: "/guide" },
+    { label: "Portfolio", path: "/portfolio" },
+    { label: "Contact", path: "/contact" },
+  ];
 
   return (
-    <>
-      <div className="nav-head bg-slate-900   m-0 p-0 overflow-hidden ">
-        <div className="main lg:px-4 md:m-4 w-full mx-auto  lg:mx-auto  md:w-full  lg:w-4/5  ">
-          <div className=" flex justify-between gap-3  w-full md:w-full mx-4 md:mx-0 items-center  bg-slate-900   text-gray-400">
-            <div className="grid grid-cols-1 py-4 md:py-0 md:space-x-6 md:grid-cols-2 lg:grid-cols-2  lg:gap-2 ">
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=sapkotasajit2@gmail.com"
-                className="text-sm font-light"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fa-regular fa-envelope mr-1 text-blue-500"></i>{" "}
-                sapktosajit2@gmail.com
-              </a>
-
-              {/* <a
-                href="mailto:sapkotasajit2@gmail.com"
-                className="text-sm font-light"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fa-regular fa-envelope mr-1 text-blue-500"></i>{" "}
-                sapktosajit2@gmail.com
-              </a> */}
-              
-
-              <a href="/contact" className="text-sm font-light">
-                <i className="fa-brands fa-periscope mr-1 text-blue-500"></i>
-                Naya Baneshwor. Nepal
-              </a>
-            </div>
-
-            <div className="grid grid-cols-2 text-sm w-40 pr-4 md:pr-0 md-pl-4 md:w-fit">
-              {isLoggedIn() ? (
-                <div className="relative">
-                  <button
-                    onClick={toggleDropdown}
-                    className="focus:outline-none"
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+      {/* Top Bar */}
+      <div
+        className={`bg-slate-900 text-slate-300 transition-all duration-500 ease-in-out origin-top border-b border-white/5 ${
+          scrolled ? "h-0 opacity-0 -translate-y-full" : "h-11 opacity-100 py-0"
+        }`}
+      >
+        <div className="container mx-auto px-6 h-full flex justify-between items-center text-[10px] font-black uppercase tracking-[0.15em]">
+          <div className="flex gap-8 items-center h-full">
+            <a
+              href="mailto:sapkotasajit2@gmail.com"
+              className="flex items-center gap-2.5 hover:text-blue-400 transition-colors"
+            >
+              <HiMail className="text-blue-500 text-lg opacity-80" />
+              sapktosajit2@gmail.com
+            </a>
+            <span className="hidden md:flex items-center gap-2.5 text-slate-500">
+              <HiLocationMarker className="text-blue-500 text-lg opacity-80" />
+              New Baneshwor, Nepal
+            </span>
+          </div>
+          <div className="flex items-center gap-6 h-full">
+            {!isLoggedIn() ? (
+              <div className="flex gap-4">
+                <Link
+                  to="/login"
+                  className="hover:text-white transition-colors py-2"
+                >
+                  Gateway Access
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4 animate-in fade-in duration-700">
+                <span className="text-blue-500/80 hidden sm:inline-block">
+                  System Active
+                </span>
+                {(isAdmin() || isStaff()) && (
+                  <Link
+                    to={isAdmin() ? "/admin/dashboard" : "/staffs"}
+                    className="px-4 py-1.5 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg transition-all border border-blue-500/30 text-[9px] shadow-lg shadow-blue-500/10"
                   >
-                    <img
-                      src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?t=st=1711861254~exp=1711864854~hmac=ebe6d6f8247b131892eced4153914b2cc9c740ddad891206e7bcfe4788be65c7&w=740"
-                      alt="Profile"
-                      className="w-16 rounded-full"
-                    />
-                  </button>
-                  {isProfileOpen && (
-                    <div
-                      className="absolute bg-gray-300 z-999 rounded-sm shadow-lg"
-                      style={{
-                        top: "50%",
-                        right: "calc(100% + 10px)",
-                        transform: "translateY(-50%)",
-                        minWidth: "150px",
-                      }}
-                      onClick={closeDropdown}
-                    >
-                    
-                      {isStaff() && (
-                        <Link
-                          to={"/staffs"}
-                          className="block w-full px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                      {isAdmin() && (
-                        <Link
-                          to={"/admin/roles"}
-                          className="block w-full px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                      <Link
-                        className="block w-full px-3 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
-                        to="/change-password"
-                      >
-                        &nbsp;Change Password
-                      </Link>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-black hover:bg-blue-500 hover:text-slate-900"
-                        onClick={handleLogout}
-                      >
-                        Log Out
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <>
-                  <a href="/login">
-                    <button className="text-white w-16 md:w-fit mr-6 md:mr-auto text-[9px] md:text-[14px] font-semibold md:px-4 py-2 rounded-md hover:bg-blue-600 border hover:border-blue-500 border-slate-900 bg-blue-500">
-                      Login
-                    </button>
-                  </a>
-
-                  <a href="/register">
-                    <button className="text-white w-16 md:w-fit mr-16 md:mr-6 xl:mr-auto text-[9px] md:text-[14px] font-semibold md:px-4 py-2 rounded-md hover:bg-blue-600 border hover:border-blue-500 border-slate-900 bg-blue-500">
-                      Sign Up
-                    </button>
-                  </a>
-                </>
-              )}
-              {isStaff() ? <Link to={"/staffs"}></Link> : null}
-            </div>
+                    Control Console
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <div className="sticky top-0 z-10  bg-white shadow-md">
-        <div className="main border-b-2 w-full lg:w-4/5 mx-auto">
-          <nav className="w-full transition-opacity duration-500 ">
-            <div className="px-4 py-4 md:flex md:justify-between md:items-center">
-              <div className="flex justify-between items-center ">
-                <a href="#" className="w-[10rem] relative">
-                  <img src="ssss.png" className="S.D Enterprises" alt="" />
-                </a>
-                <button
-                  onClick={toggleMenu}
-                  className="block text-gray-800 hover:text-black focus:text-black focus:outline-none md:hidden"
+
+      {/* Main Nav */}
+      <nav
+        className={`transition-all duration-500 ease-in-out ${
+          scrolled
+            ? "glass py-2 shadow-2xl shadow-slate-900/5 backdrop-blur-3xl bg-white/80 border-b border-white/40 border-t-0"
+            : "bg-white/95 py-3.5 shadow-sm border-b border-slate-100"
+        }`}
+      >
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3.5 group">
+            <div className="bg-slate-900 p-2.5 rounded-2xl group-hover:rotate-[15deg] transition-all duration-500 shadow-xl shadow-slate-200 border border-white/10 group-hover:scale-105 active:scale-95">
+              <span className="text-xl font-black text-white px-1">SD</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-tighter text-slate-900 leading-none">
+                S.D
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 leading-none mt-1 opacity-80">
+                Enterprises
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop Links */}
+          <ul className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <li key={link.path}>
+                <Link
+                  to={link.path}
+                  className="text-[11px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-[0.2em] transition-all relative group py-2"
                 >
-                  {isOpen ? (
-                    <svg
-                      className="h-6 w-6 fill-current"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M6.293 7.707a1 1 0 011.414 0L12 12.586l4.293-4.293a1 1 0 111.414 1.414L13.414 14l4.293 4.293a1 1 0 11-1.414 1.414L12 15.414l-4.293 4.293a1 1 0 01-1.414-1.414L10.586 14 6.293 9.707a1 1 0 010-1.414z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="h-6 w-6 fill-current"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M4 6a1 1 0 011-1h14a1 1 0 110 2H5a1 1 0 01-1-1zM3 11a1 1 0 011-1h16a1 1 0 110 2H4a1 1 0 01-1-1zM9 16a1 1 0 100 2h6a1 1 0 100-2H9z"
-                      />
-                    </svg>
-                  )}
-                </button>
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-500 group-hover:w-full rounded-full"></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Actions */}
+          <div className="flex items-center gap-6">
+            <div className="hidden xl:flex items-center gap-4 border-l pl-8 border-slate-200/60 h-10">
+              <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200/40">
+                <HiPhone className="text-slate-900 text-lg opacity-80" />
               </div>
-              <ul
-                className={`md:flex md:flex-row ${
-                  isOpen ? "block" : "hidden"
-                } md:space-x-4`}
-              >
-                <li className="border-b border-gray-100 pr-[15px] py-[17px]">
-                  <Link
-                    to="/"
-                    className="nav md:text-[14px] lg:text-[17px] font-semibold text-black transition-colors duration-300 hover:text-blue-500"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li className="border-b border-gray-100 pr-[15px] py-[17px]">
-                  <Link
-                    to="/homeServices"
-                    className="nav md:text-[14px] lg:text-[17px] font-semibold text-black transition-colors duration-300 hover:text-blue-500"
-                  >
-                    Services
-                  </Link>
-                </li>
-                <li className="border-b border-gray-100 pr-[15px] py-[17px]">
-                  <Link
-                    to="/guide"
-                    className="nav md:text-[14px] lg:text-[17px] font-semibold text-black transition-colors duration-300 hover:text-blue-500"
-                  >
-                    Guides
-                  </Link>
-                </li>
-                <li className="border-b border-gray-100 pr-[15px] py-[17px]">
-                  <Link
-                    to="/portfolio"
-                    className="nav md:text-[14px] lg:text-[17px] font-semibold text-black transition-colors duration-300 hover:text-blue-500"
-                  >
-                    Portfolio
-                  </Link>
-                </li>
-                <li className="border-b border-gray-100 pr-[15px] py-[17px]">
-                  <Link
-                    to="/contact"
-                    className="nav md:text-[14px] lg:text-[17px] font-semibold text-black transition-colors duration-300 hover:text-blue-500"
-                  >
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-              <div className="p-4 hidden md:block">
-                <div className="grid grid-cols-1 justify-center items-center">
-                  <div className="flex justify-center items-center text-[35px] lg:px-[10px] h-8 hover:text-blue-500 transition-colors duration-300">
-                    <i className="fa-solid fa-phone text-blue-500 mr-3 p-4 shadow-lg rounded-full text-2xl"></i>
-                    <div className="md:flex flex-col">
-                      <p className="text-[12px] text-gray-400">Call us Now</p>
-                      <a
-                        href="tel:+9841435289
-                        "
-                        className="text-[17px] font-semibold"
-                      >
-                        9841435289
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-black">
+                  Elite Hub
+                </span>
+                <a
+                  href="tel:9841435289"
+                  className="text-xs font-black text-slate-900 hover:text-blue-600 transition-colors tracking-widest"
+                >
+                  9841435289
+                </a>
               </div>
             </div>
-          </nav>
+
+            {/* Profile / Auth Toggle */}
+            {isLoggedIn() ? (
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className={`flex items-center gap-2.5 p-1 rounded-2xl hover:bg-slate-50 transition-all border border-transparent ${
+                    isProfileOpen ? "bg-slate-50 border-slate-100" : ""
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-[1rem] bg-slate-900 flex items-center justify-center text-white border-4 border-white shadow-xl overflow-hidden transition-transform active:scale-95">
+                    <img
+                      src="https://ui-avatars.com/api/?name=User&background=0F172A&color=fff&bold=true"
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <HiChevronDown
+                    className={`text-slate-400 text-lg transition-transform duration-500 ${
+                      isProfileOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isProfileOpen && (
+                  <div className="absolute right-0 mt-4 w-64 glass rounded-[2rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] p-2.5 animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-300 origin-top-right border border-white/80 bg-white/90 backdrop-blur-3xl">
+                    <div className="px-4 py-4 mb-2 bg-slate-50/50 rounded-[1.5rem] border border-slate-100/50">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
+                        Authorized Node
+                      </p>
+                      <p className="text-sm font-black text-slate-900">
+                        System Operator
+                      </p>
+                    </div>
+
+                    {(isAdmin() || isStaff()) && (
+                      <Link
+                        to={isAdmin() ? "/admin/dashboard" : "/staffs"}
+                        className="flex items-center gap-4 px-5 py-3.5 text-xs font-bold text-slate-700 hover:bg-blue-600 hover:text-white rounded-[1.2rem] transition-all mb-1 group"
+                        onClick={closeDropdown}
+                      >
+                        <div className="w-8 h-8 rounded-xl bg-blue-50 group-hover:bg-blue-500/20 flex items-center justify-center text-blue-600 group-hover:text-white transition-colors">
+                          <HiUser className="text-lg opacity-80" />
+                        </div>
+                        Control Dashboard
+                      </Link>
+                    )}
+                    <Link
+                      to="/change-password"
+                      className="flex items-center gap-4 px-5 py-3.5 text-xs font-bold text-slate-700 hover:bg-blue-600 hover:text-white rounded-[1.2rem] transition-all mb-1 group"
+                      onClick={closeDropdown}
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-orange-50 group-hover:bg-orange-500/20 flex items-center justify-center text-orange-600 group-hover:text-white transition-colors">
+                        <HiLockClosed className="text-lg opacity-80" />
+                      </div>
+                      Identity Security
+                    </Link>
+
+                    <div className="h-px bg-slate-100 my-2 mx-3"></div>
+
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-4 px-5 py-3.5 text-xs font-bold text-red-600 hover:bg-red-500 hover:text-white rounded-[1.2rem] transition-all group"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-red-50 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <HiLogout className="text-lg opacity-80" />
+                      </div>
+                      Terminate Session
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="btn-primary py-3 px-8 text-[11px] font-black uppercase tracking-[0.2em] hidden sm:flex items-center gap-2 rounded-2xl shadow-xl shadow-blue-500/20 border-b-4 border-blue-800 active:border-b-0 active:translate-y-1 transition-all"
+              >
+                Launch Platform
+              </Link>
+            )}
+
+            {/* Mobile Toggle */}
+            <button
+              onClick={toggleMenu}
+              className="lg:hidden p-3 rounded-2xl bg-slate-100 text-slate-900 hover:bg-slate-200 transition-all active:scale-95"
+            >
+              {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+            </button>
+          </div>
         </div>
-      </div>
-    </>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="lg:hidden fixed inset-0 top-[70px] bg-white/95 backdrop-blur-3xl z-40 animate-in slide-in-from-right duration-500 border-t border-slate-100">
+            <ul className="flex flex-col p-8 gap-3">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
+                Navigational Matrix
+              </p>
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="flex py-5 px-6 text-xl font-black text-slate-900 hover:bg-blue-50 hover:text-blue-600 rounded-[1.5rem] transition-all active:scale-98 border border-transparent active:border-blue-100 shadow-sm hover:shadow-md"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              {!isLoggedIn() && (
+                <div className="grid grid-cols-1 gap-4 mt-10">
+                  <Link
+                    to="/login"
+                    className="w-full py-5 bg-slate-900 text-white text-center rounded-[1.5rem] font-black uppercase tracking-widest text-sm shadow-2xl active:scale-95 transition-all"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Enter Platform
+                  </Link>
+                </div>
+              )}
+            </ul>
+          </div>
+        )}
+      </nav>
+    </header>
   );
 }
 

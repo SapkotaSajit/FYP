@@ -1,220 +1,267 @@
 import React, { useState } from "react";
-import { Link, useNavigate, Outlet } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
+import {
+  HiMenuAlt2,
+  HiX,
+  HiViewGrid,
+  HiUserGroup,
+  HiBriefcase,
+  HiBookmark,
+  HiBookOpen,
+  HiAnnotation,
+  HiShieldCheck,
+  HiLogout,
+  HiChevronDown,
+  HiLockClosed,
+  HiUsers,
+  HiGlobe,
+} from "react-icons/hi";
 import { toast } from "react-toastify";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isBookingsOpen, setIsBookingsOpen] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleLogout = async () => {
-    Cookies.remove('accessToken');
-    Cookies.remove('roleId');
-    Cookies.remove('userId');
+  const handleLogout = () => {
+    Cookies.remove("accessToken");
+    Cookies.remove("roleId");
+    Cookies.remove("userId");
     navigate("/");
-    toast.success('Logout successfully');
+    toast.success("Logged out successfully");
   };
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const navItems = [
+    { label: "Dashboard", icon: HiViewGrid, path: "dashboard" },
+    { label: "Roles", icon: HiShieldCheck, path: "roles" },
+    { label: "Users", icon: HiUserGroup, path: "users" },
+    { label: "Staffs", icon: HiUsers, path: "staffs" },
+    { label: "Services", icon: HiBriefcase, path: "services" },
+  ];
 
-  const closeDropdown = () => {
-    setIsOpen(false);
-  };
+  const bookingSubItems = [
+    { label: "Pending", path: "allPen" },
+    { label: "Accepted", path: "allAccept" },
+    { label: "Rejected", path: "allReject" },
+    { label: "Completed", path: "allCompleted" },
+  ];
 
-  const toggleBookings = () => {
-    const bookingList = document.getElementById("bookingList");
-    if (bookingList) {
-      bookingList.classList.toggle("hidden");
-    }
+  const guideItems = [
+    { label: "Guides", icon: HiBookOpen, path: "AllGuide" },
+    { label: "Guide Types", icon: HiBookmark, path: "AllGuideTypes" },
+    { label: "Guide Steps", icon: HiAnnotation, path: "AllGuideSteps" },
+    { label: "Contacts", icon: HiAnnotation, path: "allContacts" },
+  ];
+
+  const isActive = (path) => {
+    const currentPath = location.pathname;
+    return currentPath.includes(path);
   };
 
   return (
-    <div className="flex   bg-white">
-      
+    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
+      {/* Sidebar */}
       <aside
-        className={`   bg-slate-800 duration-700  text-white" ${
-          isSidebarOpen ? " w-[40%] xl:w-[19%] p-2 mx-4 my-3 rounded-xl"  : "w-0  "
-        }`}
+        className={`fixed inset-y-0 left-0 z-50 transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? "w-72" : "w-0 -translate-x-full"
+        } md:relative md:translate-x-0`}
       >
-        <h2
-          className="text-lg font-semibold  my-4
-      text-white  px-5 py-2 rounded-sm">
-          <i className="fa-solid fa-igloo mr-4"></i> S.D Enterprises
-        </h2>
-        <div className="border-gray-400   h-[100vh] overflow-y-auto ">
-        <div className=" border-t-2 ">
-          <Link to="dashboard">
-            <p className="text-md my-3 font-medium  hover:text-gray-300 w-full text-white bg-slate-500 px-5 py-3">
-                <i className="fa-solid fa-house mr-1 text-sm"></i> Dashboard
-                </p>
-            </Link>
-          <p className="mt-4 text-gray-500 text-[14px] font-semibold">LAYOUTS & PAGES</p>
-          <ul className="w-full">
-          <Link to="roles">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-             
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> Roles
-              
-            </li>
-            </Link>
-            <Link to="users">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              
-                <i className="fa-regular fa-user mr-1 text-sm"></i> Users
-              
-            </li>
-            </Link>
-            <Link to="staffs">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-             
-                <i className="fa-regular fa-user mr-1 text-sm"></i> Staffs
-              
-            </li>
-            </Link>
-            <Link to="services">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              
-                <i className="fa-solid fa-bell-concierge mr-1 text-sm"></i> Services
-          
-            </li>
-            </Link>
-            <Link to="bookings" className="flex justify-between"  >
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-               
-                <p>
-                <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> Bookings
-                </p>
-                <div onClick={toggleBookings} className=""> <p> <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19 9l-7 6l-7-6"/></svg> </p> </div>
-             
-              <ul className="hidden" id="bookingList">
-               
-                <Link to="allPen">
-                <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  
-                    <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All BookingPendings
-                  
-                </li>
-                </Link>
-                <Link to="allAccept">
-                <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  
-                    <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Accepted Booking
-                  
-                </li>
-                </Link>
-                <Link to="allReject">
-                <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  
-                    <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Rejected Booking
-                  
-                </li>
-                </Link>
-                <Link to="allCompleted">
-                <li className="text-[13px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-900 px-5 py-3">
-                  
-                    <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Completed Booking
-                  
-                </li>
-                </Link>
-              </ul>
-            </li>
-            </Link>
-                
-            <Link to="AllGuide">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Guide
-              
-            </li>
-            </Link>
-         
-            <Link to="AllGuideTypes">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              
-                <i className="fa-solid fa-book-bookmark mr-1 text-sm"></i> All Guide Types
-              
-            </li>
-            </Link>
+        <div className="h-full glass border-r border-slate-200/60 flex flex-col p-6 overflow-y-auto custom-scrollbar">
+          <div className="flex items-center gap-3 mb-10 px-2">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+              <HiBriefcase size={22} />
+            </div>
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+              S.D <span className="text-blue-600">Enterprise</span>
+            </h2>
+          </div>
 
-              <Link to="AllGuideSteps">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-             
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Guide Step
-             
-            </li>
-            </Link>
-            <Link to="allContacts">
-            <li className="text-[15px] my-3 font-light  text-gray-300 w-full hover:text-white hover:bg-slate-500 px-5 py-3">
-              
-                <i className="fa-solid fa-dice-d20 mr-1 text-sm"></i> All Contact
-              
-            </li>
-            </Link>
-          </ul>
-        </div>
+          <nav className="flex-grow space-y-8">
+            {/* Main Menu */}
+            <div>
+              <p className="px-3 mb-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                General
+              </p>
+              <div className="space-y-1">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                      isActive(item.path)
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
+                        : "text-slate-600 hover:bg-white hover:text-blue-600 hover:shadow-sm"
+                    }`}
+                  >
+                    <item.icon size={20} />
+                    <span className="font-semibold text-sm">{item.label}</span>
+                  </Link>
+                ))}
+
+                {/* Bookings with Submenu */}
+                <div className="space-y-1">
+                  <button
+                    onClick={() => setIsBookingsOpen(!isBookingsOpen)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive("all") || isBookingsOpen
+                        ? "text-blue-600 bg-white shadow-sm"
+                        : "text-slate-600 hover:bg-white hover:text-blue-600"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <HiBookmark size={20} />
+                      <span className="font-semibold text-sm">Bookings</span>
+                    </div>
+                    <HiChevronDown
+                      className={`transition-transform duration-200 ${isBookingsOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {isBookingsOpen && (
+                    <div className="ml-9 space-y-1 animate-in slide-in-from-top-2 duration-200">
+                      {bookingSubItems.map((sub) => (
+                        <Link
+                          key={sub.path}
+                          to={sub.path}
+                          className={`block px-4 py-2 text-sm rounded-lg transition-colors ${
+                            isActive(sub.path)
+                              ? "text-blue-600 font-bold"
+                              : "text-slate-500 hover:text-blue-600"
+                          }`}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Content Menu */}
+            <div>
+              <p className="px-3 mb-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                Content Management
+              </p>
+              <div className="space-y-1">
+                {guideItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive(item.path)
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
+                        : "text-slate-600 hover:bg-white hover:text-blue-600"
+                    }`}
+                  >
+                    <item.icon size={20} />
+                    <span className="font-semibold text-sm">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </nav>
+
+          {/* Sidebar Footer */}
+          <div className="mt-auto pt-6 border-t border-slate-200/60">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-xl transition-colors font-semibold text-sm"
+            >
+              <HiLogout size={20} />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </aside>
-      <div className="flex-1">
-        <header className="bg-white border border-b p-4 text-white">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <button onClick={toggleSidebar} className={`mr-4 text-black duration-700 ${isSidebarOpen?"rotate-0":"rotate-180"}`}>
-                {isSidebarOpen ? <FaTimes /> : <FaBars />}
-              </button>
-              <h1 className="text-xl font-semibold">Admin Dashboard</h1>
-            </div>
-            <div className="grid  grid-cols-2 text-sm  w-40 pr-4 md:pr-0 md-pl-4 md:w-fit  ">
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Header */}
+        <header className="h-20 glass border-b border-slate-200/60 flex items-center justify-between px-6 z-40">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="p-2 hover:bg-slate-100 rounded-lg text-slate-600 transition-colors"
+            >
+              <HiMenuAlt2 size={24} />
+            </button>
+            <h1 className="text-xl font-bold text-slate-900 hidden md:block">
+              {navItems.find((i) => isActive(i.path))?.label || "Admin Console"}
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+            >
+              <HiGlobe size={18} />
+              Visit Site
+            </Link>
+            {/* Profile Dropdown */}
             <div className="relative">
-              <button onClick={toggleDropdown} className="focus:outline-none">
-                <img
-                  src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?t=st=1711861254~exp=1711864854~hmac=ebe6d6f8247b131892eced4153914b2cc9c740ddad891206e7bcfe4788be65c7&w=740"
-                  alt="Profile"
-                  className="w-16 rounded-full"
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-100 rounded-2xl transition-all"
+              >
+                <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 border border-blue-200 overflow-hidden shadow-sm">
+                  <img
+                    src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
+                    alt="Admin"
+                  />
+                </div>
+                <div className="text-left hidden sm:block">
+                  <p className="text-sm font-bold text-slate-900 leading-tight">
+                    Admin User
+                  </p>
+                  <p className="text-[11px] font-medium text-slate-500 uppercase tracking-tighter">
+                    Super Admin
+                  </p>
+                </div>
+                <HiChevronDown
+                  className={`text-slate-400 transition-transform duration-200 ${isProfileOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              {isOpen && (
-                <div
-                  className="absolute bg-gray-300 z-999 rounded-md shadow-lg"
-                  style={{
-                    top: "150%",
-                    right: "calc(10% + 10px)",
-                    transform: "translateY(-50%)",
-                    minWidth: "150px",
-                  }}
-                  onClick={closeDropdown}
-                >
-                    {/* <Link
-                        className="block px-4 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900"
-                        to="/change-password"
-                      >
-                        &nbsp;Dashboard
-                      </Link>  */}
-                      <Link
-                        className="block px-4 py-2 w-full text-black hover:bg-blue-600 hover:text-slate-900"
-                        to="/change-password"
-                      >
-                        &nbsp;Change Password
-                      </Link>   
-                  <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-blue-600" onClick={handleLogout}>Log Out</a>
-          
-              
-                </div>
+
+              {isProfileOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setIsProfileOpen(false)}
+                  ></div>
+                  <div className="absolute right-0 mt-3 w-56 glass rounded-2xl shadow-2xl border border-slate-200/60 p-2 z-20 animate-in fade-in zoom-in-95 duration-200">
+                    <Link
+                      to="/change-password"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 rounded-xl transition-all font-medium"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      <HiLockClosed size={18} className="text-slate-400" />
+                      Change Password
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-3 px-4 py-3 w-full text-sm text-red-500 hover:bg-red-50 rounded-xl transition-all font-medium"
+                    >
+                      <HiLogout size={18} />
+                      Log Out
+                    </button>
+                  </div>
+                </>
               )}
-            </div>
             </div>
           </div>
         </header>
-        <main>
-          <Outlet />
+
+        {/* Dynamic Page Content */}
+        <main className="flex-1 overflow-y-auto bg-slate-50/50 p-6 md:p-8 custom-scrollbar">
+          <div className="max-w-[1400px] mx-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

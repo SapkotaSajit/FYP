@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchWithAuth } from "../../../auth/api";
+import { HiShieldCheck, HiArrowRight, HiArrowLeft } from "react-icons/hi";
 
 function CreateRole() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function CreateRole() {
     name: "",
     description: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,63 +19,94 @@ function CreateRole() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetchWithAuth("POST", "createRole", formData);
 
       if (response.status === 201) {
-      navigate("/admin/roles");
         toast.success("Role Created Successfully");
+        navigate("/admin/roles");
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message);
+        toast.error(errorData.message || "Failed to create role");
       }
     } catch (error) {
-      console.error("Error:", error.message);
+      toast.error("An error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="container  mx-auto px-4 my-6">
-      <div className="bg-white rounded-lg p-6 shadow-lg">
-      <h2 className="text-3xl text-center font-semibold text-gray-700 mb-4">Create Role</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex items-center gap-4 mb-8">
+        <Link
+          to="/admin/roles"
+          className="p-2 hover:bg-white rounded-xl text-slate-400 hover:text-blue-600 transition-all shadow-sm"
+        >
+          <HiArrowLeft size={20} />
+        </Link>
         <div>
-          <label htmlFor="roleName" className="block mb-2">
-            Role Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            autoFocus= "on"
-            className="w-full border focus:ring-2 focus:ring-blue-500 border-gray-300 rounded-md outline-none p-2"
-          />
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+            Create New Role
+          </h2>
+          <p className="text-slate-500 text-sm">
+            Define a new permission group for the system.
+          </p>
         </div>
-        <div>
-          <label htmlFor="description" className="block mb-2">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            required
-            onChange={handleChange}
-            className="w-full border outline-none focus:ring-2 focus:ring-blue-500 border-gray-300 rounded-md  p-2"
-          />
-        </div>
-        <div className="grid place-items-center">
+      </div>
+
+      <div className="glass rounded-3xl p-8 md:p-10 shadow-xl border border-slate-200/60 transition-all hover:shadow-2xl">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-bold text-slate-700 ml-1">
+              Role Name
+            </label>
+            <div className="relative group">
+              <HiShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors text-xl" />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Manager, Editor, etc."
+                className="input-field pl-12"
+                autoFocus
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-bold text-slate-700 ml-1">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+              rows="4"
+              placeholder="Briefly describe what this role can do..."
+              className="input-field py-3 min-h-[120px]"
+            />
+          </div>
+
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 mt-4 mb-6"
+            disabled={isLoading}
+            className="btn-primary w-full py-4 mt-4 flex items-center justify-center gap-2 group relative overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Create
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            ) : (
+              <>
+                <span>Create Role</span>
+                <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
           </button>
-        </div>
-      </form>
+        </form>
       </div>
     </div>
   );

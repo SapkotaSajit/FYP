@@ -1,54 +1,135 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import {
+  HiMail,
+  HiPhone,
+  HiLocationMarker,
+  HiArrowRight,
+} from "react-icons/hi";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-gray-900 text-white mt-36 mx-auto   ">
-      <div className="container mx-auto lg:w-4/5 py-12 px-4 ">
-        <div className="grid grid-cols-1  md:grid-cols-3 mx-auto gap-8  ">
-          <div className="col-span-1">
-            <h2 className="text-3xl font-bold">S.D Enterprises</h2>
-            <p className="text-gray-400 mt-4">You can follow us on.</p>
-            <div className="mt-6 flex space-x-3">
-              <a href="https://www.facebook.com/ganesh.dkl" target='_blank' className="text-white hover:text-blue-500">
-                <i className="fab fa-facebook fa-lg"></i>
+    <footer className="bg-slate-900 text-slate-300 pt-20 mt-20">
+      <div className="container mx-auto px-4 lg:w-4/5 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="bg-blue-600 p-2 rounded-lg">
+                <span className="text-xl font-bold text-white">S.D</span>
+              </div>
+              <span className="text-xl font-bold tracking-tight text-white">
+                Enterprises
+              </span>
+            </Link>
+            <p className="text-sm leading-relaxed text-slate-400">
+              Providing professional construction and guide services with a
+              commitment to excellence and reliability.
+            </p>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+              >
+                <FaFacebookF size={18} />
               </a>
-              <a href="https://x.com/" target='_blank' className="text-white hover:text-blue-500">
-                <i className="fab fa-twitter fa-lg"></i>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+              >
+                <FaTwitter size={18} />
               </a>
-              <a href="https://www.instagram.com/" target='_blank' className="text-white hover:text-blue-500">
-                <i className="fab fa-instagram fa-lg"></i>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+              >
+                <FaInstagram size={18} />
               </a>
             </div>
           </div>
-          <div className="col-span-2 md:col-span-2">
-            <div className="grid  grid-cols-1 md:grid-cols-2  gap-8 ">
 
-            <div className="col-span-1">
-                <h3 className="text-xl font-semibold mb-4">Explore</h3>
-                <div className="grid grid-cols-1 space-y-4">
-                  <a href="/" className="text-gray-400 nav w-fit">About us</a>
-                  <a href="homeServices" className="text-gray-400 nav w-fit">Services</a>
-                  <a href="guide" className="text-gray-400 nav w-fit">Guide</a>
-                  <a href="portfolio" className="text-gray-400 nav w-fit">Portfolio</a>
-                  <a href="contact" className="text-gray-400 nav w-fit">Contact</a>
-                </div>
-              </div>
+          {/* Explore Section */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-6">Explore</h3>
+            <ul className="space-y-4">
+              {[
+                { label: "About Us", path: "/" },
+                { label: "Services", path: "/homeServices" },
+                { label: "Guide", path: "/guide" },
+                { label: "Portfolio", path: "/portfolio" },
+              ].map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="text-sm hover:text-blue-500 hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-200"
+                  >
+                    <HiArrowRight className="text-blue-500" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              <div className="col-span-1">
-                <h3 className="text-xl font-semibold mb-4">Contact</h3>
-                <p className="text-gray-400">Get in touch with us.</p>
-                <p className="text-gray-400 mb-2">sapkotasajit05@gmail.com</p>
-                <p className="text-gray-400 mb-2">9841435289</p>
-              </div>
-             
-             
+          {/* Contact Section */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-6">Contact Us</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <HiLocationMarker className="text-blue-500 mt-1 flex-shrink-0" />
+                <span className="text-sm">
+                  Naya Baneshwor, Kathmandu, Nepal
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <HiPhone className="text-blue-500 flex-shrink-0" />
+                <span className="text-sm">9841435289</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <HiMail className="text-blue-500 flex-shrink-0" />
+                <span className="text-sm">sapkotasajit05@gmail.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter / CTA */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-6">Newsletter</h3>
+            <p className="text-sm mb-4 text-slate-400">
+              Subscribe to get the latest updates.
+            </p>
+            <div className="relative">
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="w-full bg-slate-800 border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              />
+              <button className="absolute right-2 top-2 bottom-2 bg-blue-600 text-white px-3 rounded-md hover:bg-blue-700 transition-colors">
+                Join
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <hr className="border-gray-800" />
-      <div className="bg-gray-800 text-center py-4">
-        <p className="text-gray-400">© 2024 S.D Enterprises. All rights reserved.</p>
+
+      {/* Copyright */}
+      <div className="border-t border-slate-800 py-8">
+        <div className="container mx-auto px-4 lg:w-4/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500 text-center">
+            © {currentYear} S.D Enterprises. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-xs text-slate-500">
+            <a href="#" className="hover:text-white transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              Terms of Service
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   );
