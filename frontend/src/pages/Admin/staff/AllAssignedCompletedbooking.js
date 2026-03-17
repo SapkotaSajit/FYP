@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 import {
   HiBadgeCheck,
   HiUser,
@@ -14,6 +15,7 @@ import { toast } from "react-toastify";
 const AssignedCompletedBookingsComponent = () => {
   const [assignedBookings, setAssignedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchAssignedBookings = async () => {
@@ -31,7 +33,7 @@ const AssignedCompletedBookingsComponent = () => {
       }
     };
     fetchAssignedBookings();
-  }, []);
+  }, [location.key]);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">

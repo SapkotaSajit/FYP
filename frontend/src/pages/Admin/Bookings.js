@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../auth/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 import {
   HiTrash,
   HiCalendar,
@@ -23,6 +24,7 @@ const AllBookings = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteBookingId, setDeleteBookingId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -52,6 +54,26 @@ const AllBookings = () => {
     setShowDeleteModal(false);
   };
 
+  const handleSelfAssign = async (bookingId) => {
+    try {
+      const adminId = Cookies.get("userId");
+      if (!adminId) {
+        toast.error("Session expired. Please login again.");
+        return;
+      }
+      await fetchWithAuth("POST", `assignBooking/${bookingId}`, {
+        userId: adminId,
+        bookingId,
+      });
+      setBookings(bookings.filter((booking) => booking.id !== bookingId));
+      toast.success("Task assigned to you successfully");
+      // Optionally navigate to see personal pending tasks if they exist
+      // navigate("/allPen");
+    } catch (error) {
+      toast.error("Failed to self-assign task");
+    }
+  };
+
   const filteredBookings = bookings.filter(
     (booking) =>
       booking.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -64,10 +86,10 @@ const AllBookings = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Recent Bookings
+            Unassigned Bookings
           </h2>
           <p className="text-slate-500 text-sm font-medium">
-            Manage all incoming service requests and assignments.
+            Review and assign new incoming service requests.
           </p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl border border-blue-100 font-bold text-xs uppercase tracking-widest">
@@ -182,11 +204,17 @@ const AllBookings = () => {
                     </td>
                     <td className="px-6 py-5 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => handleSelfAssign(booking.id)}
+                          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-emerald-200 active:scale-95"
+                        >
+                          Handle Myself
+                        </button>
                         <Link
                           to={`/admin/createAssignBooking/${booking.id}`}
                           className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95"
                         >
-                          Assign <HiChevronRight size={14} />
+                          Assign Staff <HiChevronRight size={14} />
                         </Link>
                         <button
                           className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"

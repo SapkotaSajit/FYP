@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
+import { useLocation } from "react-router-dom";
 import {
   HiXCircle,
   HiUser,
@@ -15,6 +16,7 @@ const AssignedRejectedBookingsComponentAdmin = () => {
   const [pendingBookings, setPendingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const fetchPendingBookings = async () => {
@@ -30,7 +32,7 @@ const AssignedRejectedBookingsComponentAdmin = () => {
     };
 
     fetchPendingBookings();
-  }, []);
+  }, [location.key]);
 
   const filteredBookings = pendingBookings.filter(
     (booking) =>

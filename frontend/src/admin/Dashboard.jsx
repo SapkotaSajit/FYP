@@ -44,10 +44,19 @@ function AdminDashboard() {
   ];
 
   const bookingSubItems = [
+    { label: "Unassigned", path: "bookings" },
+    { label: "Processing", path: "processBookings" },
     { label: "Pending", path: "allPen" },
     { label: "Accepted", path: "allAccept" },
     { label: "Rejected", path: "allReject" },
     { label: "Completed", path: "allCompleted" },
+  ];
+
+  const personalTaskItems = [
+    { label: "My Pending", path: "myPending" },
+    { label: "My Accepted", path: "myAccepted" },
+    { label: "My Rejected", path: "myRejected" },
+    { label: "My Completed", path: "myCompleted" },
   ];
 
   const guideItems = [
@@ -139,6 +148,28 @@ function AdminDashboard() {
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+
+            <div>
+              <p className="px-3 mb-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                My Operations
+              </p>
+              <div className="space-y-1">
+                {personalTaskItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive(item.path)
+                        ? "bg-emerald-600 text-white shadow-lg shadow-emerald-100"
+                        : "text-slate-600 hover:bg-white hover:text-emerald-600"
+                    }`}
+                  >
+                    <HiShieldCheck size={20} />
+                    <span className="font-semibold text-sm">{item.label}</span>
+                  </Link>
+                ))}
               </div>
             </div>
 

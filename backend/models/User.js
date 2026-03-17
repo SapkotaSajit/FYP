@@ -1,4 +1,3 @@
-
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 
@@ -10,7 +9,7 @@ const Users = db.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -21,7 +20,7 @@ const Users = db.define(
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -34,13 +33,14 @@ const Users = db.define(
       defaultValue: 2,
     },
     reset_code: {
-      type: DataTypes.INTEGER, 
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
   },
   {
     freezeTableName: true,
-  }
+    timestamps: false,
+  },
 );
 
 export default Users;

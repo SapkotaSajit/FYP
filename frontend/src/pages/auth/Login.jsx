@@ -53,7 +53,7 @@ function Login() {
         Cookies.set("userId", userId, { expires: 30 / 1440 });
 
         toast.success("Welcome back!");
-        navigate(roleId === 1 ? "/admin/roles" : "/");
+        navigate(roleId === 1 ? "/admin/dashboard" : "/");
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Invalid credentials");

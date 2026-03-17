@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 import {
   HiXCircle,
   HiUser,
@@ -15,9 +16,11 @@ import { toast } from "react-toastify";
 const AssignedRejectedBookingsComponent = () => {
   const [assignedBookings, setAssignedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchAssignedBookings = async () => {
+      setLoading(true);
       try {
         const userId = Cookies.get("userId");
         const response = await fetchWithAuth(
@@ -32,7 +35,7 @@ const AssignedRejectedBookingsComponent = () => {
       }
     };
     fetchAssignedBookings();
-  }, []);
+  }, [location.key]);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">

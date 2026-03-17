@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
+import { useLocation } from "react-router-dom";
 import {
   HiCheckCircle,
   HiUser,
@@ -16,6 +17,7 @@ const AssignedCompletedBookingsComponentAdmin = () => {
   const [pendingBookings, setPendingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const fetchPendingBookings = async () => {
@@ -31,7 +33,7 @@ const AssignedCompletedBookingsComponentAdmin = () => {
     };
 
     fetchPendingBookings();
-  }, []);
+  }, [location.key]);
 
   const filteredBookings = pendingBookings.filter(
     (booking) =>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   HiClock,
   HiUser,
@@ -17,9 +17,11 @@ const AllAssignedbooking = () => {
   const [assignedBookings, setAssignedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchAssignedBookings = async () => {
+      setLoading(true);
       try {
         const userId = Cookies.get("userId");
         const response = await fetchWithAuth(
@@ -34,7 +36,7 @@ const AllAssignedbooking = () => {
       }
     };
     fetchAssignedBookings();
-  }, []);
+  }, [location.key]);
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -46,8 +48,17 @@ const AllAssignedbooking = () => {
       if (response.status === 200 || response.ok) {
         toast.success(`Task status: ${newStatus}`);
         setAssignedBookings((prev) => prev.filter((b) => b.id !== id));
-        if (newStatus === "Accept") navigate("/staffs/acceptAssigned");
-        else if (newStatus === "Reject") navigate("/staffs/rejectAssigned");
+
+        const roleId = Cookies.get("roleId");
+        if (newStatus === "Accept") {
+          navigate(
+            roleId === "1" ? "/admin/myAccepted" : "/staffs/acceptAssigned",
+          );
+        } else if (newStatus === "Reject") {
+          navigate(
+            roleId === "1" ? "/admin/myRejected" : "/staffs/rejectAssigned",
+          );
+        }
       } else {
         toast.error("Status update failed");
       }

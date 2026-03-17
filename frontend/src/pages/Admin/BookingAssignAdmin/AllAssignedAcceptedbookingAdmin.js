@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
+import { useLocation } from "react-router-dom";
 import {
   HiCheckCircle,
   HiUser,
@@ -16,6 +17,7 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
   const [pendingBookings, setPendingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const fetchPendingBookings = async () => {
@@ -31,7 +33,7 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
     };
 
     fetchPendingBookings();
-  }, []);
+  }, [location.key]);
 
   const filteredBookings = pendingBookings.filter(
     (booking) =>
@@ -88,8 +90,8 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
                 <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
                   Schedule
                 </th>
-                <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  Service
+                <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
+                  Staff
                 </th>
                 <th className="px-6 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest text-right">
                   Status
@@ -154,10 +156,17 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-extrabold uppercase tracking-widest border border-blue-100">
-                        {booking.booking.service.name}
-                      </span>
+                    <td className="px-6 py-5 text-center">
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-extrabold uppercase tracking-widest">
+                          {booking.booking.service.name}
+                        </span>
+                        {booking.staff && (
+                          <span className="text-[9px] font-bold text-slate-400 flex items-center gap-1">
+                            <HiUser size={12} /> {booking.staff.name}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-5 text-right">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-xl text-[10px] font-black uppercase tracking-widest border border-emerald-200">

@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, Routes, useLocation, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import Cookies from "js-cookie";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -37,6 +43,7 @@ import AssignedRejectedBookingsComponent from "./pages/Admin/staff/AllAssignedRe
 import AssignedAcceptedBookingsComponent from "./pages/Admin/staff/AssignedAcceptedBookingsComponent";
 import AssignedCompletedBookingsComponent from "./pages/Admin/staff/AllAssignedCompletedbooking";
 import BookingAssignForm from "./pages/Admin/staff/BookingAssignForm";
+import StaffPanel from "./pages/Admin/staff/StaffPanel";
 import AllAssignedbooking from "./pages/Admin/staff/AllAssignedbooking";
 import ForgotPassword from "./components/Home/ForgotPassword";
 import ChangePassword from "./components/Home/ChangePassword";
@@ -437,6 +444,50 @@ function App() {
               />
             }
           />
+          <Route
+            path="myPending"
+            element={
+              <PrivateAdminRoute
+                element={<AllAssignedbooking />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="myAccepted"
+            element={
+              <PrivateAdminRoute
+                element={<AssignedAcceptedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="myRejected"
+            element={
+              <PrivateAdminRoute
+                element={<AssignedRejectedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="myCompleted"
+            element={
+              <PrivateAdminRoute
+                element={<AssignedCompletedBookingsComponent />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
         </Route>
         <Route
           path="/staffs"
@@ -449,6 +500,18 @@ function App() {
             />
           }
         >
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route
+            path="dashboard"
+            element={
+              <PrivateStaffRoute
+                element={<StaffPanel />}
+                authenticated={isAuthenticated()}
+                isStaff={isStaff()}
+                redirectTo="/login"
+              />
+            }
+          />
           <Route
             path="assignedUsers"
             element={

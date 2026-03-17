@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "../../../auth/api";
 import { Link } from "react-router-dom";
+import DeleteConfirmationModal from "../../../components/Home/DeleteConfirmationModal";
 import {
   HiPlus,
   HiPhone,
@@ -8,6 +9,7 @@ import {
   HiChatAlt2,
   HiSearch,
   HiFilter,
+  HiTrash,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
 
@@ -15,6 +17,7 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -35,6 +38,18 @@ const ContactList = () => {
     fetchContacts();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await fetchWithAuth("delete", `deleteContact/${id}`);
+      setContacts((prev) => prev.filter((c) => c.id !== id));
+      toast.success("Contact inquiry deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete contact inquiry");
+    } finally {
+      setDeleteModal({ isOpen: false, id: null });
+    }
+  };
+
   const filteredContacts = contacts.filter(
     (contact) =>
       contact.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -43,6 +58,11 @@ const ContactList = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <DeleteConfirmationModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, id: null })}
+        onConfirm={() => handleDelete(deleteModal.id)}
+      />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
@@ -53,13 +73,6 @@ const ContactList = () => {
             Review messages and requests from potential clients.
           </p>
         </div>
-        <Link
-          to="/admin/createContact"
-          className="btn-primary flex items-center gap-2 px-6 py-2.5 rounded-xl shadow-lg shadow-blue-100 group"
-        >
-          <HiPlus className="group-hover:rotate-90 transition-transform duration-300" />
-          <span>New Entry</span>
-        </Link>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 transition-all focus-within:shadow-md">
@@ -149,9 +162,20 @@ const ContactList = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 text-right">
-                      <button className="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-lg transition-colors border border-blue-100">
-                        Reply
-                      </button>
+                      <div className="flex items-center justify-end gap-2">
+                        <button className="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-lg transition-colors border border-blue-100">
+                          Reply
+                        </button>
+                        <button
+                          onClick={() =>
+                            setDeleteModal({ isOpen: true, id: contact.id })
+                          }
+                          className="text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-red-700 hover:bg-red-50 bg-red-50/50 px-3 py-1.5 rounded-lg transition-colors border border-red-100 flex items-center gap-1"
+                        >
+                          <HiTrash size={12} />
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
