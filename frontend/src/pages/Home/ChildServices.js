@@ -57,7 +57,7 @@ const ServiceDetails = () => {
       <Nav />
 
       {/* Hero Header */}
-      <header className="relative py-24 overflow-hidden bg-slate-900 text-white">
+      <header className="relative pt-32 pb-24 overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-3xl">

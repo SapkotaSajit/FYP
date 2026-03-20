@@ -73,7 +73,7 @@ function Contact() {
       <Nav />
 
       {/* Map Section */}
-      <section className="relative group pt-20">
+      <section className="relative group pt-32">
         <div
           className={`relative w-full overflow-hidden transition-all duration-700 ease-in-out ${isOpen ? "h-[70vh]" : "h-96"}`}
         >
@@ -178,7 +178,7 @@ function Contact() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="John Doe"
+                        placeholder="Your Full Name"
                         className={`w-full bg-white/50 border ${errors.name ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none`}
                       />
                       {errors.name && (
@@ -196,7 +196,7 @@ function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="john@enterprise.com"
+                        placeholder="Your Email Address"
                         className={`w-full bg-white/50 border ${errors.email ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none`}
                       />
                       {errors.email && (
@@ -215,7 +215,7 @@ function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+977 123 456 789"
+                      placeholder="98XXXXXXXX"
                       className={`w-full bg-white/50 border ${errors.phone ? "border-red-300" : "border-slate-200"} rounded-2xl px-6 py-4 font-bold text-slate-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none`}
                     />
                     {errors.phone && (

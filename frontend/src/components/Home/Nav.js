@@ -28,6 +28,17 @@ function Nav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setProfileIsOpen(!isProfileOpen);
   const closeDropdown = () => setProfileIsOpen(false);
@@ -255,7 +266,7 @@ function Nav() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-0 top-[70px] bg-white/95 backdrop-blur-3xl z-40 animate-in slide-in-from-right duration-500 border-t border-slate-100">
+          <div className="lg:hidden fixed inset-0 top-[70px] bg-white z-[60] overflow-y-auto animate-in slide-in-from-right duration-500 border-t border-slate-100">
             <ul className="flex flex-col p-8 gap-3">
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
                 Navigational Matrix

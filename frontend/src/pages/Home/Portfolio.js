@@ -11,7 +11,7 @@ function Portfolio() {
   return (
     <div className="bg-slate-50 min-h-screen">
       <Nav />
-      <main className="pt-24 pb-12 overflow-hidden">
+      <main className="pt-32 pb-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
             <Fade direction="up" triggerOnce>

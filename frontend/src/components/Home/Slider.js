@@ -29,7 +29,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 1"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Quality Waterproofing Solutions
@@ -67,7 +67,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 2"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Premium Waterproofing Solutions
@@ -103,7 +103,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 3"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Efficient Waterproofing Solutions
@@ -139,7 +139,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 4"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Durable Waterproofing Solutions
@@ -176,7 +176,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 5"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Reliable Waterproofing Solutions
@@ -212,7 +212,7 @@ export default function Slider() {
             className="w-full h-full object-cover"
             alt="Slide 6"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 flex flex-col justify-center items-center pt-32">
             <Fade direction="up" cascade delay={500}>
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4">
                 Professional Waterproofing Services
