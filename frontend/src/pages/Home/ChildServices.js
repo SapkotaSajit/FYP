@@ -12,6 +12,7 @@ import {
   HiChevronDown,
   HiChevronUp,
 } from "react-icons/hi";
+import { FaWhatsapp } from "react-icons/fa";
 
 const ServiceDetails = () => {
   const { parentId } = useParams();
@@ -147,12 +148,24 @@ const ServiceDetails = () => {
                     )}
                   </button>
 
-                  <Link
-                    to={`/booking/${service.id}`}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 active:scale-95 flex items-center gap-2"
-                  >
-                    Book Now <HiArrowRight />
-                  </Link>
+                  <div className="flex items-center gap-3 mt-auto pt-6 border-t border-slate-50">
+                    <Link
+                      to={`/booking/${service.id}`}
+                      className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 active:scale-95 flex items-center justify-center gap-2"
+                    >
+                      Book Now <HiArrowRight />
+                    </Link>
+
+                    <a
+                      href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/booking/${service.id}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95 flex items-center justify-center"
+                      title="Query on WhatsApp"
+                    >
+                      <FaWhatsapp size={18} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

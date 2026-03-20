@@ -12,6 +12,7 @@ import {
   HiChevronUp,
   HiInformationCircle,
 } from "react-icons/hi";
+import { FaWhatsapp } from "react-icons/fa";
 
 const AllServicesWithParent = () => {
   const [services, setServices] = useState([]);
@@ -140,6 +141,16 @@ const AllServicesWithParent = () => {
                       >
                         Learn More <HiArrowRight />
                       </Link>
+
+                      <a
+                        href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/childServices/${service.id}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95"
+                        title="Query on WhatsApp"
+                      >
+                        <FaWhatsapp size={20} />
+                      </a>
                     </div>
                   </div>
                 </div>
