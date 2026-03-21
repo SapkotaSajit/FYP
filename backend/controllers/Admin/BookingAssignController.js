@@ -48,7 +48,7 @@ export const createBookingAssign = async (req, res) => {
       booking_id: bookingId,
     });
     await Booking.update(
-      { status: "1" },
+      { status: true },
       {
         where: { id: bookingId },
       },

@@ -34,7 +34,7 @@ const formatBooking = (booking) => {
 export const getAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.findAll({
-      where: { status: 0 },
+      where: { status: false },
       include: [
         { model: User, attributes: ["id", "name", "email", "phone"] },
         { model: Service, attributes: ["id", "name"] },
@@ -52,7 +52,7 @@ export const getAllBookings = async (req, res) => {
 export const getAllProcessingBookings = async (req, res) => {
   try {
     const bookings = await Booking.findAll({
-      where: { status: 1 },
+      where: { status: true },
       include: [
         { model: User, attributes: ["id", "name", "email", "phone"] },
         { model: Service, attributes: ["id", "name"] },
@@ -61,11 +61,9 @@ export const getAllProcessingBookings = async (req, res) => {
     res.status(200).json(bookings.map(formatBooking));
   } catch (error) {
     console.error("Error fetching processing bookings:", error);
-    res
-      .status(500)
-      .json({
-        message: "Internal synchronization error fetching processing bookings",
-      });
+    res.status(500).json({
+      message: "Internal synchronization error fetching processing bookings",
+    });
   }
 };
 
