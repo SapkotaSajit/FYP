@@ -54,7 +54,7 @@ const Guide = () => {
                   got you covered.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                  {/* <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
                     <span className="text-2xl font-black text-blue-500 tracking-tighter">
                       100+
                     </span>
@@ -63,7 +63,7 @@ const Guide = () => {
                       <br />
                       Guides
                     </span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
                     <span className="text-2xl font-black text-blue-500 tracking-tighter">
                       24/7

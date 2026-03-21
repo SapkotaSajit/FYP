@@ -80,7 +80,7 @@ const AllServicesWithParent = () => {
                   </div>
                   <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
                     <span className="text-2xl font-black text-blue-500 tracking-tighter">
-                      500+
+                      100+
                     </span>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
                       Projects
