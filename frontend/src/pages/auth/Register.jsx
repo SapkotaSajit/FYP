@@ -71,11 +71,14 @@ function Register() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || "http://localhost:5000"}`}/api/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
 
       if (response.ok) {
         const successData = await response.json();
@@ -124,7 +127,7 @@ function Register() {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="John Doe"
+                      placeholder="Enter your full name"
                       className={`input-field pl-12 ${errors.name ? "border-red-500 focus:ring-red-500/20" : ""}`}
                       autoFocus
                     />
@@ -149,7 +152,7 @@ function Register() {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="john@example.com"
+                        placeholder="Enter your email"
                         className={`input-field pl-12 ${errors.email ? "border-red-500 focus:ring-red-500/20" : ""}`}
                       />
                     </div>
