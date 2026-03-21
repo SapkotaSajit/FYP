@@ -19,6 +19,8 @@ import {
   HiPhotograph,
   HiChatAlt2,
   HiShieldCheck,
+  HiViewGrid,
+  HiMenuAlt3,
 } from "react-icons/hi";
 
 function Nav() {
@@ -40,12 +42,12 @@ function Nav() {
   useEffect(() => {
     const fetchPageSettings = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/page-settings`,
-        );
-        setPageSettings(response.data || []);
+        const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+        const response = await axios.get(`${apiUrl}/api/page-settings`);
+        setPageSettings(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Error fetching page settings:", error);
+        setPageSettings([]);
       }
     };
     fetchPageSettings();
@@ -102,304 +104,275 @@ function Nav() {
       icon: <HiChatAlt2 />,
     },
   ].filter((link) => {
-    if (link.key === "home") return true; // Always show Home
+    if (link.key === "home") return true;
+    if (!Array.isArray(pageSettings) || pageSettings.length === 0) return true;
     const setting = pageSettings.find((s) => s.page_key === link.key);
-    return setting ? setting.is_active : true; // Show by default if setting missing
+    return setting ? setting.is_active : true;
   });
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-      {/* Top Bar */}
+    <header className="fixed top-0 left-0 right-0 z-[100]">
+      {/* Top Bar - Premium Desktop View */}
       <div
-        className={`bg-slate-900 text-slate-300 transition-all duration-500 ease-in-out origin-top border-b border-white/5 ${
-          scrolled ? "h-0 opacity-0 -translate-y-full" : "h-11 opacity-100 py-0"
+        className={`bg-slate-900 text-white/90 transition-all duration-500 hidden sm:block overflow-hidden ${
+          scrolled ? "h-0 opacity-0" : "h-10 opacity-100"
         }`}
       >
-        <div className="container mx-auto px-6 h-full flex justify-between items-center text-[10px] font-black uppercase tracking-[0.15em]">
-          <div className="flex gap-8 items-center h-full">
+        <div className="container mx-auto px-6 h-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+          <div className="flex items-center gap-8">
             <a
-              href="mailto:sapkotasajit2@gmail.com"
-              className="flex items-center gap-2.5 hover:text-blue-400 transition-colors"
+              href="mailto:sdenterprise10@gmail.com"
+              className="flex items-center gap-2 hover:text-blue-400 transition-colors"
             >
-              <HiMail className="text-blue-500 text-lg opacity-80" />
-              sapktosajit2@gmail.com
+              <HiMail size={14} className="text-blue-500" />
+              sdenterprise10@gmail.com
             </a>
-            <span className="hidden md:flex items-center gap-2.5 text-slate-500">
-              <HiLocationMarker className="text-blue-500 text-lg opacity-80" />
-              New Baneshwor, Nepal
+            <span className="hidden lg:flex items-center gap-2 text-slate-400">
+              <HiLocationMarker size={14} className="text-blue-500" />
+              Basundhara, Kathmandu
             </span>
           </div>
-          <div className="flex items-center gap-6 h-full">
-            {!isLoggedIn() ? (
-              <div className="flex gap-4">
-                <Link
-                  to="/login"
-                  className="hover:text-white transition-colors py-2"
-                >
-                  Gateway Access
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center gap-4 animate-in fade-in duration-700">
-                <span className="text-blue-500/80 hidden sm:inline-block">
-                  System Active
-                </span>
-                {(isAdmin() || isStaff()) && (
-                  <Link
-                    to={isAdmin() ? "/admin/dashboard" : "/staffs"}
-                    className="px-4 py-1.5 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg transition-all border border-blue-500/30 text-[9px] shadow-lg shadow-blue-500/10"
-                  >
-                    Control Console
-                  </Link>
-                )}
-              </div>
-            )}
+          <div className="flex items-center gap-6">
+            <a
+              href="tel:9851351110"
+              className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <HiPhone size={14} />
+              +977 9851351110
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Main Nav */}
+      {/* Main Navigation */}
       <nav
-        className={`transition-all duration-500 ease-in-out ${
+        className={`w-full transition-all duration-500 ${
           scrolled
-            ? "glass py-2 shadow-2xl shadow-slate-900/5 backdrop-blur-3xl bg-white/80 border-b border-white/40 border-t-0"
-            : "bg-white/95 py-3.5 shadow-sm border-b border-slate-100"
+            ? "bg-white/95 backdrop-blur-md py-3 shadow-xl border-b border-slate-100"
+            : "bg-white py-4 md:py-6"
         }`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3.5 group">
-            <div className="bg-slate-900 p-2.5 rounded-2xl group-hover:rotate-[15deg] transition-all duration-500 shadow-xl shadow-slate-200 border border-white/10 group-hover:scale-105 active:scale-95">
-              <span className="text-xl font-black text-white px-1">SD</span>
+        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center gap-2 md:gap-3 group">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-xl shadow-slate-200 group-hover:bg-blue-600 transition-all duration-300 group-hover:-rotate-6">
+              <span className="text-sm md:text-base font-black tracking-tighter">
+                SD
+              </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tighter text-slate-900 leading-none">
+              <span className="text-base md:text-xl font-black text-slate-900 leading-none tracking-tight group-hover:text-blue-600 transition-colors">
                 S.D
               </span>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 leading-none mt-1 opacity-80">
+              <span className="text-[8px] md:text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mt-0.5">
                 Enterprises
               </span>
             </div>
           </Link>
 
-          {/* Desktop Links */}
-          <ul className="hidden lg:flex items-center gap-10">
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => (
-              <li key={link.path}>
-                <Link
-                  to={link.path}
-                  className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all relative group py-2 ${
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-xs xl:text-sm font-bold transition-all relative py-2 group ${
+                  location.pathname === link.path
+                    ? "text-blue-600"
+                    : "text-slate-600 hover:text-blue-600"
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${
                     location.pathname === link.path
-                      ? "text-slate-900"
-                      : "text-slate-500 hover:text-slate-900"
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
                   }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-1 bg-blue-600 transition-all duration-500 rounded-full ${
-                      location.pathname === link.path
-                        ? "w-full"
-                        : "w-0 group-hover:w-full"
-                    }`}
-                  ></span>
-                </Link>
-              </li>
+                ></span>
+              </Link>
             ))}
-          </ul>
 
-          {/* Actions */}
-          <div className="flex items-center gap-6">
-            <div className="hidden xl:flex items-center gap-4 border-l pl-8 border-slate-200/60 h-10">
-              <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200/40">
-                <HiPhone className="text-slate-900 text-lg opacity-80" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-black">
-                  Elite Hub
-                </span>
-                <a
-                  href="tel:9841435289"
-                  className="text-xs font-black text-slate-900 hover:text-blue-600 transition-colors tracking-widest"
-                >
-                  9841435289
-                </a>
-              </div>
-            </div>
+            <div className="h-8 w-px bg-slate-200 mx-2"></div>
 
-            {/* Profile / Auth Toggle */}
             {isLoggedIn() ? (
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
-                  className={`flex items-center gap-2.5 p-1 rounded-2xl hover:bg-slate-50 transition-all border border-transparent ${
-                    isProfileOpen ? "bg-slate-50 border-slate-100" : ""
+                  className={`flex items-center gap-2 p-1 rounded-xl hover:bg-slate-50 transition-all ${
+                    isProfileOpen ? "bg-slate-50" : ""
                   }`}
                 >
-                  <div className="w-10 h-10 rounded-[1rem] bg-slate-900 flex items-center justify-center text-white border-4 border-white shadow-xl overflow-hidden transition-transform active:scale-95">
-                    <img
-                      src="https://ui-avatars.com/api/?name=User&background=0F172A&color=fff&bold=true"
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-100">
+                    {isAdmin() ? "AD" : "ST"}
                   </div>
                   <HiChevronDown
-                    className={`text-slate-400 text-lg transition-transform duration-500 ${
+                    className={`text-slate-400 transition-transform duration-300 ${
                       isProfileOpen ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-4 w-64 glass rounded-[2rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] p-2.5 animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-300 origin-top-right border border-white/80 bg-white/90 backdrop-blur-3xl">
-                    <div className="px-4 py-4 mb-2 bg-slate-50/50 rounded-[1.5rem] border border-slate-100/50">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
-                        Authorized Node
+                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 z-[110] animate-in fade-in zoom-in-95 duration-200">
+                    <div className="px-3 py-2 border-b border-slate-50 mb-2">
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                        Operator
                       </p>
-                      <p className="text-sm font-black text-slate-900">
-                        System Operator
+                      <p className="text-xs font-bold text-slate-900">
+                        {isAdmin() ? "Administrator" : "Staff Member"}
                       </p>
                     </div>
-
-                    {(isAdmin() || isStaff()) && (
-                      <Link
-                        to={isAdmin() ? "/admin/dashboard" : "/staffs"}
-                        className="flex items-center gap-4 px-5 py-3.5 text-xs font-bold text-slate-700 hover:bg-blue-600 hover:text-white rounded-[1.2rem] transition-all mb-1 group"
-                        onClick={closeDropdown}
-                      >
-                        <div className="w-8 h-8 rounded-xl bg-blue-50 group-hover:bg-blue-500/20 flex items-center justify-center text-blue-600 group-hover:text-white transition-colors">
-                          <HiUser className="text-lg opacity-80" />
-                        </div>
-                        Control Dashboard
-                      </Link>
-                    )}
                     <Link
-                      to="/change-password"
-                      className="flex items-center gap-4 px-5 py-3.5 text-xs font-bold text-slate-700 hover:bg-blue-600 hover:text-white rounded-[1.2rem] transition-all mb-1 group"
+                      to={isAdmin() ? "/admin/dashboard" : "/staffs"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
                       onClick={closeDropdown}
                     >
-                      <div className="w-8 h-8 rounded-xl bg-orange-50 group-hover:bg-orange-500/20 flex items-center justify-center text-orange-600 group-hover:text-white transition-colors">
-                        <HiLockClosed className="text-lg opacity-80" />
-                      </div>
-                      Identity Security
+                      <HiViewGrid size={16} />
+                      Dashboard
                     </Link>
-
-                    <div className="h-px bg-slate-100 my-2 mx-3"></div>
-
+                    <Link
+                      to="/change-password"
+                      className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
+                      onClick={closeDropdown}
+                    >
+                      <HiLockClosed size={16} />
+                      Security
+                    </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex w-full items-center gap-4 px-5 py-3.5 text-xs font-bold text-red-600 hover:bg-red-500 hover:text-white rounded-[1.2rem] transition-all group"
+                      className="flex items-center gap-3 px-4 py-2.5 w-full text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-red-50 group-hover:bg-white/20 flex items-center justify-center transition-colors">
-                        <HiLogout className="text-lg opacity-80" />
-                      </div>
-                      Terminate Session
+                      <HiLogout size={16} />
+                      Logout
                     </button>
                   </div>
                 )}
+                <div
+                  className="fixed inset-0 z-[-1]"
+                  onClick={closeDropdown}
+                ></div>
               </div>
             ) : (
               <Link
                 to="/login"
-                className="btn-primary py-3 px-8 text-[11px] font-black uppercase tracking-[0.2em] hidden sm:flex items-center gap-2 rounded-2xl shadow-xl shadow-blue-500/20 border-b-4 border-blue-800 active:border-b-0 active:translate-y-1 transition-all"
+                className="px-6 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-xs hover:bg-blue-600 transition-all shadow-lg shadow-slate-200 active:scale-95"
               >
-                Launch Platform
+                Launch Console
               </Link>
             )}
+          </div>
 
-            {/* Mobile Toggle */}
-            <button
-              onClick={toggleMenu}
-              className="lg:hidden p-3 rounded-2xl bg-slate-100 text-slate-900 hover:bg-slate-200 transition-all active:scale-95"
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={toggleMenu}
+            className="lg:hidden p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all border border-slate-200 active:scale-90"
+          >
+            {isOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`lg:hidden fixed inset-0 bg-white z-[200] transition-all duration-500 ease-in-out transform ${
+          isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+        }`}
+      >
+        <div className="flex flex-col h-full overflow-y-auto">
+          {/* Mobile Menu Header */}
+          <div className="flex items-center justify-between p-6 bg-white sticky top-0 z-[10]">
+            <Link
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3"
             >
-              {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-lg">
+                <span className="text-sm font-black">SD</span>
+              </div>
+              <span className="text-sm font-black text-slate-900 uppercase tracking-widest">
+                Enterprises
+              </span>
+            </Link>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2.5 rounded-xl bg-slate-100 text-slate-600"
+            >
+              <HiX size={24} />
             </button>
           </div>
-        </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="lg:hidden fixed inset-0 top-0 bg-white z-[60] overflow-y-auto animate-in fade-in slide-in-from-top duration-500">
-            <div className="flex flex-col h-full min-h-screen">
-              {/* Mobile Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-slate-100">
+          {/* Mobile Menu Links */}
+          <div className="px-6 py-8 flex-1">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8 border-l-4 border-blue-600 pl-4 leading-none">
+              Navigation
+            </p>
+            <div className="space-y-4">
+              {navLinks.map((link) => (
                 <Link
-                  to="/"
-                  className="flex items-center gap-3"
+                  key={link.path}
+                  to={link.path}
                   onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-5 p-4 rounded-2xl transition-all border ${
+                    location.pathname === link.path
+                      ? "bg-blue-600 text-white border-blue-600 shadow-xl shadow-blue-100"
+                      : "bg-white text-slate-700 border-slate-100 hover:border-blue-200"
+                  }`}
                 >
-                  <div className="bg-slate-900 p-2 rounded-xl shadow-lg">
-                    <span className="text-sm font-black text-white px-1">
-                      SD
-                    </span>
+                  <div
+                    className={`text-xl ${location.pathname === link.path ? "text-white" : "text-blue-600"}`}
+                  >
+                    {link.icon}
                   </div>
-                  <span className="text-sm font-black text-slate-900 uppercase tracking-widest">
-                    Enterprises
+                  <span className="text-base font-bold tracking-tight">
+                    {link.label}
                   </span>
                 </Link>
-                <button
+              ))}
+            </div>
+
+            <div className="mt-12">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8 border-l-4 border-slate-900 pl-4 leading-none">
+                System Access
+              </p>
+              {isLoggedIn() ? (
+                <div className="grid grid-cols-2 gap-4">
+                  <Link
+                    to={isAdmin() ? "/admin/dashboard" : "/staffs"}
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center gap-3 p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-900"
+                  >
+                    <HiViewGrid size={24} className="text-blue-600" />
+                    <span className="text-xs font-bold">Dashboard</span>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex flex-col items-center gap-3 p-6 bg-red-50 rounded-2xl border border-red-100 text-red-600"
+                  >
+                    <HiLogout size={24} />
+                    <span className="text-xs font-bold">Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="p-3 rounded-2xl bg-slate-100 text-slate-900 hover:bg-slate-200 transition-all"
+                  className="flex items-center justify-center gap-3 w-full py-5 bg-slate-900 text-white rounded-2xl font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all"
                 >
-                  <HiX size={24} />
-                </button>
-              </div>
-
-              <div className="p-8 pb-32">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">
-                  Core Navigation
-                </p>
-                <ul className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <li key={link.path}>
-                      <Link
-                        to={link.path}
-                        className={`group flex items-center gap-5 p-5 rounded-[1.8rem] transition-all border shadow-sm ${
-                          location.pathname === link.path
-                            ? "bg-blue-600 text-white border-blue-600 shadow-blue-200 shadow-xl"
-                            : "bg-white text-slate-900 border-slate-100 hover:border-blue-200"
-                        }`}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <div
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl transition-colors ${
-                            location.pathname === link.path
-                              ? "bg-white/20"
-                              : "bg-slate-50 group-hover:bg-blue-50 text-slate-400 group-hover:text-blue-600"
-                          }`}
-                        >
-                          {link.icon}
-                        </div>
-                        <span className="text-lg font-black tracking-tight">
-                          {link.label}
-                        </span>
-                        {location.pathname === link.path && (
-                          <div className="ml-auto w-2 h-2 rounded-full bg-white animate-pulse"></div>
-                        )}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-
-                {!isLoggedIn() && (
-                  <div className="mt-12">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">
-                      Secure Access
-                    </p>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center gap-3 w-full py-6 bg-slate-900 text-white rounded-[2rem] font-black uppercase tracking-widest text-sm shadow-2xl active:scale-98 transition-all"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <HiShieldCheck className="text-blue-500 text-xl" />
-                      Launch Platform
-                    </Link>
-                  </div>
-                )}
-              </div>
+                  <HiShieldCheck size={18} className="text-blue-500" />
+                  Launch Console
+                </Link>
+              )}
             </div>
           </div>
-        )}
-      </nav>
+
+          <div className="p-8 bg-slate-50 border-t border-slate-100">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
+              © 2024 S.D Enterprises • Bassundhara
+            </p>
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

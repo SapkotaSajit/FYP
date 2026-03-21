@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { fetchApi } from "../../auth/api_two";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
-import { Fade } from "react-awesome-reveal";
 import ServiceSlider from "../../components/Home/ServiceSlider";
 import {
   HiCollection,
@@ -17,7 +16,7 @@ import { FaWhatsapp } from "react-icons/fa";
 const AllServicesWithParent = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
+  const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || "http://localhost:5000"}`}/`;
 
   useEffect(() => {
     const fetchServicesWithParent = async () => {
@@ -51,45 +50,42 @@ const AllServicesWithParent = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-transparent z-10"></div>
-            <div className="relative z-20 px-8 py-24 md:px-16 md:py-32 flex flex-col items-start max-w-3xl">
-              <Fade direction="up" triggerOnce>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
-                  Professional Solutions
-                </div>
-                <h1 className="text-3xl md:text-7xl font-black text-white leading-tight md:leading-[1.05] mb-6 md:mb-8 tracking-tight">
-                  World-class{" "}
-                  <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
-                    Waterproofing
+            <div className="relative z-20 px-6 py-16 md:px-16 md:py-32 flex flex-col items-start max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 backdrop-blur-md">
+                Professional Solutions
+              </div>
+              <h1 className="text-3xl md:text-7xl font-black text-white leading-tight md:leading-[1.05] mb-4 md:mb-8 tracking-tight">
+                World-class{" "}
+                <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
+                  Waterproofing
+                </span>
+              </h1>
+              <p className="text-slate-300 text-sm md:text-xl font-medium leading-relaxed mb-6 md:mb-10 max-w-xl">
+                From chemical injection to structural membrane installation, our
+                advanced methods protect your investment from the inside out.
+              </p>
+              <div className="flex flex-wrap gap-3 md:gap-4">
+                <div className="flex items-center gap-3 px-4 py-2.5 md:px-6 md:py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                  <span className="text-xl md:text-2xl font-black text-blue-500 tracking-tighter">
+                    15+
                   </span>
-                </h1>
-                <p className="text-slate-300 text-sm md:text-xl font-medium leading-relaxed mb-8 md:mb-10 max-w-xl">
-                  From chemical injection to structural membrane installation,
-                  our advanced methods protect your investment from the inside
-                  out.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
-                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
-                      15+
-                    </span>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                      Years of
-                      <br className="hidden md:block" />
-                      Excellence
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
-                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
-                      100+
-                    </span>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
-                      Projects
-                      <br className="hidden md:block" />
-                      Completed
-                    </span>
-                  </div>
+                  <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                    Years of
+                    <br className="hidden md:block" />
+                    Excellence
+                  </span>
                 </div>
-              </Fade>
+                <div className="flex items-center gap-3 px-4 py-2.5 md:px-6 md:py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                  <span className="text-xl md:text-2xl font-black text-blue-500 tracking-tighter">
+                    100+
+                  </span>
+                  <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                    Projects
+                    <br className="hidden md:block" />
+                    Completed
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* Decorative element */}
@@ -101,8 +97,8 @@ const AllServicesWithParent = () => {
       </main>
 
       {/* Services Grid */}
-      <main className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 pb-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {loading ? (
             Array(6)
               .fill(0)

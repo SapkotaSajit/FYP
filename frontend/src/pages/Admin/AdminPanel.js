@@ -251,7 +251,7 @@ function AdminPanel() {
                       <p className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
                         {contact.name}
                       </p>
-                      <p className="text-[10px] text-slate-500 font-medium truncate max-w-[150px]">
+                      <p className="text-[10px] text-slate-500 font-medium truncate max-w-[100px] sm:max-w-[150px]">
                         {contact.email}
                       </p>
                     </div>

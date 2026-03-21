@@ -23,12 +23,32 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
 function AdminDashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isBookingsOpen, setIsBookingsOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Handle window resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(true);
+      } else {
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Auto-close sidebar on mobile when route changes
+  React.useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     Cookies.remove("accessToken");
@@ -90,18 +110,18 @@ function AdminDashboard() {
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden animate-in fade-in duration-300"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden transition-opacity"
           onClick={() => setIsSidebarOpen(false)}
         ></div>
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 transition-all duration-300 ease-in-out ${
-          isSidebarOpen ? "w-72" : "w-0 -translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 transition-all duration-300 ease-in-out w-72 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0`}
       >
-        <div className="h-full glass border-r border-slate-200/60 flex flex-col p-6 overflow-y-auto custom-scrollbar">
+        <div className="h-full glass border-r border-slate-200/60 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-white">
           <div className="flex items-center justify-between gap-3 mb-10 px-2">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
@@ -302,7 +322,7 @@ function AdminDashboard() {
                     className="fixed inset-0 z-10"
                     onClick={() => setIsProfileOpen(false)}
                   ></div>
-                  <div className="absolute right-0 mt-3 w-56 glass rounded-2xl shadow-2xl border border-slate-200/60 p-2 z-20 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-200/60 p-2 z-50 animate-in fade-in zoom-in-95 duration-200">
                     <Link
                       to="/change-password"
                       className="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 rounded-xl transition-all font-medium"

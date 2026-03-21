@@ -1,5 +1,4 @@
 import React from "react";
-import { Fade } from "react-awesome-reveal";
 
 const NotableProjects = ({ projects: dynamicProjects }) => {
   const staticProjects = [
@@ -66,33 +65,34 @@ const NotableProjects = ({ projects: dynamicProjects }) => {
           ...p,
           image: p.image?.startsWith("http")
             ? p.image
-            : `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/${p.image}`,
+            : `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || "http://localhost:5000"}`}/${p.image}`,
         }))
       : staticProjects;
 
   return (
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
         {projects.map((project, index) => (
-          <Fade key={index} direction="up" duration={1000} triggerOnce>
-            <div className="group bg-white rounded-[3rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 h-full hover:-translate-y-2">
-              <div className="h-80 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100 p-8">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-1000 group-hover:scale-110"
-                />
-              </div>
-              <div className="p-10">
-                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-blue-600 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
+          <div
+            key={index}
+            className="group bg-white rounded-[2rem] md:rounded-[3rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 h-full hover:-translate-y-2"
+          >
+            <div className="h-64 md:h-80 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100 p-6 md:p-8">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-1000 group-hover:scale-110"
+              />
             </div>
-          </Fade>
+            <div className="p-6 md:p-10">
+              <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 md:mb-4 tracking-tight group-hover:text-blue-600 transition-colors">
+                {project.title}
+              </h3>
+              <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+          </div>
         ))}
       </div>
     </div>
