@@ -14,46 +14,53 @@ import PageSetting from "./models/PageSetting.js";
 dotenv.config();
 const app = express();
 
-try {
-  await db.authenticate();
-  console.log("Database Connected");
+// Initialize Database asynchronously without blocking the ES Module export
+(async () => {
+  try {
+    await db.authenticate();
+    console.log("Database Connected");
 
-  // Sync all models (creates tables if they don't exist, preserves existing data)
-  await db.sync();
+    // Sync all models (creates tables if they don't exist, preserves existing data)
+    await db.sync();
 
-  // Seed roles if they don't exist
-  const rolesCount = await Role.count();
-  if (rolesCount === 0) {
-    await Role.bulkCreate([
-      { id: 1, name: "Admin", description: "Administrator with full access" },
-      { id: 2, name: "User", description: "Standard user" },
-      { id: 3, name: "Staff", description: "Staff member" },
-    ]);
-    console.log("Default roles seeded.");
-  }
-
-  // Seed Page Settings if they don't exist
-  const defaultPageSettings = [
-    { page_key: "portfolio", display_name: "Portfolio", is_active: true },
-    { page_key: "services", display_name: "Services", is_active: true },
-    { page_key: "guides", display_name: "Guides", is_active: true },
-    { page_key: "why_us", display_name: "Why Us", is_active: true },
-    { page_key: "testimonials", display_name: "Testimonials", is_active: true },
-    { page_key: "contact", display_name: "Contact", is_active: true },
-  ];
-
-  for (const setting of defaultPageSettings) {
-    const [pageSetting, created] = await PageSetting.findOrCreate({
-      where: { page_key: setting.page_key },
-      defaults: setting,
-    });
-    if (created) {
-      console.log(`Page setting created for: ${setting.page_key}`);
+    // Seed roles if they don't exist
+    const rolesCount = await Role.count();
+    if (rolesCount === 0) {
+      await Role.bulkCreate([
+        { id: 1, name: "Admin", description: "Administrator with full access" },
+        { id: 2, name: "User", description: "Standard user" },
+        { id: 3, name: "Staff", description: "Staff member" },
+      ]);
+      console.log("Default roles seeded.");
     }
+
+    // Seed Page Settings if they don't exist
+    const defaultPageSettings = [
+      { page_key: "portfolio", display_name: "Portfolio", is_active: true },
+      { page_key: "services", display_name: "Services", is_active: true },
+      { page_key: "guides", display_name: "Guides", is_active: true },
+      { page_key: "why_us", display_name: "Why Us", is_active: true },
+      {
+        page_key: "testimonials",
+        display_name: "Testimonials",
+        is_active: true,
+      },
+      { page_key: "contact", display_name: "Contact", is_active: true },
+    ];
+
+    for (const setting of defaultPageSettings) {
+      const [pageSetting, created] = await PageSetting.findOrCreate({
+        where: { page_key: setting.page_key },
+        defaults: setting,
+      });
+      if (created) {
+        console.log(`Page setting created for: ${setting.page_key}`);
+      }
+    }
+  } catch (error) {
+    console.log("Database Error:", error);
   }
-} catch (error) {
-  console.log(error);
-}
+})();
 
 app.use(
   cors({
