@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
@@ -21,6 +21,7 @@ function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [pageSettings, setPageSettings] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -166,10 +167,20 @@ function Nav() {
               <li key={link.path}>
                 <Link
                   to={link.path}
-                  className="text-[11px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-[0.2em] transition-all relative group py-2"
+                  className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all relative group py-2 ${
+                    location.pathname === link.path
+                      ? "text-slate-900"
+                      : "text-slate-500 hover:text-slate-900"
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-1 bg-blue-600 transition-all duration-500 group-hover:w-full rounded-full"></span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-1 bg-blue-600 transition-all duration-500 rounded-full ${
+                      location.pathname === link.path
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  ></span>
                 </Link>
               </li>
             ))}
@@ -295,7 +306,11 @@ function Nav() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="flex py-5 px-6 text-xl font-black text-slate-900 hover:bg-blue-50 hover:text-blue-600 rounded-[1.5rem] transition-all active:scale-98 border border-transparent active:border-blue-100 shadow-sm hover:shadow-md"
+                    className={`flex py-5 px-6 text-xl font-black rounded-[1.5rem] transition-all active:scale-98 border shadow-sm hover:shadow-md ${
+                      location.pathname === link.path
+                        ? "bg-blue-50 text-blue-600 border-blue-100"
+                        : "text-slate-900 hover:bg-blue-50 hover:text-blue-600 border-transparent shadow-sm"
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
