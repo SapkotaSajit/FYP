@@ -17,13 +17,21 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  cb(null, true);
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error("Invalid file type. Only JPG, PNG and WebP are allowed."),
+      false,
+    );
+  }
 };
 
 export const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: Infinity },
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 }).single("image");
 
 export const uploadPortfolioImage = (req, res) => {
