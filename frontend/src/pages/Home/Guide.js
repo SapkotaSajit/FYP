@@ -9,7 +9,7 @@ const Guide = () => {
   const [guides, setGuides] = useState([]);
   const [error, setError] = useState(null);
   const [expandedGuideId, setExpandedGuideId] = useState(null);
-  const URL = "http://localhost:5000/";
+  const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
 
   useEffect(() => {
     const fetchGuide = async () => {

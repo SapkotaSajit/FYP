@@ -68,4 +68,11 @@ app.use(express.json());
 
 app.use("/api", router);
 app.use("/Images", express.static("./Images"));
-app.listen(5000, () => console.log("Server up and running"));
+
+// Export the Express API for Vercel
+export default app;
+
+// Ensure it still runs locally if called directly
+if (process.env.NODE_ENV !== "production") {
+  app.listen(5000, () => console.log("Server up and running"));
+}

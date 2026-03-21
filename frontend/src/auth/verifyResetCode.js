@@ -1,6 +1,6 @@
 export const verifyResetCode = async (email, code) => {
     try {
-      const response = await fetch("http://localhost:5000/api/enter-code", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/enter-code`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

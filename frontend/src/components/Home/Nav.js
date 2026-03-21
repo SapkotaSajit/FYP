@@ -41,7 +41,7 @@ function Nav() {
     const fetchPageSettings = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/page-settings",
+          `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/page-settings`,
         );
         setPageSettings(response.data || []);
       } catch (error) {

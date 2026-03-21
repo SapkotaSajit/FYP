@@ -14,7 +14,7 @@ import {
   HiSelector,
 } from "react-icons/hi";
 
-const URL = "http://localhost:5000/";
+const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
 
 function EditGuideSteps() {
   const { id } = useParams();

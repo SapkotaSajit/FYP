@@ -10,7 +10,7 @@ const GuideTypes = () => {
   const [guideTypes, setGuideTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const URL = "http://localhost:5000/";
+  const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
 
   useEffect(() => {
     const fetchGuideTypes = async () => {

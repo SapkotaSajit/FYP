@@ -18,7 +18,7 @@ const ServiceDetails = () => {
   const { parentId } = useParams();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const URL = "http://localhost:5000/";
+  const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
 
   const toggleExpandService = (id) => {
     setServices((prev) =>

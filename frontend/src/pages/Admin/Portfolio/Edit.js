@@ -181,7 +181,7 @@ function EditPortfolio() {
                 {preview || existingImage ? (
                   <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-xl">
                     <img
-                      src={preview || `http://localhost:5000/${existingImage}`}
+                      src={preview || `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/${existingImage}`}
                       alt="Preview"
                       className="w-full h-full object-contain bg-slate-100"
                     />

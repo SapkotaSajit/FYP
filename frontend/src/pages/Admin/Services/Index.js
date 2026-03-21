@@ -13,7 +13,7 @@ import {
 } from "react-icons/hi";
 import DeleteConfirmationModal from "../../../components/Home/DeleteConfirmationModal";
 
-const URL = "http://localhost:5000/";
+const URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/`;
 
 const AllServices = () => {
   const [services, setServices] = useState([]);

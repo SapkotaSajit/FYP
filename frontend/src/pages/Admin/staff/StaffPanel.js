@@ -32,7 +32,7 @@ function StaffPanel() {
     try {
       setLoading(true);
       const token = Cookies.get("accessToken");
-      const response = await axios.get("http://localhost:5000/api/staffStats", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/staffStats`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStats(response.data);

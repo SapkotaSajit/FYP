@@ -40,7 +40,7 @@ const SignificantProjects = ({ projects: dynamicProjects }) => {
           ...p,
           image: p.image?.startsWith("http")
             ? p.image
-            : `http://localhost:5000/${p.image}`,
+            : `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/${p.image}`,
         }))
       : staticProjects;
 

@@ -71,7 +71,7 @@ function ChangePassword() {
     setIsSubmitting(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/change-password`,
+        `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/change-password`,
         {
           method: "POST",
           headers: {

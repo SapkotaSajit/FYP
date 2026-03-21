@@ -152,7 +152,7 @@ function PortfolioList() {
                         <div className="w-16 h-16 rounded-2xl overflow-hidden border border-slate-100 shadow-sm shrink-0">
                           {item.image ? (
                             <img
-                              src={`http://localhost:5000/${item.image}`}
+                              src={`${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/${item.image}`}
                               alt={item.title}
                               className="w-full h-full object-cover"
                             />
