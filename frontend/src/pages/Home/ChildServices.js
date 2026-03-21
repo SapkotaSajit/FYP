@@ -107,64 +107,71 @@ const ServiceDetails = () => {
 
       {/* Services Grid */}
       <section id="service-type" className="max-w-7xl mx-auto px-6 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {services.map((service) => (
             <div
               key={service.id}
-              className="group bg-white rounded-[3rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col md:flex-row h-full md:h-72"
+              className="group bg-white rounded-[3rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col md:flex-row h-full md:h-80"
             >
-              <div className="w-full md:w-2/5 relative overflow-hidden h-60 md:h-auto">
+              <div className="w-full md:w-2/5 relative overflow-hidden bg-slate-50 flex items-center justify-center border-r border-slate-100">
                 <img
                   src={`${URL}${service.service_image}`}
                   alt={service.name}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  className="max-w-full max-h-full w-auto h-auto object-contain p-8 transition-transform duration-1000 group-hover:scale-110"
                 />
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm border border-slate-200 text-[8px] font-black text-slate-900 uppercase tracking-widest rounded-lg shadow-sm">
+                    Premium
+                  </span>
+                </div>
               </div>
 
-              <div className="p-8 flex-1 flex flex-col justify-center">
-                <h3 className="text-xl font-black text-slate-900 mb-4 capitalize group-hover:text-blue-600 transition-colors">
+              <div className="p-10 flex-1 flex flex-col">
+                <h3 className="text-2xl font-black text-slate-900 mb-4 capitalize group-hover:text-blue-600 transition-colors tracking-tight">
                   {service.name}
                 </h3>
 
                 <div
-                  className={`text-slate-500 text-xs leading-relaxed mb-6 transition-all duration-500 ${service.expanded ? "max-h-40 overflow-y-auto" : "max-h-12 overflow-hidden"}`}
+                  className={`text-slate-500 text-sm leading-relaxed mb-8 transition-all duration-500 ${service.expanded ? "max-h-[500px] opacity-100" : "max-h-12 opacity-80 overflow-hidden"}`}
                 >
                   <p>{service.description}</p>
                 </div>
 
-                <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-50">
-                  <button
-                    onClick={() => toggleExpandService(service.id)}
-                    className="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest transition-colors flex items-center gap-1"
-                  >
-                    {service.expanded ? (
-                      <>
-                        <HiChevronUp /> Less
-                      </>
-                    ) : (
-                      <>
-                        <HiChevronDown /> More
-                      </>
-                    )}
-                  </button>
-
-                  <div className="flex items-center gap-3 mt-auto pt-6 border-t border-slate-50">
-                    <Link
-                      to={`/booking/${service.id}`}
-                      className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 active:scale-95 flex items-center justify-center gap-2"
+                <div className="mt-auto flex flex-col gap-4">
+                  <div className="flex items-center justify-between border-t border-slate-100 pt-6">
+                    <button
+                      onClick={() => toggleExpandService(service.id)}
+                      className="text-slate-400 hover:text-blue-600 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors"
                     >
-                      Book Now <HiArrowRight />
-                    </Link>
+                      {service.expanded ? (
+                        <>
+                          <HiChevronUp /> Collapse
+                        </>
+                      ) : (
+                        <>
+                          <HiChevronDown /> Description
+                        </>
+                      )}
+                    </button>
 
-                    <a
-                      href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/booking/${service.id}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95 flex items-center justify-center"
-                      title="Query on WhatsApp"
-                    >
-                      <FaWhatsapp size={18} />
-                    </a>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        to={`/booking/${service.id}`}
+                        className="px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 active:scale-95 flex items-center gap-2"
+                      >
+                        Book Now <HiArrowRight />
+                      </Link>
+
+                      <a
+                        href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/booking/${service.id}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95 flex items-center"
+                        title="Query on WhatsApp"
+                      >
+                        <FaWhatsapp size={20} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

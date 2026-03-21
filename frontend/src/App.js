@@ -13,7 +13,8 @@ import Dashboard from "./admin/Dashboard";
 import CreateRole from "./pages/Admin/Role/CreateRole";
 import RoleList from "./pages/Admin/Role/Index";
 import CreateServiceForm from "./pages/Admin/Services/Create";
-import AllServices from "./pages/Admin/Services/Index";
+import CategoryIndex from "./pages/Admin/Services/CategoryIndex";
+import ServiceIndex from "./pages/Admin/Services/ServiceIndex";
 import EditRole from "./pages/Admin/Role/editRole";
 import EditService from "./pages/Admin/Services/edit";
 import AllServicesWithParent from "./pages/Home/Services";
@@ -295,10 +296,21 @@ function App() {
             }
           />
           <Route
+            path="service-categories"
+            element={
+              <PrivateAdminRoute
+                element={<CategoryIndex />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
             path="services"
             element={
               <PrivateAdminRoute
-                element={<AllServices />}
+                element={<ServiceIndex />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"

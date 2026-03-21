@@ -1,11 +1,9 @@
-
-
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { fetchApi } from '../../auth/api_two';
-import Nav from '../../components/Home/Nav';
-import Footer from '../../components/Home/Footer';
-import { Fade } from 'react-awesome-reveal';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { fetchApi } from "../../auth/api_two";
+import Nav from "../../components/Home/Nav";
+import Footer from "../../components/Home/Footer";
+import { Fade } from "react-awesome-reveal";
 
 const GuideTypes = () => {
   const { guide_id } = useParams();
@@ -17,8 +15,8 @@ const GuideTypes = () => {
   useEffect(() => {
     const fetchGuideTypes = async () => {
       try {
-        console.log('Guide ID:', guide_id);
-        const response = await fetchApi('get', `guideType/${guide_id}`);
+        console.log("Guide ID:", guide_id);
+        const response = await fetchApi("get", `guideType/${guide_id}`);
         setGuideTypes(response.data);
         setLoading(false);
       } catch (error) {
@@ -43,78 +41,97 @@ const GuideTypes = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen">
       <Nav />
-      <main className="">
-        <div className="main-guide mx-auto lg:w-4/5 ">
-          <div className="content  my-6  ">
-            <Fade direction="left" cascade>
-              <h1 className="text-start px-4  text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400  ">
-                Guide Types
-              </h1>
-            </Fade>
-            <Fade direction="right" cascade delay={1000}>
-              <div className="my-6 bg-gradient-to-b from-blue-200 to-blue-500">
-                <div className="px-4 grid place-items-end shadow-2xl rounded-md py-28">
-                  <h1 className="text-white font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider">
-                    Find your problem step wise solutions here.
-                  </h1>
-                  <h2 className="text-white font-semibold text-xl md:text-2xl lg:text-3xl tracking-wider mt-6">
-                  Advanced Repair Techniques
-                  </h2>
-                  <p className="mt-6 text-white">
-                  Take your repair skills to the next level with our advanced techniques guide.
-                  </p>
-                 
+
+      {/* Hero Header */}
+      <section className="pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="bg-white rounded-[2.5rem] p-12 md:p-20 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="max-w-2xl text-center md:text-left">
+              <Fade direction="up" triggerOnce>
+                <span className="inline-block px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-blue-100 shadow-sm">
+                  Sub-Categories
+                </span>
+                <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tighter">
+                  Specific <span className="text-blue-600">Repair</span> Topics
+                </h1>
+                <p className="text-slate-500 text-lg font-medium leading-relaxed">
+                  Drill down into specific repair types to find the exact
+                  instructions you need.
+                </p>
+              </Fade>
+            </div>
+            <div className="hidden lg:block">
+              <div className="w-32 h-32 bg-blue-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Grid Section */}
+      <main className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {guideTypes.map((guideType, index) => (
+            <Fade
+              key={guideType.id}
+              direction="up"
+              delay={index * 100}
+              triggerOnce
+            >
+              <div className="group bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col hover:-translate-y-2 h-full">
+                <div className="relative h-64 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100">
+                  <img
+                    src={`${URL}${guideType.guideTypes_image}`}
+                    alt={guideType.name}
+                    className="max-w-full max-h-full w-auto h-auto object-contain p-8 transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute top-6 left-6">
+                    <span className="px-4 py-2 glass border border-white/40 text-[10px] font-black text-slate-900 uppercase tracking-widest rounded-xl shadow-lg backdrop-blur-md">
+                      Type
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-black text-slate-900 mb-4 capitalize group-hover:text-blue-600 transition-colors">
+                    {guideType.name}
+                  </h3>
+
+                  <div className="flex-1">
+                    <p
+                      className={`text-slate-500 text-sm leading-relaxed mb-8 transition-all duration-500 ${expandedGuideId === guideType.id ? "max-h-[1000px] opacity-100" : "max-h-20 opacity-80 overflow-hidden"}`}
+                    >
+                      {guideType.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto flex flex-col gap-4">
+                    <div className="flex items-center justify-between border-t border-slate-100 pt-6">
+                      <button
+                        onClick={() => toggleExpandGuide(guideType.id)}
+                        className="text-slate-400 hover:text-blue-600 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors"
+                      >
+                        {expandedGuideId === guideType.id
+                          ? "Show Less"
+                          : "Read Description"}
+                      </button>
+
+                      <Link
+                        to={`/guideStep/${guideType.id}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 hover:shadow-blue-200 active:scale-95"
+                      >
+                        View Steps
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Fade>
-          </div>
+          ))}
         </div>
       </main>
 
-      <div className="grid grid-cols-3  mx-auto px-4 lg:w-4/5 my-16 ">
-        <hr className="border-2 mt-2  border-black" />
-        <p className="text-center text-blue-500 text-lg font-semibold tracking-wider ">
-          View your solution here
-        </p>
-        <hr className="border-2 mt-2 border-black" />
-      </div>
-
-      <div className="mx-auto px-4 mt-6 lg:w-4/5">
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-7 mt-6">
-          {guideTypes.map((guideType, index) => (
-            <div key={guideType.id} className={`bg-white my-6 shadow-md rounded-md overflow-hidden transform transition duration-300 ease-in-out delay-${index * 100} opacity-100 hover:shadow-lg hover:scale-105`}>
-              <img src={`${URL}${guideType.guideTypes_image}`} alt="GuideType Image" className="w-full h-40 object-cover" />
-              <div className="p-6">
-                <h3 className="text-lg capitalize text-gray-700 text-center font-semibold mb-2">{guideType.name}</h3>
-                <div className='my-6'>
-                  <label className='text-lg md:text-1xl overflow-hidden lg:text-xl font-semibold text-gray-800'>Description:</label>
-                  <p className={`text-gray-600 mt-1 mb-6 md:-ml-0 rounded-md ${expandedGuideId !== guideType.id ? 'max-h-20 overflow-y-hidden': 'max-h-40 overflow-y-auto'}`}>
-                    {expandedGuideId === guideType.id ? guideType.description : truncate(guideType.description, 30)}
-                  </p>
-                  {guideType.description.length > 1 && (
-                    <button
-                      className="text-white hover:text-blue-500 font-semibold hover:bg-gray-900 bg-gray-600 px-4 py-2 rounded-sm focus:outline-none"
-                      onClick={() => toggleExpandGuide(guideType.id)}
-                    >
-                      {expandedGuideId === guideType.id ? 'Show Less' : 'Read More'}
-                    </button>
-                  )}
-                </div>
-                <div className="flex justify-between items-center">
-                  <Link
-                    to={`/guideStep/${guideType.id}`}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full text-center rounded-sm transition duration-300"
-                  >
-                    View Steps
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
       <Footer />
     </div>
   );

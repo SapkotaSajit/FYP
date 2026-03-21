@@ -28,101 +28,138 @@ const Guide = () => {
   };
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen">
       <Nav />
-      {error && <div className="text-blue-500">Loading......</div>}
 
-      <main className="overflow-hidden">
-        <div className="main-guide mx-auto lg:w-4/5 ">
-          <div className="content  my-6  ">
-            <Fade direction="left" cascade>
-              <h1 className="text-start px-4  text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400  ">
-                Repair Guides
-              </h1>
-            </Fade>
-            <Fade direction="right" cascade delay={1000}>
-              <div className="my-6 bg-gradient-to-b from-blue-200 to-blue-500">
-                <div className="px-4 grid place-items-end shadow-2xl rounded-md py-28">
-                  <h1 className="text-white font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider">
-                    First time repairing?
-                  </h1>
-                  <p className="mt-6 text-white">
-                    Learn To fix just about anything.
-                  </p>
-                  <h2 className="text-white font-semibold text-xl md:text-2xl lg:text-3xl tracking-wider mt-6">
-                    You got this.
-                  </h2>
+      {/* Hero Section */}
+      <main className="pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-transparent z-10"></div>
+            <div className="relative z-20 px-8 py-24 md:px-16 md:py-32 flex flex-col items-start max-w-3xl">
+              <Fade direction="up" triggerOnce>
+                <span className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
+                  Expert Repair Knowledge
+                </span>
+                <h1 className="text-4xl md:text-7xl font-black text-white leading-[1.05] mb-8 tracking-tight">
+                  The Ultimate{" "}
+                  <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
+                    Repair
+                  </span>{" "}
+                  Library
+                </h1>
+                <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed mb-10 max-w-xl">
+                  Learn to fix anything with our step-by-step professional
+                  guides. From minor leaks to major structural repairs, we've
+                  got you covered.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
+                      100+
+                    </span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                      Detailed
+                      <br />
+                      Guides
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
+                      24/7
+                    </span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                      Support
+                      <br />
+                      Access
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Fade>
+              </Fade>
+            </div>
+
+            {/* Decorative element */}
+            <div className="absolute top-0 right-0 w-1/3 h-full hidden lg:block">
+              <div className="w-full h-full bg-gradient-to-l from-blue-600/10 to-transparent"></div>
+            </div>
           </div>
         </div>
       </main>
-      <div className="grid grid-cols-3  mx-auto px-4 lg:w-4/5 my-16 ">
-        <hr className="border-2 mt-2  border-black" />
-        <p className="text-center text-blue-500 text-lg font-semibold tracking-wider ">
-          What do you want to fix today?
-        </p>
-        <hr className="border-2 mt-2 border-black" />
-      </div>
 
-      <div className="mx-auto  px-4 mt-6 lg:w-4/5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-6">
+      {/* Grid Section */}
+      <section className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="max-w-xl">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
+              What are you fixing <span className="text-blue-600">today?</span>
+            </h2>
+            <p className="text-slate-500 font-medium">
+              Select a category below to browse professional repair solutions.
+            </p>
+          </div>
+          <div className="h-0.5 flex-1 bg-slate-200 mb-3 mx-8 hidden lg:block"></div>
+          {error && (
+            <div className="text-blue-600 animate-pulse font-bold tracking-widest text-[10px] uppercase">
+              Refreshing data...
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {guides.map((Guide, index) => (
-            <div
-              key={Guide.id}
-              className={`bg-white my-6 shadow-md rounded-md overflow-hidden transform transition duration-300 ease-in-out delay-${
-                index * 100
-              } opacity-100 hover:shadow-lg hover:scale-105`}
-            >
-              <img
-                src={`${URL}${Guide.image_url}`}
-                alt="Guide Image"
-                className="w-full h-40 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-lg capitalize text-gray-700  text-center font-semibold mb-2">
-                  {Guide.name}
-                </h3>
-                <div className="my-6">
-                  <label className="text-lg md:text-1xl overflow-hidden lg:text-xl font-semibold text-gray-800">
-                    Description:
-                  </label>
-                  <p
-                    className={`text-gray-600 mt-1 mb-6 md:-ml-0 rounded-md ${
-                      expandedGuideId !== Guide.id
-                        ? "max-h-20 overflow-y-hidden"
-                        : "max-h-40 overflow-y-auto"
-                    }`}
-                  >
-                    {expandedGuideId === Guide.id
-                      ? Guide.description
-                      : `${Guide.description.slice(0, 30)}${
-                          Guide.description.length > 20 ? "..." : ""
-                        }`}
-                  </p>
-                  {Guide.description.length > 1 && (
-                    <button
-                      className="text-white  hover:text-blue-500 font-semibold hover:bg-gray-900 bg-gray-600 px-4 py-2 rounded-sm focus:outline-none"
-                      onClick={() => toggleExpandGuide(Guide.id)}
-                    >
-                      {expandedGuideId === Guide.id ? "Show Less" : "Read More"}
-                    </button>
-                  )}
+            <Fade key={Guide.id} direction="up" delay={index * 100} triggerOnce>
+              <div className="group bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col hover:-translate-y-2 h-full">
+                <div className="relative h-64 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100">
+                  <img
+                    src={`${URL}${Guide.image_url}`}
+                    alt={Guide.name}
+                    className="max-w-full max-h-full w-auto h-auto object-contain p-8 transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute top-6 left-6">
+                    <span className="px-4 py-2 glass border border-white/40 text-[10px] font-black text-slate-900 uppercase tracking-widest rounded-xl shadow-lg backdrop-blur-md">
+                      Category
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <Link
-                    to={`/guideType/${Guide.id}`}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full text-center rounded-sm transition duration-300"
-                  >
-                    View Guides
-                  </Link>
+
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-black text-slate-900 mb-4 capitalize group-hover:text-blue-600 transition-colors">
+                    {Guide.name}
+                  </h3>
+
+                  <div className="flex-1">
+                    <p
+                      className={`text-slate-500 text-sm leading-relaxed mb-8 transition-all duration-500 ${expandedGuideId === Guide.id ? "max-h-[1000px] opacity-100" : "max-h-20 opacity-80 overflow-hidden"}`}
+                    >
+                      {Guide.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto flex flex-col gap-4">
+                    <div className="flex items-center justify-between border-t border-slate-100 pt-6">
+                      <button
+                        onClick={() => toggleExpandGuide(Guide.id)}
+                        className="text-slate-400 hover:text-blue-600 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors"
+                      >
+                        {expandedGuideId === Guide.id
+                          ? "Show Less"
+                          : "Read Description"}
+                      </button>
+
+                      <Link
+                        to={`/guideType/${Guide.id}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 hover:shadow-blue-200 active:scale-95"
+                      >
+                        Explore Topics
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Fade>
           ))}
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>

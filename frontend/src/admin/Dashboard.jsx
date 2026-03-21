@@ -17,6 +17,7 @@ import {
   HiGlobe,
   HiCollection,
   HiAdjustments,
+  HiPhotograph,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
@@ -42,8 +43,13 @@ function AdminDashboard() {
     { label: "Roles", icon: HiShieldCheck, path: "roles" },
     { label: "Users", icon: HiUserGroup, path: "users" },
     { label: "Staffs", icon: HiUsers, path: "staffs" },
-    { label: "Services", icon: HiBriefcase, path: "services" },
-    { label: "Portfolio", icon: HiCollection, path: "portfolios" },
+    {
+      label: "Service Categories",
+      icon: HiCollection,
+      path: "service-categories",
+    },
+    { label: "Service List", icon: HiBriefcase, path: "services" },
+    { label: "Portfolio", icon: HiPhotograph, path: "portfolios" },
     {
       label: "Page Settings",
       icon: HiAdjustments,

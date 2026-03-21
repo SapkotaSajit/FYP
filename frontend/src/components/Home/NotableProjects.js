@@ -71,29 +71,31 @@ const NotableProjects = ({ projects: dynamicProjects }) => {
       : staticProjects;
 
   return (
-    <main className="project space-y-16 h-fit mt-36">
-      <div className="heading  text-center text-3xl lg:text-4xl xl:text-5xl tracking-wide font-bold text-blue-400 my-8 md:my-0">
-        Some Notable Projects
-      </div>
-
-      <div className="main  mx-auto lg:lg:w-4/5 grid grid-cols-1 md:grid-cols-2 px-4 gap-10 my-12">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {projects.map((project, index) => (
-          <Fade key={index} bottom duration={1500}>
-            <div className="contain shadow-2xl h-[100%] rounded-lg p-8 duration-700 hover:scale-110 my-6">
-              <img
-                src={project.image}
-                alt="project image"
-                className="w-full h-96"
-              />
-              <h3 className="text-center font-semibold text-gray-700 text-xl lg:text-2xl my-6 tracking-wider">
-                {project.title}
-              </h3>
-              <p className="text-center">{project.description}</p>
+          <Fade key={index} direction="up" duration={1000} triggerOnce>
+            <div className="group bg-white rounded-[3rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 h-full hover:-translate-y-2">
+              <div className="h-80 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100 p-8">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-1000 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-10">
+                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-blue-600 transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
             </div>
           </Fade>
         ))}
       </div>
-    </main>
+    </div>
   );
 };
 

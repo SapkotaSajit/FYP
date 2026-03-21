@@ -46,25 +46,59 @@ const AllServicesWithParent = () => {
       <Nav />
       <ServiceSlider />
 
-      {/* Header Section */}
-      <section
-        id="our-service"
-        className="max-w-7xl mx-auto px-6 py-20 mt-12 text-center"
-      >
-        <Fade cascade direction="up" triggerOnce>
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-blue-100 shadow-sm">
-            <HiCollection /> Professional Solutions
+      {/* Hero Section */}
+      <main className="pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="relative rounded-[3rem] overflow-hidden bg-slate-900 shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-transparent z-10"></div>
+            <div className="relative z-20 px-8 py-24 md:px-16 md:py-32 flex flex-col items-start max-w-3xl">
+              <Fade direction="up" triggerOnce>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
+                  Professional Solutions
+                </div>
+                <h1 className="text-4xl md:text-7xl font-black text-white leading-[1.05] mb-8 tracking-tight">
+                  World-class{" "}
+                  <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
+                    Waterproofing
+                  </span>
+                </h1>
+                <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed mb-10 max-w-xl">
+                  From chemical injection to structural membrane installation,
+                  our advanced methods protect your investment from the inside
+                  out.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
+                      15+
+                    </span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                      Years of
+                      <br />
+                      Excellence
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                    <span className="text-2xl font-black text-blue-500 tracking-tighter">
+                      500+
+                    </span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                      Projects
+                      <br />
+                      Completed
+                    </span>
+                  </div>
+                </div>
+              </Fade>
+            </div>
+
+            {/* Decorative element */}
+            <div className="absolute top-0 right-0 w-1/3 h-full hidden lg:block opacity-20">
+              <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-600/40 via-transparent to-transparent"></div>
+            </div>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tight max-w-4xl mx-auto">
-            World-class <span className="text-blue-600">Waterproofing</span> for
-            Modern Structures
-          </h2>
-          <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium leading-relaxed">
-            From chemical injection to structural membrane installation, our
-            advanced methods protect your investment from the inside out.
-          </p>
-        </Fade>
-      </section>
+        </div>
+      </main>
 
       {/* Services Grid */}
       <main className="max-w-7xl mx-auto px-6 pb-32">
@@ -94,14 +128,14 @@ const AllServicesWithParent = () => {
                 key={service.id}
                 className="group bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 flex flex-col hover:-translate-y-2"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100">
                   <img
                     src={`${URL}${service.service_image}`}
                     alt={service.name}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    className="max-w-full max-h-full w-auto h-auto object-contain p-6 transition-transform duration-1000 group-hover:scale-110"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-4 py-2 glass border border-white/40 text-[10px] font-black text-white uppercase tracking-widest rounded-xl shadow-lg backdrop-blur-md">
+                    <span className="px-4 py-2 glass border border-white/40 text-[10px] font-black text-slate-900 uppercase tracking-widest rounded-xl shadow-lg backdrop-blur-md">
                       Premium Service
                     </span>
                   </div>
@@ -122,7 +156,7 @@ const AllServicesWithParent = () => {
                     <div className="flex items-center justify-between border-t border-slate-100 pt-6">
                       <button
                         onClick={() => toggleExpandService(service.id)}
-                        className="text-slate-500 hover:text-blue-600 flex items-center gap-1 text-xs font-black uppercase tracking-widest transition-colors"
+                        className="text-slate-400 hover:text-blue-600 flex items-center gap-1 text-[10px] font-black uppercase tracking-widest transition-colors"
                       >
                         {service.expanded ? (
                           <>
@@ -135,22 +169,24 @@ const AllServicesWithParent = () => {
                         )}
                       </button>
 
-                      <Link
-                        to={`/childServices/${service.id}`}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl text-xs font-black uppercase tracking-[0.15em] hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 hover:shadow-blue-200 active:scale-95"
-                      >
-                        Learn More <HiArrowRight />
-                      </Link>
+                      <div className="flex items-center gap-3">
+                        <Link
+                          to={`/childServices/${service.id}`}
+                          className="px-6 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-100 active:scale-95 flex items-center gap-2"
+                        >
+                          Learn More <HiArrowRight />
+                        </Link>
 
-                      <a
-                        href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/childServices/${service.id}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95"
-                        title="Query on WhatsApp"
-                      >
-                        <FaWhatsapp size={20} />
-                      </a>
+                        <a
+                          href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/childServices/${service.id}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95 flex items-center"
+                          title="Query on WhatsApp"
+                        >
+                          <FaWhatsapp size={20} />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>

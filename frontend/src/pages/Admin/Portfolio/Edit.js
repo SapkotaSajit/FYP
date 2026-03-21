@@ -48,8 +48,14 @@ function EditPortfolio() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files[0]) {
-      setFormData((prevState) => ({ ...prevState, [name]: files[0] }));
-      setPreview(URL.createObjectURL(files[0]));
+      const file = files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size exceeds 5MB limit.");
+        e.target.value = "";
+        return;
+      }
+      setFormData((prevState) => ({ ...prevState, [name]: file }));
+      setPreview(URL.createObjectURL(file));
     } else {
       setFormData((prevState) => ({ ...prevState, [name]: value }));
     }
@@ -177,7 +183,7 @@ function EditPortfolio() {
                     <img
                       src={preview || `http://localhost:5000/${existingImage}`}
                       alt="Preview"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain bg-slate-100"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/upload:opacity-100 transition-opacity flex items-center justify-center">
                       <label className="bg-white/20 backdrop-blur-md text-white px-6 py-2 rounded-xl cursor-pointer hover:bg-white/30 transition-all font-bold text-xs uppercase tracking-widest border border-white/30">

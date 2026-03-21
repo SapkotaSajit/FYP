@@ -45,32 +45,31 @@ const SignificantProjects = ({ projects: dynamicProjects }) => {
       : staticProjects;
 
   return (
-    <section className="significant-projects  h-fit ">
-      <div className="container space-y-16  mx-auto">
-        <h2 className="text-center mt-36 text-3xl lg:text-4xl xl:text-5xl text-blue-400 font-bold mb-8">
-          Some Significant Projects
-        </h2>
-        <div className="grid grid-cols-1 px-4 md:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <Fade key={index} bottom duration={1500}>
-              <div className="project-card bg-white   shadow-lg rounded-lg overflow-hidden ">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {projects.map((project, index) => (
+          <Fade key={index} direction="up" duration={1000} triggerOnce>
+            <div className="group bg-white rounded-[2.5rem] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 h-full hover:-translate-y-2">
+              <div className="h-64 bg-white flex items-center justify-center overflow-hidden border-b border-slate-100 p-6">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-64 object-cover hover:scale-105 duration-1000"
+                  className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-1000 group-hover:scale-110"
                 />
-                <div className="p-6">
-                  <h3 className="text-xl lg:text-2xl font-semibold mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600">{project.description}</p>
-                </div>
               </div>
-            </Fade>
-          ))}
-        </div>
+              <div className="p-8">
+                <h3 className="text-xl font-black text-slate-900 mb-3 tracking-tight group-hover:text-blue-600 transition-colors capitalize">
+                  {project.title}
+                </h3>
+                <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+          </Fade>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 export default SignificantProjects;

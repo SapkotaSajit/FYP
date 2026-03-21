@@ -3,28 +3,33 @@ import { Fade } from "react-awesome-reveal";
 
 const ConstructionPartner = ({ name, imageSrc, description }) => {
   return (
-    <div className="main md:h-fit my-10 grid grid-cols-1 md:grid-cols-2 place-items-center gap-8">
-      <div>
-        <Fade direction="left" cascade>
-          <div className="text-xl my-6 md:text-3xl lg:text-4xl px-4 text-gray-700 font-semibold">
-            <p>{name}</p>
-          </div>
-
-          <div className="img my-8 mx-4">
+    <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20 mb-20 last:mb-0">
+      <div className="w-full md:w-1/2">
+        <Fade direction="left" triggerOnce>
+          <div className="relative h-96 lg:h-[500px] bg-slate-50 rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center shadow-inner group">
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent"></div>
             <img
               src={imageSrc}
-              className="h-[50vh] w-full object-cover"
-              alt="Company Image"
+              className="max-w-full max-h-full w-auto h-auto object-contain p-12 transition-transform duration-1000 group-hover:scale-110"
+              alt={name}
             />
           </div>
         </Fade>
       </div>
 
-      <Fade direction="right" cascade>
-        <div className="content px-4 space-y-5">
-          <p className="text-gray-600 leading-relaxed">{description}</p>
-        </div>
-      </Fade>
+      <div className="w-full md:w-1/2">
+        <Fade direction="right" triggerOnce>
+          <span className="inline-block px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest mb-6">
+            Official Partner
+          </span>
+          <h4 className="text-3xl lg:text-5xl font-black text-slate-900 mb-8 tracking-tighter leading-[1.1]">
+            {name}
+          </h4>
+          <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-xl">
+            {description}
+          </p>
+        </Fade>
+      </div>
     </div>
   );
 };
@@ -59,7 +64,7 @@ const ConstructionPartners = ({ partners: dynamicPartners }) => {
       : staticPartners;
 
   return (
-    <div>
+    <div className="space-y-12">
       {partners.map((partner, index) => (
         <ConstructionPartner
           key={index}

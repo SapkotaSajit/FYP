@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300 pt-20 mt-20">
       <div className="container mx-auto px-4 lg:w-4/5 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2 group">
@@ -52,7 +52,7 @@ function Footer() {
           </div>
 
           {/* Explore Section */}
-          <div>
+          <div className="md:text-center">
             <h3 className="text-white font-bold text-lg mb-6">Explore</h3>
             <ul className="space-y-4">
               {[
@@ -75,9 +75,9 @@ function Footer() {
           </div>
 
           {/* Contact Section */}
-          <div>
+          <div className="md:text-right">
             <h3 className="text-white font-bold text-lg mb-6">Contact Us</h3>
-            <ul className="space-y-4">
+            <ul className="space-y-4 inline-block text-left">
               <li className="flex items-start gap-3">
                 <HiLocationMarker className="text-blue-500 mt-1 flex-shrink-0" />
                 <span className="text-sm">
@@ -93,24 +93,6 @@ function Footer() {
                 <span className="text-sm">sapkotasajit05@gmail.com</span>
               </li>
             </ul>
-          </div>
-
-          {/* Newsletter / CTA */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-6">Newsletter</h3>
-            <p className="text-sm mb-4 text-slate-400">
-              Subscribe to get the latest updates.
-            </p>
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full bg-slate-800 border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              />
-              <button className="absolute right-2 top-2 bottom-2 bg-blue-600 text-white px-3 rounded-md hover:bg-blue-700 transition-colors">
-                Join
-              </button>
-            </div>
           </div>
         </div>
       </div>
