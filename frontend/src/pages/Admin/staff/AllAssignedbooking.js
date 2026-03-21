@@ -82,7 +82,8 @@ const AllAssignedbooking = () => {
       </div>
 
       <div className="glass rounded-3xl overflow-hidden shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-200/60">
@@ -180,6 +181,74 @@ const AllAssignedbooking = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {loading ? (
+            <div className="px-6 py-20 text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-10 h-10 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+                <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                  Loading pending tasks...
+                </span>
+              </div>
+            </div>
+          ) : assignedBookings.length === 0 ? (
+            <div className="px-6 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+              Your assigned queue is empty
+            </div>
+          ) : (
+            assignedBookings.map((booking) => (
+              <div key={booking.id} className="p-5 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 border border-blue-100 shadow-sm">
+                      <HiUser size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">
+                        {booking.booking.user.name}
+                      </p>
+                      <p className="text-[10px] text-slate-500 font-bold flex items-center gap-1 uppercase tracking-tighter">
+                        <HiPhone /> {booking.booking.user.phone}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[9px] font-bold border border-indigo-100">
+                      {booking.booking.booking_date}
+                    </span>
+                    <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-[9px] font-bold border border-blue-100">
+                      {booking.booking.booking_time}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-tight border border-slate-100">
+                    <HiCollection className="text-blue-500" />{" "}
+                    {booking.booking.service.name}
+                  </div>
+                  <div className="flex-1 max-w-[140px]">
+                    <select
+                      onChange={(e) =>
+                        handleStatusChange(booking.id, e.target.value)
+                      }
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Action
+                      </option>
+                      <option value="Accept">Accept</option>
+                      <option value="Reject">Reject</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

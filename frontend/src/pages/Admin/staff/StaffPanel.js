@@ -32,9 +32,12 @@ function StaffPanel() {
     try {
       setLoading(true);
       const token = Cookies.get("accessToken");
-      const response = await axios.get(`${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/staffStats`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || "http://localhost:5000"}`}/api/staffStats`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       setStats(response.data);
     } catch (error) {
       console.error("Error fetching staff stats:", error);
@@ -93,8 +96,11 @@ function StaffPanel() {
     <div className="space-y-10">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <Fade direction="down" triggerOnce>
-          <div>
+        <Fade direction="down" triggerOnce className="w-full md:w-auto">
+          <div className="relative pl-6">
+            {/* Clean side decoration to replace any stray elements */}
+            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.3)]"></div>
+
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-wider mb-4 border border-blue-100">
               <HiLightningBolt className="animate-pulse" /> System Active
             </div>
@@ -146,7 +152,7 @@ function StaffPanel() {
                 </div>
 
                 <div className="mt-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:translate-x-2 transition-transform duration-300">
-                  Open Register <HiArrowRight />
+                  View Details <HiArrowRight />
                 </div>
               </div>
             </Link>

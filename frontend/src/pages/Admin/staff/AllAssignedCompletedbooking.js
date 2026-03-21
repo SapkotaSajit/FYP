@@ -50,7 +50,8 @@ const AssignedCompletedBookingsComponent = () => {
       </div>
 
       <div className="glass rounded-3xl overflow-hidden shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-200/60">
@@ -131,6 +132,56 @@ const AssignedCompletedBookingsComponent = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {loading ? (
+            <div className="px-6 py-20 text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-10 h-10 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+                <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                  Accessing records...
+                </span>
+              </div>
+            </div>
+          ) : assignedBookings.length === 0 ? (
+            <div className="px-6 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+              No completed tasks in archive
+            </div>
+          ) : (
+            assignedBookings.map((booking) => (
+              <div key={booking.id} className="p-5 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 border border-slate-100">
+                      <HiUser size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">
+                        {booking.booking.user.name}
+                      </p>
+                      <p className="text-[10px] text-slate-500 font-bold flex items-center gap-1 uppercase tracking-tighter">
+                        <HiPhone /> {booking.booking.user.phone}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[9px] font-bold border border-emerald-100">
+                    Success
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 text-indigo-600 rounded-lg text-[10px] font-black uppercase tracking-tight border border-indigo-100/50">
+                    <HiCollection /> {booking.booking.service.name}
+                  </div>
+                  <span className="px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl text-[10px] font-bold flex items-center gap-2 border border-slate-100">
+                    <HiCalendar size={12} /> {booking.booking.booking_date}
+                  </span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

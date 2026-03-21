@@ -111,11 +111,11 @@ function Nav() {
   });
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[100] overflow-hidden">
+    <header className="fixed top-0 left-0 w-full z-[100]">
       {/* Top Bar - Premium Desktop View */}
       <div
-        className={`bg-slate-900 text-white/90 transition-all duration-500 hidden sm:block overflow-hidden ${
-          scrolled ? "h-0 opacity-0" : "h-10 opacity-100"
+        className={`bg-slate-900 text-white/90 transition-all duration-500 hidden sm:block ${
+          scrolled ? "h-0 opacity-0 overflow-hidden" : "h-10 opacity-100"
         }`}
       >
         <div className="container mx-auto px-6 h-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
@@ -214,44 +214,49 @@ function Nav() {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 z-[110] animate-in fade-in zoom-in-95 duration-200">
-                    <div className="px-3 py-2 border-b border-slate-50 mb-2">
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                        Operator
-                      </p>
-                      <p className="text-xs font-bold text-slate-900">
-                        {isAdmin() ? "Administrator" : "Staff Member"}
-                      </p>
+                  <>
+                    {/* Fixed Overlay - Click outside to close */}
+                    <div
+                      className="fixed inset-0 z-[100] bg-transparent cursor-default"
+                      onClick={closeDropdown}
+                    ></div>
+
+                    {/* Dropdown Menu */}
+                    <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 z-[110] animate-in fade-in zoom-in-95 duration-200">
+                      <div className="px-3 py-2 border-b border-slate-50 mb-2">
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                          Operator
+                        </p>
+                        <p className="text-xs font-bold text-slate-900">
+                          {isAdmin() ? "Administrator" : "Staff Member"}
+                        </p>
+                      </div>
+                      <Link
+                        to={isAdmin() ? "/admin/dashboard" : "/staffs"}
+                        className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
+                        onClick={closeDropdown}
+                      >
+                        <HiViewGrid size={16} />
+                        {isAdmin() ? "Admin Dashboard" : "Staff Dashboard"}
+                      </Link>
+                      <Link
+                        to="/change-password"
+                        className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
+                        onClick={closeDropdown}
+                      >
+                        <HiLockClosed size={16} />
+                        Security
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-2.5 w-full text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                      >
+                        <HiLogout size={16} />
+                        Logout
+                      </button>
                     </div>
-                    <Link
-                      to={isAdmin() ? "/admin/dashboard" : "/staffs"}
-                      className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
-                      onClick={closeDropdown}
-                    >
-                      <HiViewGrid size={16} />
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/change-password"
-                      className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all"
-                      onClick={closeDropdown}
-                    >
-                      <HiLockClosed size={16} />
-                      Security
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-3 px-4 py-2.5 w-full text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all"
-                    >
-                      <HiLogout size={16} />
-                      Logout
-                    </button>
-                  </div>
+                  </>
                 )}
-                <div
-                  className="fixed inset-0 z-[-1]"
-                  onClick={closeDropdown}
-                ></div>
               </div>
             ) : (
               <Link
@@ -344,7 +349,9 @@ function Nav() {
                     className="flex flex-col items-center gap-3 p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-900"
                   >
                     <HiViewGrid size={24} className="text-blue-600" />
-                    <span className="text-xs font-bold">Dashboard</span>
+                    <span className="text-[10px] font-bold text-center">
+                      {isAdmin() ? "Admin Console" : "Staff Console"}
+                    </span>
                   </Link>
                   <button
                     onClick={handleLogout}

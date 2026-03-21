@@ -64,13 +64,21 @@ function StaffDashboard() {
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
       <aside
-        className={`glass h-full transition-all duration-500 border-r border-slate-200/60 z-30 flex flex-col ${
+        className={`fixed inset-y-0 left-0 bg-white md:relative z-50 transition-all duration-300 ease-in-out border-r border-slate-200/60 flex flex-col ${
           isSidebarOpen
-            ? "w-72"
-            : "w-0 -translate-x-full md:w-20 md:translate-x-0"
-        }`}
+            ? "translate-x-0 w-72"
+            : "-translate-x-full md:translate-x-0 md:w-20"
+        } overflow-hidden`}
       >
         <div className="p-6 flex items-center gap-3 shrink-0">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200 shrink-0">
@@ -136,17 +144,26 @@ function StaffDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 px-6 flex items-center justify-between shrink-0 z-20">
-          <div className="flex items-center gap-4">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-6 flex items-center justify-between shrink-0 z-40">
+          <div className="flex items-center gap-3 md:gap-4">
             <button
               onClick={toggleSidebar}
-              className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-600 transition-all active:scale-95"
+              className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-600 transition-all active:scale-95 shrink-0"
             >
-              <HiMenuAlt2 size={24} />
+              {isSidebarOpen ? <HiX size={24} /> : <HiMenuAlt2 size={24} />}
             </button>
-            <h1 className="text-xl font-bold text-slate-800 hidden sm:block">
-              Operation Center
-            </h1>
+
+            <div className="flex items-center gap-3">
+              {/* Show logo in header on mobile only when sidebar is closed */}
+              {!isSidebarOpen && (
+                <div className="md:hidden w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-100">
+                  <span className="text-white font-black text-xs">SD</span>
+                </div>
+              )}
+              <h1 className="text-lg md:text-xl font-bold text-slate-800 truncate">
+                Operation Center
+              </h1>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">

@@ -35,6 +35,18 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
     fetchPendingBookings();
   }, [location.key]);
 
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await fetchWithAuth("patch", `bookingAssign/${id}/status`, {
+        status: newStatus,
+      });
+      setPendingBookings((prev) => prev.filter((b) => b.id !== id));
+      toast.success(`Status updated to ${newStatus}`);
+    } catch (error) {
+      toast.error("Failed to update status");
+    }
+  };
+
   const filteredBookings = pendingBookings.filter(
     (booking) =>
       booking.booking?.user?.name
@@ -169,10 +181,18 @@ const AssignedAcceptedBookingsComponentAdmin = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 text-right">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-xl text-[10px] font-black uppercase tracking-widest border border-emerald-200">
-                        <HiFlag />
-                        {booking.status}
-                      </span>
+                      <select
+                        className="bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-widest border border-emerald-200 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all cursor-pointer"
+                        value={booking.status}
+                        onChange={(e) =>
+                          handleStatusChange(booking.id, e.target.value)
+                        }
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Accept">Accept</option>
+                        <option value="Reject">Reject</option>
+                        <option value="Completed">Completed</option>
+                      </select>
                     </td>
                   </tr>
                 ))
