@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Nav from "../../components/Home/Nav";
 import Footer from "../../components/Home/Footer";
 import SignificantProjects from "../../components/Home/SignificantProjects";
@@ -8,6 +9,30 @@ import ConstructionPartners from "../../components/Home/ConstructionPartners";
 import { HiCollection, HiOutlineCube, HiCheckCircle } from "react-icons/hi";
 
 function Portfolio() {
+  const [portfolios, setPortfolios] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPortfolios = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/portfolios",
+        );
+        setPortfolios(response.data || []);
+      } catch (error) {
+        console.error("Error fetching portfolios:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPortfolios();
+  }, []);
+
+  const notableProjects = portfolios.filter((p) => p.category === "notable");
+  const significantProjects = portfolios.filter(
+    (p) => p.category === "significant",
+  );
+  const partners = portfolios.filter((p) => p.category === "partner");
   return (
     <div className="bg-slate-50 min-h-screen">
       <Nav />
@@ -39,18 +64,18 @@ function Portfolio() {
                 </h3>
                 <div className="h-px bg-slate-200 w-12"></div>
               </div>
-              <ConstructionPartners />
+              <ConstructionPartners partners={partners} />
             </div>
           </div>
         </div>
       </main>
 
       <section className="bg-white border-y border-slate-100 py-10">
-        <NotableProjects />
+        <NotableProjects projects={notableProjects} />
       </section>
 
       <section className="py-20 lg:py-32">
-        <SignificantProjects />
+        <SignificantProjects projects={significantProjects} />
       </section>
 
       <div className="max-w-7xl mx-auto px-6 pb-20">

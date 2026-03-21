@@ -1,5 +1,5 @@
-import React from 'react';
-import { Fade } from 'react-awesome-reveal';
+import React from "react";
+import { Fade } from "react-awesome-reveal";
 
 const ConstructionPartner = ({ name, imageSrc, description }) => {
   return (
@@ -29,20 +29,34 @@ const ConstructionPartner = ({ name, imageSrc, description }) => {
   );
 };
 
-const ConstructionPartners = () => {
-  const partners = [
+const ConstructionPartners = ({ partners: dynamicPartners }) => {
+  const staticPartners = [
     {
       name: "Himalayan Builders and Engineers",
-      imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7qX5FP9jvrnWPDATKbucgLnmCNc7ojrkyz3aT0jYDgYm9DmI&s",
-      description: "Made last it seen went no just when of by. Occasional entreaties comparison me difficulty so themselves. At brother inquiry of offices without do my service. As particular to companions at sentiments. Weather however luckily enquire so certain do. Aware did stood was day under ask. Dearest affixed enquire on explain opinion he. Reached who the mrs joy offices pleased. Towards did colonel article any parties."
+      imageSrc:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7qX5FP9jvrnWPDATKbucgLnmCNc7ojrkyz3aT0jYDgYm9DmI&s",
+      description:
+        "Made last it seen went no just when of by. Occasional entreaties comparison me difficulty so themselves. At brother inquiry of offices without do my service. As particular to companions at sentiments. Weather however luckily enquire so certain do. Aware did stood was day under ask. Dearest affixed enquire on explain opinion he. Reached who the mrs joy offices pleased. Towards did colonel article any parties.",
     },
     {
       name: "Tripura Construction CO.PVT.LTD",
-      imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7qX5FP9jvrnWPDATKbucgLnmCNc7ojrkyz3aT0jYDgYm9DmI&s",
-      description: "Made last it seen went no just when of by. Occasional entreaties comparison me difficulty so themselves. At brother inquiry of offices without do my service. As particular to companions at sentiments. Weather however luckily enquire so certain do. Aware did stood was day under ask. Dearest affixed enquire on explain opinion he. Reached who the mrs joy offices pleased. Towards did colonel article any parties."
-    }
-       
+      imageSrc:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7qX5FP9jvrnWPDATKbucgLnmCNc7ojrkyz3aT0jYDgYm9DmI&s",
+      description:
+        "Made last it seen went no just when of by. Occasional entreaties comparison me difficulty so themselves. At brother inquiry of offices without do my service. As particular to companions at sentiments. Weather however luckily enquire so certain do. Aware did stood was day under ask. Dearest affixed enquire on explain opinion he. Reached who the mrs joy offices pleased. Towards did colonel article any parties.",
+    },
   ];
+
+  const partners =
+    dynamicPartners && dynamicPartners.length > 0
+      ? dynamicPartners.map((p) => ({
+          name: p.title,
+          imageSrc: p.image?.startsWith("http")
+            ? p.image
+            : `http://localhost:5000/${p.image}`,
+          description: p.description,
+        }))
+      : staticPartners;
 
   return (
     <div>
