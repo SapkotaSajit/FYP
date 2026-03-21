@@ -64,35 +64,6 @@ function HomePage() {
                   alt="Work in Progress"
                   className="w-full h-[500px] object-cover rounded-[2rem] transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute bottom-8 left-8 right-8 glass p-6 rounded-2xl border border-white/20 shadow-lg">
-                  <div className="flex items-center gap-4">
-                    <div className="flex -space-x-3">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden"
-                        >
-                          <img
-                            src={`https://i.pravatar.cc/100?u=${i}`}
-                            alt="Client"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-900">
-                        10k+ Protected Homes
-                      </p>
-                      <div className="flex text-amber-500 gap-0.5">
-                        <HiStar />
-                        <HiStar />
-                        <HiStar />
-                        <HiStar />
-                        <HiStar />
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Fade>
@@ -120,26 +91,6 @@ function HomePage() {
                 scientific testing with precision application techniques that
                 standard contractors simply cannot match.
               </p>
-              <div className="grid grid-cols-2 gap-6 pt-4">
-                <div className="p-6 rounded-2xl bg-blue-50 border border-blue-100">
-                  <HiLightningBolt className="text-blue-600 mb-3" size={24} />
-                  <h4 className="font-bold text-slate-900 mb-1">
-                    Fast Execution
-                  </h4>
-                  <p className="text-xs text-slate-500">
-                    Minimal disruption to your daily schedule.
-                  </p>
-                </div>
-                <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-100">
-                  <HiShieldCheck className="text-emerald-600 mb-3" size={24} />
-                  <h4 className="font-bold text-slate-900 mb-1">
-                    20Y Warranty
-                  </h4>
-                  <p className="text-xs text-slate-500">
-                    Guaranteed protection for decades to come.
-                  </p>
-                </div>
-              </div>
             </div>
           </Fade>
 
@@ -151,12 +102,6 @@ function HomePage() {
                   alt="Legacy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-              </div>
-              <div className="absolute -bottom-8 -left-8 glass p-8 rounded-3xl border border-white/40 shadow-xl max-w-[240px]">
-                <p className="text-4xl font-black text-blue-600 mb-1">15+</p>
-                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest leading-tight">
-                  Years of Unmatched Expertise
-                </p>
               </div>
             </div>
           </Fade>

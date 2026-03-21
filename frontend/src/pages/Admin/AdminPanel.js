@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { fetchWithAuth } from "../../auth/api";
 import { HiUsers, HiUserGroup, HiTrendingUp, HiCalendar } from "react-icons/hi";
 
@@ -7,7 +8,19 @@ function AdminPanel() {
     totalUsers: 0,
     totalStaff: 0,
     activeBookings: 0,
-    revenue: "Rs. 0",
+    revenue: 0,
+    breakdown: {
+      pending: 0,
+      accepted: 0,
+      rejected: 0,
+      completed: 0,
+    },
+    additional: {
+      services: 0,
+      portfolios: 0,
+      contacts: 0,
+    },
+    recentContacts: [],
   });
   const [loading, setLoading] = useState(true);
 
@@ -35,28 +48,28 @@ function AdminPanel() {
       value: statsData.totalUsers,
       icon: HiUsers,
       color: "bg-blue-500",
-      trend: "+12% from last month",
+      trend: "System Users",
     },
     {
       label: "Total Staff",
       value: statsData.totalStaff,
       icon: HiUserGroup,
       color: "bg-purple-500",
-      trend: "Stable",
+      trend: "Active Staff",
     },
     {
       label: "Active Bookings",
       value: statsData.activeBookings,
       icon: HiCalendar,
       color: "bg-emerald-500",
-      trend: "Real-time updates",
+      trend: `${statsData.breakdown?.pending || 0} Pending`,
     },
     {
-      label: "Revenue",
-      value: statsData.revenue || "Rs. 12.5k",
+      label: "Completed",
+      value: statsData.breakdown?.completed || 0,
       icon: HiTrendingUp,
       color: "bg-orange-500",
-      trend: "+8% growth",
+      trend: "Total Success",
     },
   ];
 
@@ -132,72 +145,132 @@ function AdminPanel() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* System Status */}
+        {/* Booking Breakdown */}
         <div className="glass rounded-[2.5rem] p-8 border border-white/40 shadow-sm bg-white/40">
           <h3 className="text-lg font-black text-slate-900 mb-8 flex items-center gap-3 uppercase tracking-widest text-[11px]">
             <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-            Core Infrastructure Status
+            Booking Status Breakdown
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              {
-                label: "API Gateway",
-                status: "Active",
-                color: "text-emerald-500",
-                bg: "bg-emerald-50",
-              },
-              {
-                label: "DB Cluster",
-                status: "Healthy",
-                color: "text-emerald-500",
-                bg: "bg-emerald-50",
-              },
-              {
-                label: "SMTP Service",
-                status: "Online",
-                color: "text-blue-500",
-                bg: "bg-blue-50",
-              },
-              {
-                label: "Cloud Storage",
-                status: "89% Free",
-                color: "text-indigo-500",
-                bg: "bg-indigo-50",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className={`p-5 rounded-2xl border border-white flex flex-col gap-2 transition-all hover:bg-white`}
-              >
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  {item.label}
-                </span>
-                <span className={`text-sm font-black ${item.color}`}>
-                  {item.status}
-                </span>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-5 rounded-2xl border border-white bg-white/50 space-y-2">
+              <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest">
+                Pending
+              </span>
+              <p className="text-2xl font-black text-slate-900">
+                {statsData.breakdown?.pending || 0}
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl border border-white bg-white/50 space-y-2">
+              <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">
+                Accepted
+              </span>
+              <p className="text-2xl font-black text-slate-900">
+                {statsData.breakdown?.accepted || 0}
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl border border-white bg-white/50 space-y-2">
+              <span className="text-[10px] font-black text-red-500 uppercase tracking-widest">
+                Rejected
+              </span>
+              <p className="text-2xl font-black text-slate-900">
+                {statsData.breakdown?.rejected || 0}
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl border border-white bg-white/50 space-y-2">
+              <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">
+                Completed
+              </span>
+              <p className="text-2xl font-black text-slate-900">
+                {statsData.breakdown?.completed || 0}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Action Card */}
-        <div className="glass rounded-[2.5rem] p-10 border border-white/40 shadow-sm flex flex-col items-center justify-center text-center bg-slate-900 group">
-          <div className="relative mb-8">
-            <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full scale-150"></div>
-            <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center text-blue-400 border border-white/10 relative z-10 transition-transform group-hover:rotate-12">
-              <HiTrendingUp size={40} />
+        {/* Content Stats */}
+        <div className="glass rounded-[2.5rem] p-8 border border-white/40 shadow-sm bg-white/40">
+          <h3 className="text-lg font-black text-slate-900 mb-8 flex items-center gap-3 uppercase tracking-widest text-[11px]">
+            <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+            Website Content Overview
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl border border-indigo-100 bg-indigo-50/30 flex flex-col gap-1">
+              <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">
+                Services
+              </span>
+              <span className="text-xl font-black text-indigo-600">
+                {statsData.additional?.services || 0}
+              </span>
+            </div>
+            <div className="p-5 rounded-2xl border border-blue-100 bg-blue-50/30 flex flex-col gap-1">
+              <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">
+                Portfolio
+              </span>
+              <span className="text-xl font-black text-blue-600">
+                {statsData.additional?.portfolios || 0}
+              </span>
+            </div>
+            <div className="p-5 rounded-2xl border border-emerald-100 bg-emerald-50/30 flex flex-col gap-1">
+              <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">
+                Contacts
+              </span>
+              <span className="text-xl font-black text-emerald-600">
+                {statsData.additional?.contacts || 0}
+              </span>
             </div>
           </div>
-          <h3 className="text-2xl font-black text-white mb-3 tracking-tight">
-            Predictive Growth
-          </h3>
-          <p className="text-slate-400 text-sm font-medium max-w-xs mb-10 leading-relaxed">
-            Harness deeper insights from client engagement patterns to scale
-            your waterproofing operations.
-          </p>
-          <button className="w-full py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-blue-600 transition-all shadow-xl shadow-blue-500/20 active:scale-95">
-            Access Intelligence Suite
-          </button>
+        </div>
+
+        {/* Recent Inquiries */}
+        <div className="glass rounded-[2.5rem] p-8 border border-white/40 shadow-sm bg-slate-900 overflow-hidden">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-lg font-black text-white flex items-center gap-3 uppercase tracking-widest text-[11px]">
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+              Recent Digital Correspondence
+            </h3>
+            <Link
+              to="/contacts"
+              className="text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
+            >
+              View All
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {statsData.recentContacts?.length > 0 ? (
+              statsData.recentContacts.map((contact, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 font-black text-xs">
+                      {contact.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
+                        {contact.name}
+                      </p>
+                      <p className="text-[10px] text-slate-500 font-medium truncate max-w-[150px]">
+                        {contact.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                      {new Date(contact.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="py-20 text-center">
+                <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">
+                  No recent inquiries
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

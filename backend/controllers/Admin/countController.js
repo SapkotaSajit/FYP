@@ -1,6 +1,9 @@
 import Users from "../../models/User.js";
 import Booking from "../../models/Booking.js";
 import BookingAssign from "../../models/BookingAssign.js";
+import Service from "../../models/Service.js";
+import Portfolio from "../../models/Portfolio.js";
+import Contact from "../../models/Contact.js";
 import { Op } from "sequelize";
 
 // Function to count total number of users
@@ -28,8 +31,6 @@ export const getTotalStaff = async (req, res) => {
 // Function to count total number of active bookings (pending/accepted)
 export const getTotalBookingsCount = async (req, res) => {
   try {
-    // Assuming status 0 = pending, or based on BookingAssign status
-    // For simplicity, let's count all bookings in the bookings table
     const totalBookings = await Booking.count();
     res.json({ totalBookings });
   } catch (error) {
@@ -38,20 +39,53 @@ export const getTotalBookingsCount = async (req, res) => {
   }
 };
 
-// Function to count total revenue (placeholder or based on completed services)
+// ... (previous functions remain if used elsewhere, but I'll focus on getDashboardStats)
+
+// Function to calculate total dashboard stats
 export const getDashboardStats = async (req, res) => {
   try {
-    const users = await Users.count({ where: { role_id: 2 } });
-    const staff = await Users.count({ where: { role_id: 3 } });
-    const bookings = await Booking.count();
-    // Return combined stats for efficiency
+    const totalUsers = await Users.count({ where: { role_id: 2 } });
+    const totalStaff = await Users.count({ where: { role_id: 3 } });
+
+    // Booking counts by status from BookingAssign
+    const pending = await BookingAssign.count({ where: { status: "Pending" } });
+    const accepted = await BookingAssign.count({ where: { status: "Accept" } });
+    const rejected = await BookingAssign.count({ where: { status: "Reject" } });
+    const completed = await BookingAssign.count({
+      where: { status: "Completed" },
+    });
+
+    // Additional metrics
+    const totalServices = await Service.count({
+      where: { parent_id: { [Op.ne]: null } },
+    }); // Only child services
+    const totalPortfolios = await Portfolio.count();
+    const totalContacts = await Contact.count();
+    const recentContacts = await Contact.findAll({
+      limit: 5,
+      order: [["createdAt", "DESC"]],
+    });
+
     res.json({
-      totalUsers: users,
-      totalStaff: staff,
-      activeBookings: bookings,
-      revenue: "Rs. 12.5k", // Static for now as no pricing model found in DB
+      totalUsers,
+      totalStaff,
+      activeBookings: pending + accepted,
+      revenue: 0, // No price field in models yet
+      breakdown: {
+        pending,
+        accepted,
+        rejected,
+        completed,
+      },
+      additional: {
+        services: totalServices,
+        portfolios: totalPortfolios,
+        contacts: totalContacts,
+      },
+      recentContacts,
     });
   } catch (error) {
+    console.error("Dashboard stats error:", error);
     res.status(500).json({ error: "Stats retrieval failed" });
   }
 };
