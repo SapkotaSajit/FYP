@@ -12,7 +12,7 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-900 text-slate-300 pt-20 mt-20">
+    <footer className="w-full bg-slate-900 text-slate-300 pt-20 mt-20">
       <div className="container mx-auto px-4 lg:w-4/5 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand Section */}

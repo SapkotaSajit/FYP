@@ -111,7 +111,7 @@ function Nav() {
   });
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100]">
+    <header className="fixed top-0 left-0 w-full z-[100] overflow-hidden">
       {/* Top Bar - Premium Desktop View */}
       <div
         className={`bg-slate-900 text-white/90 transition-all duration-500 hidden sm:block overflow-hidden ${
@@ -275,9 +275,10 @@ function Nav() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-white z-[200] transition-all duration-500 ease-in-out transform ${
+        className={`lg:hidden fixed inset-0 bg-white z-[200] transition-all duration-500 ease-in-out transform shadow-2xl ${
           isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         }`}
+        style={{ width: "100vw" }}
       >
         <div className="flex flex-col h-full overflow-y-auto">
           {/* Mobile Menu Header */}
