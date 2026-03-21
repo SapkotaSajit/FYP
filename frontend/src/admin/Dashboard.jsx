@@ -86,7 +86,15 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
+    <div className="min-h-screen bg-slate-50 flex overflow-hidden relative">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden animate-in fade-in duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 transition-all duration-300 ease-in-out ${
@@ -94,13 +102,21 @@ function AdminDashboard() {
         } md:relative md:translate-x-0`}
       >
         <div className="h-full glass border-r border-slate-200/60 flex flex-col p-6 overflow-y-auto custom-scrollbar">
-          <div className="flex items-center gap-3 mb-10 px-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-              <HiBriefcase size={22} />
+          <div className="flex items-center justify-between gap-3 mb-10 px-2">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <HiBriefcase size={22} />
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                S.D <span className="text-blue-600">Enterprise</span>
+              </h2>
             </div>
-            <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-              S.D <span className="text-blue-600">Enterprise</span>
-            </h2>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="md:hidden p-2 text-slate-400 hover:text-slate-900 transition-colors"
+            >
+              <HiX size={20} />
+            </button>
           </div>
 
           <nav className="flex-grow space-y-8">
@@ -114,6 +130,9 @@ function AdminDashboard() {
                   <Link
                     key={item.path}
                     to={item.path}
+                    onClick={() => {
+                      if (window.innerWidth < 768) setIsSidebarOpen(false);
+                    }}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                       isActive(item.path)
                         ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
@@ -150,6 +169,10 @@ function AdminDashboard() {
                         <Link
                           key={sub.path}
                           to={sub.path}
+                          onClick={() => {
+                            if (window.innerWidth < 768)
+                              setIsSidebarOpen(false);
+                          }}
                           className={`block px-4 py-2 text-sm rounded-lg transition-colors ${
                             isActive(sub.path)
                               ? "text-blue-600 font-bold"

@@ -89,10 +89,10 @@ function AdminPanel() {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
             Dashboard Overview
           </h1>
-          <p className="text-slate-500 font-medium text-sm mt-1">
+          <p className="text-slate-500 font-medium text-xs md:text-sm mt-1">
             Welcome back, System Administrator. Here's a snapshot of your
             operations.
           </p>
@@ -113,7 +113,7 @@ function AdminPanel() {
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className="glass rounded-[2rem] p-7 shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 group relative overflow-hidden border border-white/40"
+            className="glass rounded-[2rem] p-6 md:p-7 shadow-sm hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 group relative overflow-hidden border border-white/40"
           >
             <div
               className={`absolute top-0 right-0 w-32 h-32 ${stat.color}/5 rounded-full -mr-12 -mt-12 transition-transform duration-700 group-hover:scale-150`}
@@ -128,7 +128,7 @@ function AdminPanel() {
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">
                 {stat.label}
               </p>
-              <h3 className="text-4xl font-black text-slate-900 tracking-tighter">
+              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">
                 {stat.value}
               </h3>
               <div className="mt-5 flex items-center gap-2">

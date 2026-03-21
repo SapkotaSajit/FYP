@@ -52,14 +52,14 @@ function Portfolio() {
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
                   <HiOutlineCube /> Architectural Gallery
                 </div>
-                <h1 className="text-4xl md:text-7xl font-black text-white leading-[1.05] mb-8 tracking-tight">
+                <h1 className="text-3xl md:text-7xl font-black text-white leading-tight md:leading-[1.05] mb-6 md:mb-8 tracking-tight">
                   Our{" "}
                   <span className="text-blue-600 underline decoration-blue-500/30 underline-offset-8">
                     Legendary
                   </span>{" "}
                   Portfolio
                 </h1>
-                <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed mb-10 max-w-2xl">
+                <p className="text-slate-300 text-sm md:text-xl font-medium leading-relaxed mb-8 md:mb-10 max-w-2xl">
                   Showcasing the structural projects where our waterproofing
                   integrity meets world-class construction. A testament to
                   engineering excellence.

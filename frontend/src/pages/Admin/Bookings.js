@@ -116,7 +116,8 @@ const AllBookings = () => {
       </div>
 
       <div className="glass rounded-3xl overflow-hidden shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-200/60">
@@ -232,6 +233,96 @@ const AllBookings = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {loading ? (
+            <div className="px-6 py-20 text-center">
+              <div className="w-10 h-10 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+              <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                Retrieving bookings...
+              </span>
+            </div>
+          ) : filteredBookings.length === 0 ? (
+            <div className="px-6 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+              No matching bookings found
+            </div>
+          ) : (
+            filteredBookings.map((booking) => (
+              <div key={booking.id} className="p-6 space-y-5">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center border shadow-sm">
+                      <img
+                        src={`https://ui-avatars.com/api/?name=${booking.user.name}&background=random&color=fff&bold=true`}
+                        alt={booking.user.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm font-black text-slate-900">
+                        {booking.user.name}
+                      </p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                        {booking.user.phone}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-100 text-[9px] font-black uppercase tracking-widest">
+                    {booking.service.name}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                      Date
+                    </p>
+                    <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                      <HiCalendar className="text-blue-500" />{" "}
+                      {booking.booking_date}
+                    </p>
+                  </div>
+                  <div className="space-y-1 text-right">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                      Time
+                    </p>
+                    <p className="text-xs font-bold text-slate-700 flex items-center justify-end gap-1.5">
+                      <HiClock className="text-blue-500" />{" "}
+                      {booking.booking_time}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 pt-2">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSelfAssign(booking.id)}
+                      className="flex-1 py-3 bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-100 transition-all active:scale-95"
+                    >
+                      Handle Myself
+                    </button>
+                    <Link
+                      to={`/admin/createAssignBooking/${booking.id}`}
+                      className="flex-1 py-3 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 transition-all active:scale-95 text-center"
+                    >
+                      Assign Staff
+                    </Link>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setDeleteBookingId(booking.id);
+                      setShowDeleteModal(true);
+                    }}
+                    className="w-full py-3 text-red-500 border border-red-100 bg-red-50/30 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-50 transition-all flex items-center justify-center gap-2"
+                  >
+                    <HiTrash size={14} /> Remove Request
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <DeleteConfirmationModal

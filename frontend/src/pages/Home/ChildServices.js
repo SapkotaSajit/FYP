@@ -65,13 +65,13 @@ const ServiceDetails = () => {
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-8 border border-blue-400/30 backdrop-blur-md">
                 <HiOutlineSparkles /> Specialized Expertise
               </div>
-              <h1 className="text-4xl md:text-6xl font-black mb-8 leading-[1.1] tracking-tight">
+              <h1 className="text-3xl md:text-6xl font-black mb-6 md:mb-8 leading-tight md:leading-[1.1] tracking-tight">
                 Request Service{" "}
                 <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
                   Today
                 </span>
               </h1>
-              <p className="text-xl text-slate-300 mb-10 font-medium leading-relaxed">
+              <p className="text-sm md:text-xl text-slate-300 mb-8 md:mb-10 font-medium leading-relaxed">
                 Our elite engineering team is ready to deploy advanced
                 waterproofing systems tailored to your specific architectural
                 needs.

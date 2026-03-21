@@ -93,7 +93,8 @@ const ContactList = () => {
       </div>
 
       <div className="glass rounded-3xl overflow-hidden shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-200/60">
@@ -182,6 +183,63 @@ const ContactList = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {loading ? (
+            <div className="px-6 py-20 text-center">
+              <div className="w-10 h-10 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+              <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                Retrieving messages...
+              </span>
+            </div>
+          ) : filteredContacts.length === 0 ? (
+            <div className="px-6 py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
+              No inquiries in your inbox
+            </div>
+          ) : (
+            filteredContacts.map((contact) => (
+              <div key={contact.id} className="p-6 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 border border-blue-100">
+                      <HiUser size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-black text-slate-900">
+                        {contact.name}
+                      </p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                        ID: #{contact.id}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 italic">
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    "{contact.description}"
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2">
+                  <button className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-blue-600 bg-blue-50 rounded-xl border border-blue-100 shadow-sm">
+                    Reply
+                  </button>
+                  <button
+                    onClick={() =>
+                      setDeleteModal({ isOpen: true, id: contact.id })
+                    }
+                    className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-red-600 bg-red-50 rounded-xl border border-red-100 shadow-sm flex items-center justify-center gap-2"
+                  >
+                    <HiTrash size={14} />
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -56,13 +56,13 @@ const AllServicesWithParent = () => {
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
                   Professional Solutions
                 </div>
-                <h1 className="text-4xl md:text-7xl font-black text-white leading-[1.05] mb-8 tracking-tight">
+                <h1 className="text-3xl md:text-7xl font-black text-white leading-tight md:leading-[1.05] mb-6 md:mb-8 tracking-tight">
                   World-class{" "}
                   <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">
                     Waterproofing
                   </span>
                 </h1>
-                <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed mb-10 max-w-xl">
+                <p className="text-slate-300 text-sm md:text-xl font-medium leading-relaxed mb-8 md:mb-10 max-w-xl">
                   From chemical injection to structural membrane installation,
                   our advanced methods protect your investment from the inside
                   out.
@@ -74,7 +74,7 @@ const AllServicesWithParent = () => {
                     </span>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
                       Years of
-                      <br />
+                      <br className="hidden md:block" />
                       Excellence
                     </span>
                   </div>
@@ -84,7 +84,7 @@ const AllServicesWithParent = () => {
                     </span>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
                       Projects
-                      <br />
+                      <br className="hidden md:block" />
                       Completed
                     </span>
                   </div>

@@ -13,6 +13,12 @@ import {
   HiMail,
   HiLocationMarker,
   HiPhone,
+  HiHome,
+  HiBriefcase,
+  HiBookOpen,
+  HiPhotograph,
+  HiChatAlt2,
+  HiShieldCheck,
 } from "react-icons/hi";
 
 function Nav() {
@@ -75,11 +81,26 @@ function Nav() {
   };
 
   const navLinks = [
-    { label: "Home", path: "/", key: "home" },
-    { label: "Services", path: "/homeServices", key: "services" },
-    { label: "Guides", path: "/guide", key: "guides" },
-    { label: "Portfolio", path: "/portfolio", key: "portfolio" },
-    { label: "Contact", path: "/contact", key: "contact" },
+    { label: "Home", path: "/", key: "home", icon: <HiHome /> },
+    {
+      label: "Services",
+      path: "/homeServices",
+      key: "services",
+      icon: <HiBriefcase />,
+    },
+    { label: "Guides", path: "/guide", key: "guides", icon: <HiBookOpen /> },
+    {
+      label: "Portfolio",
+      path: "/portfolio",
+      key: "portfolio",
+      icon: <HiPhotograph />,
+    },
+    {
+      label: "Contact",
+      path: "/contact",
+      key: "contact",
+      icon: <HiChatAlt2 />,
+    },
   ].filter((link) => {
     if (link.key === "home") return true; // Always show Home
     const setting = pageSettings.find((s) => s.page_key === link.key);
@@ -297,38 +318,85 @@ function Nav() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden fixed inset-0 top-[70px] bg-white z-[60] overflow-y-auto animate-in slide-in-from-right duration-500 border-t border-slate-100">
-            <ul className="flex flex-col p-8 gap-3">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
-                Navigational Matrix
-              </p>
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className={`flex py-5 px-6 text-xl font-black rounded-[1.5rem] transition-all active:scale-98 border shadow-sm hover:shadow-md ${
-                      location.pathname === link.path
-                        ? "bg-blue-50 text-blue-600 border-blue-100"
-                        : "text-slate-900 hover:bg-blue-50 hover:text-blue-600 border-transparent shadow-sm"
-                    }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              {!isLoggedIn() && (
-                <div className="grid grid-cols-1 gap-4 mt-10">
-                  <Link
-                    to="/login"
-                    className="w-full py-5 bg-slate-900 text-white text-center rounded-[1.5rem] font-black uppercase tracking-widest text-sm shadow-2xl active:scale-95 transition-all"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Enter Platform
-                  </Link>
-                </div>
-              )}
-            </ul>
+          <div className="lg:hidden fixed inset-0 top-0 bg-white z-[60] overflow-y-auto animate-in fade-in slide-in-from-top duration-500">
+            <div className="flex flex-col h-full min-h-screen">
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                <Link
+                  to="/"
+                  className="flex items-center gap-3"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <div className="bg-slate-900 p-2 rounded-xl shadow-lg">
+                    <span className="text-sm font-black text-white px-1">
+                      SD
+                    </span>
+                  </div>
+                  <span className="text-sm font-black text-slate-900 uppercase tracking-widest">
+                    Enterprises
+                  </span>
+                </Link>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-3 rounded-2xl bg-slate-100 text-slate-900 hover:bg-slate-200 transition-all"
+                >
+                  <HiX size={24} />
+                </button>
+              </div>
+
+              <div className="p-8 pb-32">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">
+                  Core Navigation
+                </p>
+                <ul className="flex flex-col gap-4">
+                  {navLinks.map((link) => (
+                    <li key={link.path}>
+                      <Link
+                        to={link.path}
+                        className={`group flex items-center gap-5 p-5 rounded-[1.8rem] transition-all border shadow-sm ${
+                          location.pathname === link.path
+                            ? "bg-blue-600 text-white border-blue-600 shadow-blue-200 shadow-xl"
+                            : "bg-white text-slate-900 border-slate-100 hover:border-blue-200"
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl transition-colors ${
+                            location.pathname === link.path
+                              ? "bg-white/20"
+                              : "bg-slate-50 group-hover:bg-blue-50 text-slate-400 group-hover:text-blue-600"
+                          }`}
+                        >
+                          {link.icon}
+                        </div>
+                        <span className="text-lg font-black tracking-tight">
+                          {link.label}
+                        </span>
+                        {location.pathname === link.path && (
+                          <div className="ml-auto w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+                {!isLoggedIn() && (
+                  <div className="mt-12">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">
+                      Secure Access
+                    </p>
+                    <Link
+                      to="/login"
+                      className="flex items-center justify-center gap-3 w-full py-6 bg-slate-900 text-white rounded-[2rem] font-black uppercase tracking-widest text-sm shadow-2xl active:scale-98 transition-all"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <HiShieldCheck className="text-blue-500 text-xl" />
+                      Launch Platform
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
       </nav>
