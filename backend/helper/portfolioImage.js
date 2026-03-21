@@ -2,7 +2,9 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-const dir = "Images/PortfolioImages";
+const isVercel = process.env.VERCEL === "1" || process.env.VERCEL;
+const dir = isVercel ? "/tmp/Images/PortfolioImages" : "Images/PortfolioImages";
+
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir, { recursive: true });
 }
