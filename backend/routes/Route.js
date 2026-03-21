@@ -69,6 +69,7 @@ import {
   getGuideStepsByGuideTypeId,
   getGuideStepsById,
   updateGuideStepsById,
+  deleteGuideStepById,
 } from "../controllers/Admin/GuideStepsController.js";
 import { uploadGuideTypes } from "../helper/guideTypesImage.js";
 import { uploadGuideSteps } from "../helper/guideStepsImage.js";
@@ -102,7 +103,14 @@ import {
 import { changePassword } from "../controllers/Admin/changePassword.js";
 import { deleteGuideTypeById } from "../controllers/Admin/GuideTypeController.js";
 import { updateGuideTypesById } from "../controllers/Admin/GuideTypeController.js";
-import { deleteGuideStepById } from "../controllers/Admin/GuideStepsController.js";
+import {
+  getAllPortfolios,
+  getPortfolioById,
+  createPortfolio,
+  updatePortfolioById,
+  deletePortfolioById,
+} from "../controllers/Admin/PortfolioController.js";
+import { upload as uploadPortfolio } from "../helper/portfolioImage.js";
 
 const router = express.Router();
 
@@ -302,9 +310,28 @@ router.get(
   checkStaffRole,
   getAllUserBookingRejectAssignments,
 );
-router.get("/:id", getBookingAssignById);
-router.put("/:id", updateBookingAssignById);
-router.delete("/:id", deleteBookingAssignById, checkAdminRole);
+router.get("/portfolios", getAllPortfolios);
+router.get("/portfolios/:id", getPortfolioById);
+router.post(
+  "/createPortfolio",
+  verifyToken,
+  checkAdminRole,
+  uploadPortfolio,
+  createPortfolio,
+);
+router.put(
+  "/editPortfolio/:id",
+  verifyToken,
+  checkAdminRole,
+  uploadPortfolio,
+  updatePortfolioById,
+);
+router.delete(
+  "/deletePortfolio/:id",
+  verifyToken,
+  checkAdminRole,
+  deletePortfolioById,
+);
 
 router.post("/createContact", createContact);
 router.get("/AllContacts", AllContacts);
@@ -315,5 +342,9 @@ router.delete(
   checkAdminRole,
   deleteContactById,
 );
+
+router.get("/:id", getBookingAssignById);
+router.put("/:id", updateBookingAssignById);
+router.delete("/:id", deleteBookingAssignById, checkAdminRole);
 
 export default router;
