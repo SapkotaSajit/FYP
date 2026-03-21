@@ -54,7 +54,12 @@ try {
   console.log(error);
 }
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: true, // reflects the request origin, allowing both localhost and Vercel domains securely
+  }),
+);
 app.use(cookieParser());
 app.use(bodyParser.json());
 
