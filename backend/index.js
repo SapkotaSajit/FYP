@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 
 import Role from "./models/Role.js";
 import Users from "./models/User.js";
+import PageSetting from "./models/PageSetting.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,26 @@ try {
       { id: 3, name: "Staff", description: "Staff member" },
     ]);
     console.log("Default roles seeded.");
+  }
+
+  // Seed Page Settings if they don't exist
+  const defaultPageSettings = [
+    { page_key: "portfolio", display_name: "Portfolio", is_active: true },
+    { page_key: "services", display_name: "Services", is_active: true },
+    { page_key: "guides", display_name: "Guides", is_active: true },
+    { page_key: "why_us", display_name: "Why Us", is_active: true },
+    { page_key: "testimonials", display_name: "Testimonials", is_active: true },
+    { page_key: "contact", display_name: "Contact", is_active: true },
+  ];
+
+  for (const setting of defaultPageSettings) {
+    const [pageSetting, created] = await PageSetting.findOrCreate({
+      where: { page_key: setting.page_key },
+      defaults: setting,
+    });
+    if (created) {
+      console.log(`Page setting created for: ${setting.page_key}`);
+    }
   }
 } catch (error) {
   console.log(error);

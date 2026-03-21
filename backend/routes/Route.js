@@ -104,6 +104,10 @@ import { changePassword } from "../controllers/Admin/changePassword.js";
 import { deleteGuideTypeById } from "../controllers/Admin/GuideTypeController.js";
 import { updateGuideTypesById } from "../controllers/Admin/GuideTypeController.js";
 import {
+  getAllPageSettings,
+  updatePageSetting,
+} from "../controllers/Admin/PageSettingController.js";
+import {
   getAllPortfolios,
   getPortfolioById,
   createPortfolio,
@@ -331,6 +335,14 @@ router.delete(
   verifyToken,
   checkAdminRole,
   deletePortfolioById,
+);
+
+router.get("/page-settings", getAllPageSettings);
+router.put(
+  "/page-settings/:id",
+  verifyToken,
+  checkAdminRole,
+  updatePageSetting,
 );
 
 router.post("/createContact", createContact);

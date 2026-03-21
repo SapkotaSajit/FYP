@@ -59,6 +59,7 @@ import EditGuideSteps from "./pages/Admin/GuideSteps/edit";
 import PortfolioList from "./pages/Admin/Portfolio/PortfolioList";
 import CreatePortfolio from "./pages/Admin/Portfolio/Create";
 import EditPortfolio from "./pages/Admin/Portfolio/Edit";
+import PageSettings from "./pages/Admin/Settings/PageSettings";
 
 function isAuthenticated() {
   const accessToken = Cookies.get("accessToken");
@@ -309,6 +310,17 @@ function App() {
             element={
               <PrivateAdminRoute
                 element={<PortfolioList />}
+                authenticated={isAuthenticated()}
+                isAdmin={isAdmin()}
+                redirectTo="/login"
+              />
+            }
+          />
+          <Route
+            path="page-settings"
+            element={
+              <PrivateAdminRoute
+                element={<PageSettings />}
                 authenticated={isAuthenticated()}
                 isAdmin={isAdmin()}
                 redirectTo="/login"

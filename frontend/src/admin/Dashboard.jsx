@@ -16,6 +16,7 @@ import {
   HiUsers,
   HiGlobe,
   HiCollection,
+  HiAdjustments,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
@@ -43,6 +44,11 @@ function AdminDashboard() {
     { label: "Staffs", icon: HiUsers, path: "staffs" },
     { label: "Services", icon: HiBriefcase, path: "services" },
     { label: "Portfolio", icon: HiCollection, path: "portfolios" },
+    {
+      label: "Page Settings",
+      icon: HiAdjustments,
+      path: "page-settings",
+    },
   ];
 
   const bookingSubItems = [

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import {
@@ -18,6 +19,7 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setProfileIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [pageSettings, setPageSettings] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +28,20 @@ function Nav() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchPageSettings = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/page-settings",
+        );
+        setPageSettings(response.data || []);
+      } catch (error) {
+        console.error("Error fetching page settings:", error);
+      }
+    };
+    fetchPageSettings();
   }, []);
 
   useEffect(() => {
@@ -58,12 +74,16 @@ function Nav() {
   };
 
   const navLinks = [
-    { label: "Home", path: "/" },
-    { label: "Services", path: "/homeServices" },
-    { label: "Guides", path: "/guide" },
-    { label: "Portfolio", path: "/portfolio" },
-    { label: "Contact", path: "/contact" },
-  ];
+    { label: "Home", path: "/", key: "home" },
+    { label: "Services", path: "/homeServices", key: "services" },
+    { label: "Guides", path: "/guide", key: "guides" },
+    { label: "Portfolio", path: "/portfolio", key: "portfolio" },
+    { label: "Contact", path: "/contact", key: "contact" },
+  ].filter((link) => {
+    if (link.key === "home") return true; // Always show Home
+    const setting = pageSettings.find((s) => s.page_key === link.key);
+    return setting ? setting.is_active : true; // Show by default if setting missing
+  });
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
