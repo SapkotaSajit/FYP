@@ -78,7 +78,7 @@ app.use("/Images", express.static("./Images"));
 // Export the Express API for Vercel
 export default app;
 
-// Ensure it still runs locally if called directly
-if (process.env.NODE_ENV !== "production") {
+// Ensure it still runs locally if called directly, but NOT on Vercel
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
   app.listen(5000, () => console.log("Server up and running"));
 }
