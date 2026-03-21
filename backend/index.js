@@ -4,6 +4,13 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import db from "./config/Database.js";
+
+process.on("uncaughtException", (err) => {
+  console.error("FATAL UNCAUGHT EXCEPTION:", err);
+});
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("FATAL UNHANDLED REJECTION:", reason);
+});
 import router from "./routes/Route.js";
 import bodyParser from "body-parser";
 
