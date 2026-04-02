@@ -86,11 +86,11 @@ function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <HiPhone className="text-blue-500 flex-shrink-0" />
-                <span className="text-sm">9841435289</span>
+                <span className="text-sm">9851037595</span>
               </li>
               <li className="flex items-center gap-3">
                 <HiMail className="text-blue-500 flex-shrink-0" />
-                <span className="text-sm">sapkotasajit05@gmail.com</span>
+                <span className="text-sm">ganeshwpdr@gmail.com</span>
               </li>
             </ul>
           </div>

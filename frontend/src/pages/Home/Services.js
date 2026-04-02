@@ -174,7 +174,7 @@ const AllServicesWithParent = () => {
                         </Link>
 
                         <a
-                          href={`https://wa.me/9841435289?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/childServices/${service.id}`)}`}
+                          href={`https://wa.me/9851037595?text=${encodeURIComponent(`Hello, I would like to inquire about the service: ${service.name}. Link: ${window.location.origin}/childServices/${service.id}`)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-3 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 hover:shadow-emerald-200 active:scale-95 flex items-center"

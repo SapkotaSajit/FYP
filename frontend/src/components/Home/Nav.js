@@ -138,7 +138,7 @@ function Nav() {
               className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
             >
               <HiPhone size={14} />
-              +977 9851351110
+              +977 9851037595
             </a>
           </div>
         </div>

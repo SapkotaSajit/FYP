@@ -38,7 +38,7 @@ function Contact() {
     }));
   };
 
-  const BASE_URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}`}/api/`;
+  const BASE_URL = `${process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || "http://localhost:5000"}`}/api/`;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -122,14 +122,14 @@ function Contact() {
                   {
                     icon: HiPhone,
                     label: "Technical Support",
-                    value: "+977 9841435289",
+                    value: "+977 9851037595",
                     color: "text-blue-600",
                     bg: "bg-blue-50",
                   },
                   {
                     icon: HiMail,
                     label: "Digital Correspondence",
-                    value: "info@sdenterprise.com",
+                    value: "ganeshwpdr@gmail.com",
                     color: "text-emerald-600",
                     bg: "bg-emerald-50",
                   },
