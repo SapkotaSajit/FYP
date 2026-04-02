@@ -1,14 +1,7 @@
 import multer from "multer";
-import path from "path";
+import { uploadToSupabase } from "./supabase.js";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Images/GuideStepsImages");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -22,18 +15,21 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-export const uploadGuideSteps = multer({
+const _uploadGuideSteps = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 }).single("guideSteps_image");
 
+export const uploadGuideSteps = [
+  _uploadGuideSteps,
+  uploadToSupabase("GuideStepsImages"),
+];
+
 export const uploadGuideImage = (req, res) => {
-  uploadGuideSteps(req, res, (err) => {
-    if (err) {
-      console.error("File upload error:", err);
-      return res.status(400).json({ error: err.message });
-    }
-    res.status(200).json({ message: "File uploaded successfully" });
-  });
+  res
+    .status(400)
+    .json({
+      error: "Not implemented as standalone with array middleware yet.",
+    });
 };

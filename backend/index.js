@@ -87,6 +87,16 @@ app.use("/api", router); // Assuming your routes are under the /api path
 app.use(express.json());
 
 app.use("/api", router);
+
+app.get("/Images/*", (req, res, next) => {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  if (supabaseUrl) {
+    const redirectUrl = `${supabaseUrl}/storage/v1/object/public/images/${req.params[0]}`;
+    return res.redirect(redirectUrl);
+  }
+  next();
+});
+
 app.use("/Images", express.static("./Images"));
 
 // Export the Express API for Vercel
