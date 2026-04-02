@@ -2,10 +2,18 @@ import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+// We will initialize the client lazily to prevent crashing the Vercel app
+// if the environment variables are not yet configured in the dashboard.
+let supabaseClient = null;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+const getSupabase = () => {
+  if (!supabaseClient) {
+    const supabaseUrl = process.env.SUPABASE_URL || "https://dummy.supabase.co";
+    const supabaseKey = process.env.SUPABASE_ANON_KEY || "dummykey";
+    supabaseClient = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabaseClient;
+};
 
 export const uploadToSupabase = (folderName) => {
   return async (req, res, next) => {
@@ -18,6 +26,13 @@ export const uploadToSupabase = (folderName) => {
         .substring(7)}.${fileExt}`;
       const filePath = `${folderName}/${fileName}`;
 
+      if (!process.env.SUPABASE_URL) {
+        throw new Error(
+          "Missing SUPABASE_URL in Vercel environment variables.",
+        );
+      }
+
+      const supabase = getSupabase();
       const { data, error } = await supabase.storage
         .from("images")
         .upload(filePath, req.file.buffer, {
